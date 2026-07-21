@@ -87,9 +87,9 @@ async function createMemberFlowPass({ token, customerName, customerNumber, activ
 
 async function readWalletCertificates() {
   const [wwdr, signerCert, signerKey] = await Promise.all([
-    readConfiguredFile("APPLE_WWDR_CERT_PATH"),
-    readConfiguredFile("APPLE_PASS_CERT_PATH"),
-    readConfiguredFile("APPLE_PASS_KEY_PATH"),
+    readConfiguredCertificate("APPLE_WWDR_CERT"),
+    readConfiguredCertificate("APPLE_PASS_CERT"),
+    readConfiguredCertificate("APPLE_PASS_KEY"),
   ]);
   return {
     wwdr,
@@ -97,6 +97,12 @@ async function readWalletCertificates() {
     signerKey,
     signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD,
   };
+}
+
+async function readConfiguredCertificate(envPrefix: string) {
+  const base64 = process.env[`${envPrefix}_BASE64`];
+  if (base64) return Buffer.from(base64.replaceAll("\\n", "").trim(), "base64");
+  return readConfiguredFile(`${envPrefix}_PATH`);
 }
 
 async function readConfiguredFile(envName: string) {
