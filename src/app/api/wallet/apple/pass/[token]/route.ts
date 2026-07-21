@@ -22,7 +22,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ tok
       activeProgramCount: activePrograms.length || 1,
     });
 
-    const body = passBuffer.buffer.slice(passBuffer.byteOffset, passBuffer.byteOffset + passBuffer.byteLength);
+    const body = new ArrayBuffer(passBuffer.byteLength);
+    new Uint8Array(body).set(passBuffer);
     return new Response(body, {
       headers: {
         "Content-Type": "application/vnd.apple.pkpass",
@@ -100,7 +101,8 @@ async function readWalletCertificates() {
 
 async function readConfiguredFile(envName: string) {
   const configuredPath = requiredEnv(envName);
-  return readFile(path.join(process.cwd(), configuredPath));
+  const fileName = path.basename(configuredPath);
+  return readFile(path.join(process.cwd(), "secrets", "apple-wallet", fileName));
 }
 
 function requiredEnv(name: string) {
