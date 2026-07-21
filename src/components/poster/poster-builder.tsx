@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { QrCode } from "@/components/ui/qr-code";
 import { cn } from "@/lib/utils";
-import memberflowLogo from "@/img/memberflow-logo.svg";
+import memberflowMark from "@/img/memberflow-logo-source.svg";
 import type { Business, Program, ProgramType } from "@/types";
 
 type PosterTheme = "light" | "dark";
@@ -301,7 +301,10 @@ function forwardPosterPreview() {
         </div>
         {settings.showInstruction ? <div className={cn("relative mt-9 grid grid-cols-3 gap-3 rounded-3xl p-4 text-center text-sm font-semibold", dark || settings.template === "poster" ? "bg-white/10 text-slate-200" : "bg-slate-50 text-slate-700")}><span>1. Отсканируйте</span><span>2. Получите карту</span><span>3. Пользуйтесь</span></div> : null}
         <div className="relative mt-8 flex justify-center">
-          <Image src={memberflowLogo} alt="MemberFlow" width={136} height={32} className={cn("h-8 w-auto", (dark || settings.template === "poster") && "rounded-lg bg-white px-2 py-1")} />
+          <div className="inline-flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-[0_8px_24px_rgba(18,19,32,0.08)]">
+            <Image src={memberflowMark} alt="" width={28} height={28} className="h-7 w-7 rounded-lg" />
+            <span className="text-lg font-[750] tracking-tight text-[#121320]">Member<span style={{ color: "#6D5DFB" }}>Flow</span></span>
+          </div>
         </div>
       </div>
     );

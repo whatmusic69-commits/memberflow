@@ -5,6 +5,7 @@ import { Calendar, Gift, History, Wallet } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { BrandMark } from "@/components/ui/brand-logo";
 import { Card } from "@/components/ui/card";
 import { QrCode } from "@/components/ui/qr-code";
 import { formatDate } from "@/lib/utils";
@@ -46,7 +47,7 @@ export function CustomerCardsOverview() {
           <section className="rounded-[32px] bg-white p-4 shadow-[0_22px_70px_rgba(18,19,32,0.12)]">
             <div ref={memberflowPassRef} className="rounded-[30px] bg-[#121320] p-5 text-white shadow-[0_18px_56px_rgba(18,19,32,0.2)]">
               <div className="flex items-center gap-3">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--primary)] text-base font-black">MF</span>
+                <BrandMark className="h-12 w-12 rounded-2xl" />
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">MemberFlow Pass</p>
                   <h1 className="text-xl font-semibold">Anna Ozola</h1>

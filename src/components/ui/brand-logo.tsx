@@ -1,35 +1,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import memberflowLogo from "@/img/memberflow-logo.svg";
+import memberflowMark from "@/img/memberflow-logo-source.svg";
 
 export function BrandMark({ className }: { className?: string }) {
   return (
-    <span className={cn("relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-[14px] bg-[var(--primary)] shadow-[0_14px_32px_rgba(109,93,251,0.3)]", className)}>
-      <span className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,255,255,0.34),transparent_38%)]" />
-      <span className="relative flex h-5 w-6 items-center justify-between">
-        <span className="h-5 w-2 rounded-full border-2 border-white/95" />
-        <span className="h-5 w-2 rounded-full border-2 border-white/95" />
-        <span className="absolute left-1/2 top-1/2 h-2 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95" />
-      </span>
+    <span className={cn("relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-[14px] shadow-[0_14px_32px_rgba(109,93,251,0.3)]", className)}>
+      <Image src={memberflowMark} alt="" fill sizes="40px" className="object-cover" priority />
     </span>
   );
 }
 
-export function BrandLogo({ href = "/", compact = false, className }: { href?: string; compact?: boolean; className?: string }) {
+export function BrandLogo({ href = "/", compact = false, size = "md", className }: { href?: string; compact?: boolean; size?: "sm" | "md"; className?: string }) {
+  const markClassName = size === "sm" ? "h-8 w-8 rounded-[11px] shadow-[0_10px_24px_rgba(109,93,251,0.22)]" : undefined;
+  const textClassName = size === "sm" ? "text-lg" : "text-xl";
   return (
-    <Link href={href} className={cn("inline-flex items-center gap-3 font-semibold tracking-tight text-[var(--foreground)]", className)}>
+    <Link href={href} className={cn("inline-flex items-center font-semibold tracking-tight text-[var(--foreground)]", size === "sm" ? "gap-2.5" : "gap-3", className)}>
       {compact ? (
-        <BrandMark />
+        <BrandMark className={markClassName} />
       ) : (
-        <Image
-          src={memberflowLogo}
-          alt="MemberFlow"
-          width={170}
-          height={40}
-          priority
-          className="h-10 w-auto"
-        />
+        <>
+          <BrandMark className={markClassName} />
+          <span className={cn("font-[750] tracking-tight text-current", textClassName)}>
+            Member<span className="text-[var(--primary)]">Flow</span>
+          </span>
+        </>
       )}
     </Link>
   );

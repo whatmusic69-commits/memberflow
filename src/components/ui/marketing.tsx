@@ -18,7 +18,7 @@ export function SiteNavbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/50 bg-[#F4F5F9]/78 shadow-[0_1px_0_rgba(18,19,32,0.03)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <BrandLogo />
+        <BrandLogo size="sm" />
         <nav className="hidden items-center gap-7 text-sm font-semibold text-slate-600 lg:flex">
           <a href="#features" className="hover:text-[var(--foreground)]">Возможности</a>
           <a href="#how" className="hover:text-[var(--foreground)]">Как это работает</a>

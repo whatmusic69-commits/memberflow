@@ -241,7 +241,7 @@ function OnboardingShell({ step, title, next, children }: { step: string; title:
     <main className="brand-grid min-h-screen bg-[var(--background)]">
       <header className="sticky top-0 z-40 border-b border-white/60 bg-[#F4F5F9]/82 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <BrandLogo />
+          <BrandLogo size="sm" />
           <div className="flex items-center gap-2">
             <LanguageSwitcher compact />
             <LinkButton href="/" variant="secondary" className="hidden sm:inline-flex">На главную</LinkButton>

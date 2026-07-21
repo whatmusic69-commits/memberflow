@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">MemberFlow mark</title>
+  <desc id="desc">Two connected rounded membership cards on a violet gradient tile</desc>
+
+  <defs>
+    <linearGradient id="memberflow-gradient" x1="128" y1="96" x2="920" y2="944" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5142FF"/>
+      <stop offset="0.48" stop-color="#713EF5"/>
+      <stop offset="1" stop-color="#CA30DE"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background tile -->
+  <rect x="64" y="64" width="896" height="896" rx="166" fill="url(#memberflow-gradient)"/>
+
+  <!-- Upper-left card flowing into the centre -->
+  <path fill="#FFFFFF" d="
+    M 320 300
+    H 485
+    C 541 300 576 334 580 382
+    H 514
+    C 460 382 424 416 424 466
+    C 424 516 460 550 514 550
+    H 557
+    C 578 550 592 564 592 584
+    C 592 604 578 618 557 618
+    H 320
+    C 270 618 236 584 236 534
+    V 384
+    C 236 334 270 300 320 300
+    Z"/>
+
+  <!-- Lower-right card flowing back through the centre -->
+  <path fill="#FFFFFF" d="
+    M 514 410
+    H 704
+    C 754 410 788 444 788 494
+    V 644
+    C 788 694 754 728 704 728
+    H 539
+    C 483 728 448 694 444 646
+    H 510
+    C 564 646 600 612 600 562
+    C 600 512 564 478 510 478
+    H 467
+    C 446 478 432 464 432 444
+    C 432 424 446 410 467 410
+    Z"/>
+</svg>

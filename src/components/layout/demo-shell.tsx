@@ -25,7 +25,7 @@ export function TopBar({ children }: { children?: ReactNode }) {
     <>
       <header className="sticky top-0 z-30 border-b border-white/70 bg-white/82 shadow-[0_1px_0_rgba(18,19,32,0.04)] backdrop-blur-xl">
         <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 px-4 sm:px-6">
-          <BrandLogo />
+          <BrandLogo size="sm" />
           <div className="flex flex-wrap items-center gap-2">
             {children}
             <LanguageSwitcher compact className="hidden sm:inline-flex" />

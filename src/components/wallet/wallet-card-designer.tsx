@@ -3,6 +3,7 @@
 import { AlertTriangle, CreditCard, Eye, Gift, ImageIcon, Palette, QrCodeIcon, RotateCcw, Save, ShieldCheck, Stamp, Upload, WalletCards, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import { BrandMark } from "@/components/ui/brand-logo";
 import { Button, LinkButton } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { QrCode } from "@/components/ui/qr-code";
@@ -344,7 +345,7 @@ function MemberFlowPassInfo() {
     <div className="mt-4 grid gap-4 rounded-[28px] border border-slate-200 bg-white p-4 shadow-[var(--shadow-sm)] sm:grid-cols-[210px_1fr]">
       <div className="rounded-[24px] bg-[#121320] p-4 text-white">
         <div className="flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-[var(--primary)] text-sm font-black">MF</span>
+          <BrandMark className="h-9 w-9 rounded-xl" />
           <div>
             <p className="text-xs font-bold text-white/55">MemberFlow Pass</p>
             <p className="text-sm font-semibold">{testCustomer.name}</p>

@@ -3,7 +3,7 @@
 import { ArrowRight, Building2, Check, CreditCard, Gift, MapPin, ShieldCheck, Smartphone } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { BrandLogo } from "@/components/ui/brand-logo";
+import { BrandLogo, BrandMark } from "@/components/ui/brand-logo";
 import { Button, LinkButton } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { QrCode } from "@/components/ui/qr-code";
@@ -26,7 +26,7 @@ export function ProgramSignupPage({ programId, mode }: { programId: string; mode
     return (
       <main className="brand-grid min-h-screen bg-[var(--background)] px-4 py-8">
         <div className="mx-auto max-w-xl">
-          <BrandLogo />
+          <BrandLogo size="sm" />
           <Card className="mt-8 p-8 text-center shadow-[var(--shadow-md)]">
             <h1 className="text-2xl font-semibold">Программа не найдена</h1>
             <p className="mt-2 text-sm text-slate-500">Проверьте ссылку на QR-плакате или выберите другую demo-программу.</p>
@@ -52,7 +52,7 @@ export function ProgramSignupPage({ programId, mode }: { programId: string; mode
     <main className="min-h-screen bg-[var(--background)]">
       <header className="border-b border-white/70 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <BrandLogo />
+          <BrandLogo size="sm" />
           <Link href="/customer/cards" className="text-sm font-semibold text-[var(--primary)] hover:text-[var(--primary-hover)]">Мои карты</Link>
         </div>
       </header>
@@ -133,7 +133,7 @@ export function ProgramSignupPage({ programId, mode }: { programId: string; mode
             <section className="rounded-[32px] bg-white p-4 shadow-[0_22px_70px_rgba(18,19,32,0.12)]">
               <div className="rounded-[30px] bg-[#121320] p-5 text-white shadow-[0_18px_56px_rgba(18,19,32,0.2)]">
                 <div className="flex items-center gap-3">
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--primary)] text-base font-black">MF</span>
+                  <BrandMark className="h-12 w-12 rounded-2xl" />
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">MemberFlow Pass</p>
                     <h2 className="text-xl font-semibold">Anna Ozola</h2>
