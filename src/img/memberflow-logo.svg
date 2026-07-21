@@ -1,0 +1,27 @@
+<svg width="272" height="64" viewBox="0 0 272 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">MemberFlow</title>
+  <desc id="desc">Two connected membership cards next to the MemberFlow wordmark</desc>
+  <defs>
+    <linearGradient id="brand" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#806FFF"/>
+      <stop offset="1" stop-color="#5D4CF4"/>
+    </linearGradient>
+    <filter id="shadow" x="-8" y="-6" width="80" height="82" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#6D5DFB" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <rect x="4" y="4" width="56" height="56" rx="17" fill="url(#brand)"/>
+  </g>
+  <g stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="17" y="19" width="9" height="26" rx="4.5"/>
+    <rect x="38" y="19" width="9" height="26" rx="4.5"/>
+    <path d="M26 27.5H38"/>
+    <circle cx="26" cy="27.5" r="1.5" fill="white" stroke="none"/>
+    <circle cx="38" cy="27.5" r="1.5" fill="white" stroke="none"/>
+  </g>
+
+  <text x="78" y="41" fill="#151623" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="750" letter-spacing="-1.25">Member</text>
+  <text x="183" y="41" fill="#6D5DFB" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="750" letter-spacing="-1.25">Flow</text>
+</svg>
