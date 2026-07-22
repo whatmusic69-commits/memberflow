@@ -1,0 +1,179 @@
+{
+  "ru": {
+    "nav": {
+      "product": "Продукт",
+      "clientJourney": "Путь клиента",
+      "automations": "Автоматизации",
+      "pricing": "Тарифы",
+      "login": "Войти",
+      "cta": "Создать кабинет"
+    },
+    "hero": {
+      "badge": "Персональный клиентский кабинет без приложения",
+      "title": "Превращайте каждого посетителя в постоянного клиента",
+      "description": "Дайте клиентам персональную страницу с наградами, предложениями, записями и подписками. MemberFlow помогает возвращать клиентов автоматически — без разработки собственного приложения.",
+      "primaryCta": "Создать кабинет",
+      "secondaryCta": "Посмотреть демо клиента",
+      "benefits": ["Не нужно скачивать приложение", "Запуск за один вечер", "Полностью под вашим брендом"],
+      "preview": {
+        "business": "Wash Club",
+        "greeting": "Anna, ваш автомобиль ждёт ухода",
+        "progress": "4 из 6 посещений",
+        "reward": "Следующая награда: воск бесплатно",
+        "offer": "Персональное предложение",
+        "offerText": "-20% на комплексную мойку до пятницы",
+        "booking": "Записаться",
+        "wallet": "Добавить в Apple Wallet"
+      }
+    },
+    "modules": {
+      "title": "Всё, что нужно клиенту, в одном месте",
+      "text": "После сканирования QR-кода клиент получает персональный кабинет вашего бизнеса — с актуальными наградами, услугами и предложениями.",
+      "items": [
+        { "title": "Лояльность и награды", "text": "Штампы, баллы, уровни и понятный прогресс до следующего бонуса." },
+        { "title": "Персональные предложения", "text": "Индивидуальные акции для клиентов, которым нужен повод вернуться." },
+        { "title": "Онлайн-запись", "text": "Быстрый переход к записи на услугу или выбранную точку." },
+        { "title": "Пакеты и подписки", "text": "Остатки посещений, регулярные memberships и продления." },
+        { "title": "История посещений", "text": "Клиент видит последние визиты, списания, награды и покупки." },
+        { "title": "Apple Wallet и Google Wallet", "text": "Быстрый доступ к кабинету, балансу и QR-идентификации клиента." }
+      ]
+    },
+    "journey": {
+      "title": "От первого сканирования до следующего визита",
+      "text": "QR-код не просто выдаёт карту. Он создаёт постоянный цифровой канал между бизнесом и клиентом.",
+      "steps": [
+        "Клиент сканирует QR-код на кассе или стойке.",
+        "Заполняет короткую форму, настроенную бизнесом.",
+        "Получает персональный брендированный кабинет.",
+        "Видит свои награды, услуги, записи и предложения.",
+        "MemberFlow помогает автоматически вернуть его снова."
+      ]
+    },
+    "clientApp": {
+      "eyebrow": "Клиентский кабинет",
+      "title": "Как собственное приложение. Только без App Store.",
+      "text": "Кабинет работает в браузере, оформляется под бренд бизнеса, открывается по защищённой персональной ссылке и может быть добавлен в Wallet для быстрого доступа.",
+      "tabs": ["Главная", "Награды", "Предложения", "Запись", "Подписка", "Профиль"],
+      "screen": {
+        "name": "Anna Ozola",
+        "status": "Gold client",
+        "visit": "Следующий визит",
+        "visitValue": "Пятница, 14:30",
+        "reward": "До награды",
+        "rewardValue": "2 визита",
+        "membership": "Пакет моек",
+        "membershipValue": "2 из 5 осталось"
+      }
+    },
+    "automations": {
+      "title": "MemberFlow замечает, когда клиента пора вернуть",
+      "text": "Для малого бизнеса это готовые сценарии, которые можно включить и настроить за несколько минут.",
+      "scenarios": [
+        "клиент не приходил 30 дней",
+        "остался один штамп до награды",
+        "награда получена, но не использована",
+        "клиент не вернулся после первого визита",
+        "заканчивается пакет посещений",
+        "приближается день рождения"
+      ],
+      "example": {
+        "title": "Роберт не приезжал 35 дней.",
+        "text": "MemberFlow создал персональное предложение и напомнил ему об автомойке. Роберт вернулся через 3 дня.",
+        "metric": "Вернулся через 3 дня"
+      }
+    },
+    "sales": {
+      "title": "Не только возвращайте клиентов. Продавайте им больше.",
+      "text": "MemberFlow создаёт новый канал повторных продаж: клиент видит релевантные предложения именно тогда, когда готов вернуться.",
+      "items": ["индивидуальные предложения", "дополнительные услуги и апселлы", "пакеты посещений", "регулярные memberships", "продление подписок", "онлайн-запись", "промокоды", "ограниченные по времени акции"]
+    },
+    "analytics": {
+      "eyebrow": "Кабинет владельца",
+      "title": "Видно не только действия, но и коммерческий результат",
+      "text": "Следите за повторными визитами, предложениями, автоматизациями и выручкой от клиентов, которых удалось вернуть.",
+      "mainMetric": "Автоматизация вернула 17 клиентов",
+      "revenue": "Ориентировочная выручка: €680",
+      "metrics": ["новые клиенты", "повторные посещения", "использованные предложения", "активные подписки", "выручка от повторных продаж", "клиенты к возврату"]
+    },
+    "useCases": {
+      "title": "Как MemberFlow работает в разных бизнесах",
+      "text": "Каждый бизнес получает собственное брендированное клиентское пространство, а не страницу маркетплейса.",
+      "items": [
+        { "business": "Автомойка", "text": "запись, пакеты моек, баллы и персональные предложения" },
+        { "business": "Груминг", "text": "профиль питомца, запись и напоминание о следующем визите" },
+        { "business": "Барбершоп", "text": "штампы, запись и возврат неактивных клиентов" },
+        { "business": "Кофейня", "text": "награды, акции и предзаказ" },
+        { "business": "Салон красоты", "text": "записи, абонементы и персональные услуги" },
+        { "business": "Фитнес", "text": "membership, оставшиеся посещения и продление" }
+      ]
+    },
+    "pricing": {
+      "title": "Тарифы под рост клиентской базы",
+      "text": "MemberFlow — один продукт. Тариф отличается количеством точек, клиентов, автоматизаций и аналитики.",
+      "plans": [
+        { "name": "Starter", "price": "от €25 / месяц", "label": "Старт клиентского кабинета", "features": ["брендированный кабинет клиента", "лояльность и награды", "QR-подключение", "до 300 активных клиентов", "базовая аналитика"] },
+        { "name": "Growth", "price": "от €79 / месяц", "label": "Популярный", "features": ["персональные предложения", "готовые автоматизации", "пакеты посещений", "экспорт клиентов", "до 1 500 активных клиентов"] },
+        { "name": "Business", "price": "индивидуально", "label": "Для сети", "features": ["несколько точек", "расширенная аналитика", "роли и права доступа", "подписки и продления", "приоритетная поддержка"] }
+      ],
+      "note": "Если текущий тариф уже используется в кабинете, его лимиты сохраняются. На лендинге тарифы переименованы под новую концепцию продукта."
+    },
+    "faq": {
+      "title": "Частые вопросы",
+      "text": "Всё, что нужно знать перед запуском клиентского кабинета.",
+      "more": "Показать ещё",
+      "items": [
+        { "question": "Что такое персональный клиентский кабинет?", "answer": "Это брендированная страница конкретного бизнеса для конкретного клиента. Клиент видит свои награды, предложения, записи, пакеты, подписки и историю посещений." },
+        { "question": "Нужно ли клиенту скачивать приложение?", "answer": "Нет. Кабинет работает в браузере по персональной ссылке. Wallet-карта может использоваться как быстрый способ открыть кабинет и показать QR сотруднику." },
+        { "question": "Для чего нужна Wallet-карта?", "answer": "Она ускоряет доступ: клиент открывает Wallet, показывает QR-код, а сотрудник видит данные этого клиента в рамках своего бизнеса." },
+        { "question": "Можно ли пользоваться кабинетом без Wallet?", "answer": "Да. Wallet — дополнительный быстрый доступ. Основной кабинет открывается по ссылке или QR-коду." },
+        { "question": "Какие данные может собирать бизнес?", "answer": "Бизнес настраивает короткую форму подключения: имя, телефон, email, день рождения или другие поля, нужные для обслуживания. Поля должны быть понятны клиенту." },
+        { "question": "Как работают автоматизации?", "answer": "MemberFlow отслеживает события: отсутствие визита, почти готовую награду, неиспользованное предложение или окончание пакета. Бизнес включает готовый сценарий и настраивает сообщение." },
+        { "question": "Можно ли принимать записи?", "answer": "На лендинге показан сценарий записи как часть клиентского кабинета. В текущем прототипе это демонстрационный модуль, который можно подключить к реальной системе записи на следующем этапе." },
+        { "question": "Как работают пакеты и подписки?", "answer": "Клиент видит остаток посещений, дату обновления и условия. Бизнес управляет правилами в кабинете владельца." },
+        { "question": "Подходит ли продукт для нескольких точек?", "answer": "Да. В кабинете можно отслеживать точки, сотрудников и операции по филиалам. Лимиты зависят от тарифа." },
+        { "question": "Как защищается QR клиента?", "answer": "QR содержит непрозрачный token, а не email или телефон. Сотрудник видит только программы и данные, относящиеся к его бизнесу." }
+      ]
+    },
+    "cta": {
+      "title": "Создайте собственный клиентский кабинет за один вечер",
+      "text": "Начните собирать клиентов, возвращать их автоматически и продавать повторные услуги — без разработки приложения.",
+      "primary": "Создать кабинет",
+      "secondary": "Посмотреть демо"
+    },
+    "footer": {
+      "text": "MemberFlow помогает локальному бизнесу запускать брендированный клиентский кабинет, удержание, предложения, записи и повторные продажи без собственного приложения.",
+      "tagline": "Riga · Customer app platform for local services",
+      "bottom": "Персональный клиентский кабинет для локального бизнеса."
+    }
+  },
+  "en": {
+    "nav": { "product": "Product", "clientJourney": "Customer journey", "automations": "Automations", "pricing": "Pricing", "login": "Log in", "cta": "Create client app" },
+    "hero": { "badge": "A personal customer portal without an app", "title": "The customer app your business never had.", "description": "Loyalty, offers, bookings and memberships — personalised for every customer, without building an app.", "primaryCta": "Create client app", "secondaryCta": "View customer demo", "benefits": ["No app download", "Launch in one evening", "Fully under your brand"], "preview": { "business": "Wash Club", "greeting": "Anna, your car is ready for care", "progress": "4 of 6 visits", "reward": "Next reward: free wax", "offer": "Personal offer", "offerText": "20% off premium wash until Friday", "booking": "Book a visit", "wallet": "Add to Apple Wallet" } },
+    "modules": { "title": "Everything your customer needs in one place", "text": "After scanning a QR code, the customer gets a personal portal for your business with current rewards, services and offers.", "items": [{ "title": "Loyalty and rewards", "text": "Stamps, points, levels and clear progress to the next reward." }, { "title": "Personal offers", "text": "Individual offers for customers who need a reason to return." }, { "title": "Online booking", "text": "A quick path to book a service or choose a location." }, { "title": "Packages and memberships", "text": "Remaining visits, recurring memberships and renewals." }, { "title": "Visit history", "text": "Customers see visits, redemptions, rewards and purchases." }, { "title": "Apple Wallet and Google Wallet", "text": "Fast access to the portal, balance and QR customer identification." }] },
+    "journey": { "title": "From the first scan to the next visit", "text": "The QR code does not just issue a card. It creates a lasting digital channel between your business and the customer.", "steps": ["The customer scans a QR code at the counter.", "They complete a short form configured by the business.", "They receive a branded personal customer portal.", "They see rewards, services, bookings and offers.", "MemberFlow helps bring them back automatically."] },
+    "clientApp": { "eyebrow": "Customer portal", "title": "Like your own app. Without the App Store.", "text": "The portal works in the browser, is branded for your business, opens through a secure personal link and can be added to Wallet for quick access.", "tabs": ["Home", "Rewards", "Offers", "Booking", "Membership", "Profile"], "screen": { "name": "Anna Ozola", "status": "Gold client", "visit": "Next visit", "visitValue": "Friday, 14:30", "reward": "To reward", "rewardValue": "2 visits", "membership": "Wash package", "membershipValue": "2 of 5 left" } },
+    "automations": { "title": "MemberFlow notices when it is time to bring a customer back", "text": "For small businesses, these are ready-made scenarios that can be enabled and adjusted in minutes.", "scenarios": ["customer has not visited for 30 days", "one stamp left to a reward", "reward earned but not used", "customer did not return after first visit", "visit package is running out", "birthday is coming"], "example": { "title": "Robert had not visited for 35 days.", "text": "MemberFlow created a personal offer and reminded him about the car wash. Robert returned 3 days later.", "metric": "Returned in 3 days" } },
+    "sales": { "title": "Do not just bring customers back. Sell more to them.", "text": "MemberFlow creates a repeat-sales channel: customers see relevant offers exactly when they are ready to return.", "items": ["personal offers", "add-on services and upsells", "visit packages", "recurring memberships", "subscription renewals", "online booking", "promo codes", "limited-time campaigns"] },
+    "analytics": { "eyebrow": "Owner dashboard", "title": "See actions and the commercial result", "text": "Track repeat visits, offers, automations and revenue from customers you brought back.", "mainMetric": "Automation returned 17 customers", "revenue": "Estimated revenue: €680", "metrics": ["new customers", "repeat visits", "used offers", "active subscriptions", "repeat-sales revenue", "customers to win back"] },
+    "useCases": { "title": "How MemberFlow works for different businesses", "text": "Every business gets its own branded customer space, not a marketplace page.", "items": [{ "business": "Car wash", "text": "booking, wash packages, points and personal offers" }, { "business": "Grooming", "text": "pet profile, booking and next-visit reminders" }, { "business": "Barbershop", "text": "stamps, booking and inactive-customer return" }, { "business": "Coffee shop", "text": "rewards, campaigns and pre-order" }, { "business": "Beauty salon", "text": "bookings, passes and personal services" }, { "business": "Fitness", "text": "membership, remaining visits and renewal" }] },
+    "pricing": { "title": "Pricing that grows with your customer base", "text": "MemberFlow is one product. Plans differ by locations, customers, automations and analytics.", "plans": [{ "name": "Starter", "price": "from €25 / month", "label": "Start client portal", "features": ["branded customer portal", "loyalty and rewards", "QR onboarding", "up to 300 active customers", "basic analytics"] }, { "name": "Growth", "price": "from €79 / month", "label": "Popular", "features": ["personal offers", "ready automations", "visit packages", "customer export", "up to 1,500 active customers"] }, { "name": "Business", "price": "custom", "label": "For networks", "features": ["multiple locations", "advanced analytics", "roles and permissions", "subscriptions and renewals", "priority support"] }], "note": "Existing dashboard limits stay technically compatible. The landing page names plans around the new product concept." },
+    "faq": { "title": "FAQ", "text": "What to know before launching a customer portal.", "more": "Show more", "items": [{ "question": "What is a personal customer portal?", "answer": "It is a branded page for a specific business and a specific customer. Customers see rewards, offers, bookings, packages, subscriptions and visit history." }, { "question": "Does the customer need to install an app?", "answer": "No. The portal works in the browser through a personal link. Wallet can be used as a fast way to open the portal and show QR." }, { "question": "What is the Wallet card for?", "answer": "It makes access faster: the customer opens Wallet, shows a QR code and staff sees data for that business." }, { "question": "Can customers use it without Wallet?", "answer": "Yes. Wallet is optional. The main portal opens through a link or QR code." }, { "question": "What fields can a business collect?", "answer": "The business configures a short onboarding form: name, phone, email, birthday or other fields needed for service." }, { "question": "How do automations work?", "answer": "MemberFlow tracks events such as inactivity, almost-earned rewards, unused offers or expiring packages. The business enables a ready scenario and adjusts the message." }, { "question": "Can MemberFlow handle bookings?", "answer": "The landing page shows booking as a customer-portal scenario. In the current prototype it is a demo module that can be connected to a real booking system later." }, { "question": "How do packages and subscriptions work?", "answer": "Customers see remaining visits, renewal dates and conditions. The business manages rules in the owner dashboard." }, { "question": "Is it suitable for multiple locations?", "answer": "Yes. The dashboard can track locations, staff and operations by branch. Limits depend on the plan." }, { "question": "How is customer QR protected?", "answer": "The QR contains an opaque token, not email or phone. Staff sees only programs and data related to their business." }] },
+    "cta": { "title": "Create your own customer portal in one evening", "text": "Start collecting customers, bringing them back automatically and selling repeat services without building an app.", "primary": "Create client app", "secondary": "View demo" },
+    "footer": { "text": "MemberFlow helps local businesses launch a branded customer portal, retention, offers, booking and repeat sales without building an app.", "tagline": "Riga · Customer app platform for local services", "bottom": "A personal customer portal for local businesses." }
+  },
+  "lv": {
+    "nav": { "product": "Produkts", "clientJourney": "Klienta ceļš", "automations": "Automatizācijas", "pricing": "Cenas", "login": "Ieiet", "cta": "Izveidot kabinetu" },
+    "hero": { "badge": "Personīgs klienta kabinets bez lietotnes", "title": "Pārvērtiet katru apmeklētāju par pastāvīgu klientu", "description": "Dodiet klientiem personīgu lapu ar atlīdzībām, piedāvājumiem, pierakstiem un abonementiem. MemberFlow palīdz klientiem atgriezties automātiski — bez savas lietotnes izstrādes.", "primaryCta": "Izveidot kabinetu", "secondaryCta": "Skatīt klienta demo", "benefits": ["Nav jālejupielādē lietotne", "Palaišana vienā vakarā", "Pilnībā ar jūsu zīmolu"], "preview": { "business": "Wash Club", "greeting": "Anna, jūsu auto gaida aprūpi", "progress": "4 no 6 apmeklējumiem", "reward": "Nākamā balva: bezmaksas vasks", "offer": "Personīgs piedāvājums", "offerText": "-20% kompleksajai mazgāšanai līdz piektdienai", "booking": "Pierakstīties", "wallet": "Pievienot Apple Wallet" } },
+    "modules": { "title": "Viss klientam vajadzīgais vienuviet", "text": "Pēc QR koda skenēšanas klients saņem jūsu biznesa personīgo kabinetu ar aktuālām atlīdzībām, pakalpojumiem un piedāvājumiem.", "items": [{ "title": "Lojalitāte un atlīdzības", "text": "Zīmogi, punkti, līmeņi un skaidrs progress līdz nākamajam bonusam." }, { "title": "Personīgi piedāvājumi", "text": "Individuāli piedāvājumi klientiem, kuriem vajadzīgs iemesls atgriezties." }, { "title": "Tiešsaistes pieraksts", "text": "Ātrs ceļš uz pakalpojuma vai filiāles izvēli." }, { "title": "Paketes un abonementi", "text": "Atlikušie apmeklējumi, regulāri abonementi un pagarinājumi." }, { "title": "Apmeklējumu vēsture", "text": "Klients redz vizītes, norakstījumus, atlīdzības un pirkumus." }, { "title": "Apple Wallet un Google Wallet", "text": "Ātra piekļuve kabinetam, bilancei un QR identifikācijai." }] },
+    "journey": { "title": "No pirmā skena līdz nākamajai vizītei", "text": "QR kods nav tikai karte. Tas izveido pastāvīgu digitālo kanālu starp biznesu un klientu.", "steps": ["Klients skenē QR kodu pie kases vai letes.", "Aizpilda īsu formu, ko iestatījis bizness.", "Saņem personīgu zīmola klienta kabinetu.", "Redz atlīdzības, pakalpojumus, pierakstus un piedāvājumus.", "MemberFlow palīdz viņu automātiski atgriezt."] },
+    "clientApp": { "eyebrow": "Klienta kabinets", "title": "Kā sava lietotne. Tikai bez App Store.", "text": "Kabinets darbojas pārlūkā, tiek noformēts ar biznesa zīmolu, atveras ar drošu personīgo saiti un var tikt pievienots Wallet ātrai piekļuvei.", "tabs": ["Sākums", "Atlīdzības", "Piedāvājumi", "Pieraksts", "Abonements", "Profils"], "screen": { "name": "Anna Ozola", "status": "Gold client", "visit": "Nākamā vizīte", "visitValue": "Piektdien, 14:30", "reward": "Līdz balvai", "rewardValue": "2 vizītes", "membership": "Mazgāšanas pakete", "membershipValue": "2 no 5 palikušas" } },
+    "automations": { "title": "MemberFlow pamana, kad klientu laiks atgriezt", "text": "Mazajam biznesam tie ir gatavi scenāriji, ko var ieslēgt un pielāgot pāris minūtēs.", "scenarios": ["klients nav bijis 30 dienas", "līdz balvai palicis viens zīmogs", "balva iegūta, bet nav izmantota", "klients neatgriezās pēc pirmās vizītes", "apmeklējumu pakete beidzas", "tuvojas dzimšanas diena"], "example": { "title": "Roberts nebija atbraucis 35 dienas.", "text": "MemberFlow izveidoja personīgu piedāvājumu un atgādināja par automazgātavu. Roberts atgriezās pēc 3 dienām.", "metric": "Atgriezās pēc 3 dienām" } },
+    "sales": { "title": "Ne tikai atgrieziet klientus. Pārdodiet viņiem vairāk.", "text": "MemberFlow izveido atkārtoto pārdošanu kanālu: klients redz piemērotu piedāvājumu brīdī, kad ir gatavs atgriezties.", "items": ["personīgi piedāvājumi", "papildu pakalpojumi un upsell", "apmeklējumu paketes", "regulāri memberships", "abonementu pagarināšana", "tiešsaistes pieraksts", "promo kodi", "laika ierobežotas akcijas"] },
+    "analytics": { "eyebrow": "Īpašnieka kabinets", "title": "Redzamas darbības un biznesa rezultāts", "text": "Sekojiet atkārtotām vizītēm, piedāvājumiem, automatizācijām un ieņēmumiem no klientiem, kurus izdevās atgriezt.", "mainMetric": "Automatizācija atgrieza 17 klientus", "revenue": "Aptuvenie ieņēmumi: €680", "metrics": ["jauni klienti", "atkārtotas vizītes", "izmantoti piedāvājumi", "aktīvi abonementi", "atkārtoto pārdošanu ieņēmumi", "klienti, ko atgriezt"] },
+    "useCases": { "title": "Kā MemberFlow strādā dažādos biznesos", "text": "Katrs bizness saņem savu zīmola klienta telpu, nevis marketplace lapu.", "items": [{ "business": "Automazgātava", "text": "pieraksts, mazgāšanas paketes, punkti un personīgi piedāvājumi" }, { "business": "Groomings", "text": "mājdzīvnieka profils, pieraksts un nākamās vizītes atgādinājums" }, { "business": "Barbershop", "text": "zīmogi, pieraksts un neaktīvo klientu atgriešana" }, { "business": "Kafejnīca", "text": "atlīdzības, akcijas un priekšpasūtījums" }, { "business": "Skaistumkopšanas salons", "text": "pieraksti, abonementi un personīgi pakalpojumi" }, { "business": "Fitness", "text": "membership, atlikušie apmeklējumi un pagarināšana" }] },
+    "pricing": { "title": "Tarifi klientu bāzes izaugsmei", "text": "MemberFlow ir viens produkts. Tarifi atšķiras pēc filiālēm, klientiem, automatizācijām un analītikas.", "plans": [{ "name": "Starter", "price": "no €25 / mēnesī", "label": "Klienta kabineta starts", "features": ["zīmola klienta kabinets", "lojalitāte un atlīdzības", "QR pieslēgšanās", "līdz 300 aktīviem klientiem", "pamata analītika"] }, { "name": "Growth", "price": "no €79 / mēnesī", "label": "Populārs", "features": ["personīgi piedāvājumi", "gatavas automatizācijas", "apmeklējumu paketes", "klientu eksports", "līdz 1 500 aktīviem klientiem"] }, { "name": "Business", "price": "individuāli", "label": "Tīklam", "features": ["vairākas filiāles", "paplašināta analītika", "lomas un tiesības", "abonementi un pagarinājumi", "prioritārs atbalsts"] }], "note": "Esošie kabineta limiti tehniski saglabā saderību. Landing lapā tarifi pārsaukti atbilstoši jaunajai produkta koncepcijai." },
+    "faq": { "title": "Biežākie jautājumi", "text": "Kas jāzina pirms klienta kabineta palaišanas.", "more": "Rādīt vairāk", "items": [{ "question": "Kas ir personīgais klienta kabinets?", "answer": "Tā ir zīmola lapa konkrētam biznesam un konkrētam klientam. Klients redz atlīdzības, piedāvājumus, pierakstus, paketes, abonementus un apmeklējumu vēsturi." }, { "question": "Vai klientam jāinstalē lietotne?", "answer": "Nē. Kabinets darbojas pārlūkā ar personīgu saiti. Wallet var izmantot kā ātru piekļuvi un QR parādīšanai." }, { "question": "Kam vajadzīga Wallet karte?", "answer": "Tā paātrina piekļuvi: klients atver Wallet, parāda QR kodu, un darbinieks redz datus šī biznesa ietvaros." }, { "question": "Vai kabinetu var lietot bez Wallet?", "answer": "Jā. Wallet ir papildiespēja. Galvenais kabinets atveras ar saiti vai QR kodu." }, { "question": "Kādus datus bizness var vākt?", "answer": "Bizness iestata īsu pieslēgšanās formu: vārds, telefons, email, dzimšanas diena vai citi apkalpošanai nepieciešami lauki." }, { "question": "Kā strādā automatizācijas?", "answer": "MemberFlow seko notikumiem: neaktivitāte, gandrīz iegūta balva, neizmantots piedāvājums vai beidzoša pakete. Bizness ieslēdz gatavu scenāriju un pielāgo ziņu." }, { "question": "Vai var pieņemt pierakstus?", "answer": "Landing lapā pieraksts parādīts kā klienta kabineta scenārijs. Pašreizējā prototipā tas ir demo modulis, ko vēlāk var savienot ar reālu pierakstu sistēmu." }, { "question": "Kā strādā paketes un abonementi?", "answer": "Klients redz atlikušās vizītes, atjaunošanas datumu un nosacījumus. Bizness noteikumus pārvalda īpašnieka kabinetā." }, { "question": "Vai tas der vairākām filiālēm?", "answer": "Jā. Kabinetā var sekot filiālēm, darbiniekiem un operācijām pa vietām. Limiti ir atkarīgi no tarifa." }, { "question": "Kā tiek aizsargāts klienta QR?", "answer": "QR satur necaurspīdīgu tokenu, nevis email vai telefonu. Darbinieks redz tikai ar viņa biznesu saistītās programmas un datus." }] },
+    "cta": { "title": "Izveidojiet savu klienta kabinetu vienā vakarā", "text": "Sāciet vākt klientus, automātiski atgriezt viņus un pārdot atkārtotus pakalpojumus bez lietotnes izstrādes.", "primary": "Izveidot kabinetu", "secondary": "Skatīt demo" },
+    "footer": { "text": "MemberFlow palīdz lokālam biznesam palaist zīmola klienta kabinetu, noturēšanu, piedāvājumus, pierakstus un atkārtotas pārdošanas bez savas lietotnes.", "tagline": "Riga · Customer app platform for local services", "bottom": "Personīgs klienta kabinets lokālam biznesam." }
+  }
+}

@@ -120,3 +120,67 @@ export interface ChartPoint {
   platformMrrCents: number;
   newBusinesses: number;
 }
+
+export interface ServiceItem {
+  id: string;
+  businessId: string;
+  name: string;
+  description: string;
+  category: string;
+  priceCents: number;
+  pricePrefix?: "fixed" | "from";
+  durationMinutes: number;
+  visible: boolean;
+  popular?: boolean;
+  order: number;
+  imageDataUrl?: string;
+}
+
+export interface Offer {
+  id: string;
+  businessId: string;
+  title: string;
+  description: string;
+  discountLabel: string;
+  status: "draft" | "scheduled" | "active" | "ended" | "expired";
+  publicVisible: boolean;
+  validUntil?: string;
+  promoCode?: string;
+}
+
+export interface BusinessPageSettings {
+  businessId: string;
+  slug: string;
+  status: "draft" | "published" | "unpublished";
+  lastPublishedAt?: string;
+  draft: BusinessPageContent;
+  published?: BusinessPageContent;
+}
+
+export interface BusinessPageContent {
+  appearance: {
+    primaryColor: string;
+    secondaryColor: string;
+    backgroundColor: string;
+    textColor: string;
+    theme: "light" | "dark";
+    buttonShape: "soft" | "round" | "sharp";
+    cardStyle: "soft" | "outline" | "solid";
+  };
+  seo: {
+    title: string;
+    description: string;
+  };
+  blocks: BusinessPageBlock[];
+}
+
+export interface BusinessPageBlock {
+  id: string;
+  type: "hero" | "about" | "services" | "offers" | "gallery" | "team" | "contacts" | "loyalty" | "packages" | "faq" | "cta";
+  enabled: boolean;
+  order: number;
+  title: string;
+  text: string;
+  ctaLabel?: string;
+  secondaryCtaLabel?: string;
+}

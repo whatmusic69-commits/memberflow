@@ -24,7 +24,18 @@ export function LanguageSwitcher({ compact = false, className }: { compact?: boo
       }
       setHydrated(true);
     }, 0);
-    return () => window.clearTimeout(id);
+    const onChange = (event: Event) => {
+      const next = (event as CustomEvent<LanguageCode>).detail;
+      if (next && languages.some((item) => item.code === next)) {
+        setLanguage(next);
+        document.documentElement.lang = next;
+      }
+    };
+    window.addEventListener("memberflow-language-change", onChange);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("memberflow-language-change", onChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -35,6 +46,8 @@ export function LanguageSwitcher({ compact = false, className }: { compact?: boo
 
   function selectLanguage(nextLanguage: LanguageCode) {
     setLanguage(nextLanguage);
+    window.localStorage.setItem("memberflow-language", nextLanguage);
+    window.dispatchEvent(new CustomEvent("memberflow-language-change", { detail: nextLanguage }));
   }
 
   return (

@@ -55,8 +55,8 @@ export function CustomerCardsOverview() {
               </div>
               <p className="mt-6 text-3xl font-semibold">{activePrograms.length} активных программ</p>
               <p className="mt-1 text-sm text-white/60">Одна карта для всех подключённых компаний</p>
-              <div className="mt-5 rounded-[24px] bg-white p-4">
-                <QrCode value={`memberflow:customer:${customerToken}`} label="" size={180} />
+              <div className="mt-5 grid place-items-center rounded-[24px] bg-white p-4">
+                <QrCode className="items-center justify-center" value={`memberflow:customer:${customerToken}`} label="" size={180} />
               </div>
               <div className="mt-4 flex items-center justify-between text-sm font-bold text-white/70">
                 <span>{customerNumber}</span>
