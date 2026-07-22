@@ -107,78 +107,7 @@ export function PosterBuilder({ business, program, source = "onboarding" }: { bu
       pdf.autoPrint();
 
       const blobUrl = URL.createObjectURL(pdf.output("blob"));
-      printWindow.document.open();
-      printWindow.document.write(`
-        <!doctype html>
-        <html>
-          <head>
-            <title>Печать плаката</title>
-            <style>
-              html, body {
-                margin: 0;
-                height: 100%;
-                background: #f4f5f9;
-                font-family: Arial, sans-serif;
-              }
-              .toolbar {
-                position: fixed;
-                top: 12px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 2;
-                display: flex;
-                gap: 10px;
-                align-items: center;
-                padding: 10px 12px;
-                border-radius: 14px;
-                background: rgba(255, 255, 255, 0.94);
-                box-shadow: 0 12px 34px rgba(18, 19, 32, 0.16);
-              }
-              button {
-                border: 0;
-                border-radius: 10px;
-                background: #6D5DFB;
-                color: white;
-                font-weight: 700;
-                padding: 10px 14px;
-                cursor: pointer;
-              }
-              span {
-                color: #626A7A;
-                font-size: 13px;
-                font-weight: 600;
-              }
-              iframe {
-                width: 100%;
-                height: 100%;
-                border: 0;
-                background: white;
-              }
-              @media print {
-                .toolbar { display: none; }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="toolbar">
-              <button type="button" onclick="printPdf()">Печать</button>
-              <span>Если окно печати не открылось автоматически, нажмите кнопку.</span>
-            </div>
-            <iframe id="posterPdf" src="${blobUrl}"></iframe>
-            <script>
-              function printPdf() {
-                var frame = document.getElementById('posterPdf');
-                frame.contentWindow.focus();
-                frame.contentWindow.print();
-              }
-              document.getElementById('posterPdf').addEventListener('load', function () {
-                setTimeout(printPdf, 500);
-              });
-            </script>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
+      printWindow.location.href = blobUrl;
 
       window.setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
     } catch {
