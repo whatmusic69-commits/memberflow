@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { QrCode } from "@/components/ui/qr-code";
 import { cn } from "@/lib/utils";
-import memberflowMark from "@/img/memberflow-logo-source.svg";
+import memberflowMark from "@/img/memberflow-logo-source.png";
 import type { Business, Program, ProgramType } from "@/types";
 
 type PosterTheme = "light" | "dark";

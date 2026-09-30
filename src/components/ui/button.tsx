@@ -3,7 +3,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "reac
 import { cn } from "@/lib/utils";
 
 const styles = {
-  primary: "bg-[var(--primary)] text-white shadow-[0_14px_32px_rgba(109,93,251,0.28)] hover:-translate-y-0.5 hover:bg-[var(--primary-hover)] hover:shadow-[0_18px_44px_rgba(109,93,251,0.36)]",
+  primary: "bg-[var(--primary)] text-white shadow-[0_12px_28px_color-mix(in_srgb,var(--primary)_22%,transparent)] hover:-translate-y-0.5 hover:bg-[var(--primary-hover)] hover:shadow-[0_16px_36px_color-mix(in_srgb,var(--primary)_28%,transparent)]",
   secondary: "bg-white/90 text-[var(--foreground)] ring-1 ring-[var(--border)] hover:-translate-y-0.5 hover:bg-white hover:shadow-[var(--shadow-sm)]",
   ghost: "bg-transparent text-slate-700 hover:bg-slate-100/80",
   danger: "bg-[var(--danger)] text-white hover:-translate-y-0.5 hover:bg-red-700",

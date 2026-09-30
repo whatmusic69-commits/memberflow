@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import memberflowMark from "@/img/memberflow-logo-source.svg";
+import memberflowMark from "@/img/memberflow-logo-source.png";
 
 export function BrandMark({ className }: { className?: string }) {
   return (
