@@ -1,0 +1,34 @@
+export interface AuthContent {
+  welcome: string;
+  intro: string;
+  email: string;
+  password: string;
+  show: string;
+  hide: string;
+  forgot: string;
+  login: string;
+  loading: string;
+  newUser: string;
+  start: string;
+  backHome: string;
+  access: string;
+  visual: string;
+  resetTitle: string;
+  resetIntro: string;
+  sendReset: string;
+  sending: string;
+  backLogin: string;
+  invalidCredentials: string;
+  tooMany: string;
+  network: string;
+  expired: string;
+  unavailable: string;
+  requiredEmail: string;
+  invalidEmail: string;
+  requiredPassword: string;
+  fieldInvalid: string;
+  resetSent: string;
+  already: string;
+  language: string;
+  resetAccess: string;
+}
