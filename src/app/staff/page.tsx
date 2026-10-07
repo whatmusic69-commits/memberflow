@@ -1,7 +1,25 @@
-"use client";
-import { ScanLine } from "lucide-react";
-import { LinkButton } from "@/components/ui/button";
-import { Card, CardHeader, StatCard } from "@/components/ui/card";
-import { formatDateTime } from "@/lib/utils";
-import { useDemoStore } from "@/store/demo-store";
-export default function StaffPage() { const { selectedBusinessId, businesses, operations } = useDemoStore(); const business = businesses.find((b) => b.id === selectedBusinessId); const list = operations.filter((op) => op.businessId === selectedBusinessId).slice(0, 5); return <div className="mx-auto max-w-xl space-y-6"><div><h1 className="text-2xl font-semibold">{business?.name}</h1><p className="text-sm text-slate-500">Diana Scan · Staff</p></div><LinkButton href="/staff/scan" className="h-16 w-full text-base"><ScanLine className="h-5 w-5" />Сканировать QR</LinkButton><StatCard label="Операций сегодня" value="18" /><Card><CardHeader title="Последние операции" />{list.map((op) => <div key={op.id} className="flex justify-between border-b border-slate-100 p-4 text-sm last:border-0"><span>{op.change}</span><span className="text-slate-500">{formatDateTime(op.date)}</span></div>)}</Card></div>; }
+import { Suspense } from "react";
+import { cookies } from "next/headers";
+import type { Metadata } from "next";
+import { isLocale } from "@/content";
+import { StaffApp } from "@/features/staff/staff-app";
+import "../dashboard/dashboard.css";
+import "./staff.css";
+export const metadata: Metadata = {
+  title: "Staff — MemberFlow",
+  robots: { index: false, follow: false },
+};
+export default async function StaffPage() {
+  const value = (await cookies()).get("memberflow_locale")?.value;
+  return (
+    <Suspense
+      fallback={
+        <main id="main" className="mf-staff-loading" aria-busy="true">
+          MemberFlow
+        </main>
+      }
+    >
+      <StaffApp initialLocale={value && isLocale(value) ? value : "en"} />
+    </Suspense>
+  );
+}

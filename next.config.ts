@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  reactCompiler: true,
-  turbopack: {
-    root: process.cwd(),
-  },
+const config: NextConfig = {
+  poweredByHeader: false,
+  turbopack: { root: process.cwd() },
 };
-
-export default nextConfig;
+export default config;
