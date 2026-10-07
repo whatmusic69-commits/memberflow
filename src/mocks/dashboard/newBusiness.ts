@@ -1,4 +1,5 @@
 import type { DashboardOverview } from "@/features/dashboard/types";
+import { fixtureMembership } from "./permissions";
 const business: DashboardOverview["business"] = {
   id: "demo-business",
   name: "Your Coffee",
@@ -14,7 +15,8 @@ export const newBusiness: DashboardOverview = {
   source: "demo",
   business,
   businesses: [business],
-  user: { id: "demo-user", firstName: "Anna", role: "OWNER" },
+  user: { id: "demo-user", firstName: "Anna" },
+  membership: fixtureMembership(business.id),
   permissions: { canCreate: true, canManageBusiness: true },
   state: "new",
   setup: {

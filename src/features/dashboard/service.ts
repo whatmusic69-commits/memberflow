@@ -2,8 +2,10 @@ import { apiRequest } from "@/lib/api/client";
 import { readLocalSettings } from "@/features/workspace/repository";
 import { readDemoDrafts } from "@/features/campaigns/service";
 import { applyOnboardingPreview } from "./onboarding-preview";
+import { getLifecycle, getNextAction, getSetupSummary } from "./overview-model";
 import type { DashboardOverview } from "./types";
-export type DashboardFixture = "new" | "active" | "error" | "loading";
+export type DashboardFixture =
+  "new" | "partial" | "active" | "manager" | "staff" | "error" | "loading";
 export interface DashboardService {
   getOverview(
     businessId?: string,
@@ -47,16 +49,40 @@ export function getDashboardService(
       if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
       if (fixture === "error") throw new Error("fixture error");
       const { newBusiness } = await import("@/mocks/dashboard/newBusiness");
-      if (fixture === "active") {
+      if (
+        fixture === "active" ||
+        fixture === "manager" ||
+        fixture === "staff"
+      ) {
+        const { fixtureMembership } =
+          await import("@/mocks/dashboard/permissions");
         const { activeBusiness } =
           await import("@/mocks/dashboard/activeBusiness");
-        return applyBusinessSettings(activeBusiness);
+        return prepareOverview(
+          applyBusinessSettings({
+            ...activeBusiness,
+            membership: fixtureMembership(
+              activeBusiness.business.id,
+              fixture === "manager"
+                ? "MANAGER"
+                : fixture === "staff"
+                  ? "STAFF"
+                  : "OWNER",
+            ),
+          }),
+        );
+      }
+      if (fixture === "partial") {
+        const { partialBusiness } =
+          await import("@/mocks/dashboard/partialBusiness");
+        return prepareOverview(applyBusinessSettings(partialBusiness));
       }
       const base = applyOnboardingPreview(newBusiness);
       const overview = applyBusinessSettings(base);
       const drafts = readDemoDrafts(overview.business.id);
-      return {
+      return prepareOverview({
         ...overview,
+        state: drafts.length > 0 ? "partial" : "new",
         setup: { ...overview.setup, campaign: drafts.length > 0 },
         campaigns: drafts.map((draft) => ({
           id: draft.id,
@@ -68,7 +94,7 @@ export function getDashboardService(
             status: "notConfigured" as const,
           })),
         })),
-      };
+      });
     },
   };
 }
@@ -97,5 +123,14 @@ function applyBusinessSettings(base: DashboardOverview): DashboardOverview {
       ...base.user,
       firstName: settings?.firstName || base.user.firstName,
     },
+  };
+}
+
+function prepareOverview(data: DashboardOverview): DashboardOverview {
+  return {
+    ...data,
+    lifecycle: getLifecycle(data),
+    nextAction: getNextAction(data),
+    setupSummary: getSetupSummary(data),
   };
 }

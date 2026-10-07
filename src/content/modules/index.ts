@@ -101,7 +101,7 @@ const en = {
   configure: "Configure",
   connection: "Customer connection",
   connectionIntro: "Connect a visit to a customer profile and a digital card.",
-  setupQr: "Prepare customer connection",
+  setupQr: "Business QR & A4 sign",
   noQr: "Business QR and signed Wallet cards are not available in this preview.",
   settingsTabs: {
     business: "Business",
@@ -254,7 +254,7 @@ const ru: Copy = {
   configure: "Настроить",
   connection: "Подключение клиентов",
   connectionIntro: "Свяжите визит с клиентским профилем и цифровой картой.",
-  setupQr: "Подготовить подключение клиентов",
+  setupQr: "QR бизнеса и лист A4",
   noQr: "QR бизнеса и подписанные Wallet-карты недоступны в этом предпросмотре.",
   settingsTabs: {
     business: "Бизнес",
@@ -402,7 +402,7 @@ const lv: Copy = {
   connection: "Klientu savienojums",
   connectionIntro:
     "Savienojiet apmeklējumu ar klienta profilu un digitālo karti.",
-  setupQr: "Sagatavot klientu savienojumu",
+  setupQr: "Uzņēmuma QR un A4 plakāts",
   noQr: "Uzņēmuma QR un parakstītas Wallet kartes nav pieejamas šajā priekšskatījumā.",
   settingsTabs: {
     business: "Uzņēmums",

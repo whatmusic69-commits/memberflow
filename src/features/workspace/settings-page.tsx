@@ -11,7 +11,7 @@ import { onboardingContent } from "@/content/onboarding";
 import countries from "@/config/countries.json";
 import { useWorkspace } from "@/features/dashboard/workspace";
 import { OverviewSkeleton } from "@/features/dashboard/overview";
-import { localizedPlan } from "@/features/dashboard/plan-label";
+import { UsagePage } from "@/features/usage/usage-page";
 import type { BusinessSettingsDraft } from "./types";
 import {
   isDemoAdapter,
@@ -34,7 +34,7 @@ export function SettingsPage() {
   return <SettingsForm key={data.business.id} />;
 }
 function SettingsForm() {
-  const { data, locale, href } = useWorkspace();
+  const { data, locale, can, href } = useWorkspace();
   const c = moduleContent[locale];
   const d = dashboardContent[locale];
   const w = workspaceContent[locale];
@@ -74,7 +74,7 @@ function SettingsForm() {
   const lock = useRef(false);
   const demo = isDemoAdapter(data!.source === "demo");
   const allowed =
-    demo && (tab === "profile" || data!.permissions.canManageBusiness);
+    demo && (tab === "profile" || can("business.settings.manage"));
   function update<K extends keyof BusinessSettingsDraft>(
     key: K,
     value: BusinessSettingsDraft[K],
@@ -156,28 +156,28 @@ function SettingsForm() {
         </div>
       </header>
       <nav className="mf-settings-tabs" aria-label={d.nav.settings}>
-        {(["business", "profile", "billing"] as const).map((value) => (
-          <Link
-            aria-current={tab === value ? "page" : undefined}
-            key={value}
-            href={href("settings") + "&tab=" + value}
-          >
-            {c.settingsTabs[value]}
-          </Link>
-        ))}
+        {(["business", "profile", "billing"] as const)
+          .filter((value) =>
+            can(
+              value === "business"
+                ? "business.settings.read"
+                : value === "profile"
+                  ? "profile.read"
+                  : "billing.read",
+            ),
+          )
+          .map((value) => (
+            <Link
+              aria-current={tab === value ? "page" : undefined}
+              key={value}
+              href={href("settings") + "&tab=" + value}
+            >
+              {c.settingsTabs[value]}
+            </Link>
+          ))}
       </nav>
       {tab === "billing" ? (
-        <section className="mf-panel mf-billing-panel">
-          <span className="mf-kicker">{c.billingTitle}</span>
-          <h2>{localizedPlan(business.planName, w)}</h2>
-          <dl className="mf-details-list">
-            <dt>{c.status}</dt>
-            <dd>{data!.source === "demo" ? c.notActivated : c.notAvailable}</dd>
-            <dt>{c.nextBilling}</dt>
-            <dd>{c.notAvailable}</dd>
-          </dl>
-          <p className="mf-draft-notice">{c.billingUnavailable}</p>
-        </section>
+        <UsagePage />
       ) : (
         <div className="mf-settings-editor">
           <form className="mf-panel" onSubmit={save}>
@@ -186,7 +186,7 @@ function SettingsForm() {
                 {field("firstName", c.firstName, "text", true)}
                 <dl className="mf-details-list">
                   <dt>{c.role}</dt>
-                  <dd>{d.roles[data!.user.role]}</dd>
+                  <dd>{d.roles[data!.membership.role]}</dd>
                 </dl>
               </>
             ) : (

@@ -25,9 +25,16 @@ export interface CampaignDraft {
   channels: string[];
   image: string | null;
   updatedAt: string;
+  createdAt?: string | null;
   status: CampaignStatus;
+  /** Distribution content references an optional source; an Offer remains its own entity. */
+  source?: { kind: "offer" | "product" | "service" | "event"; id: string };
+  channelStatuses?: {
+    name: string;
+    status: "DRAFT" | "PROCESSING" | "PUBLISHED" | "FAILED" | "PAUSED";
+  }[];
 }
 export type CampaignInput = Omit<
   CampaignDraft,
-  "id" | "businessId" | "updatedAt" | "status"
+  "id" | "businessId" | "updatedAt" | "createdAt" | "status" | "channelStatuses"
 >;

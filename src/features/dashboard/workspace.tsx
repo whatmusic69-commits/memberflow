@@ -1,9 +1,11 @@
 "use client";
+import { animateDialogClose } from "@/lib/motion/dialog";
 import Link from "next/link";
 import { HomeLink } from "@/components/ui/home-link";
 import Image from "next/image";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import {
+  Fragment,
   createContext,
   useContext,
   useEffect,
@@ -21,6 +23,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  PanelTop,
   Megaphone,
   Settings,
   Sparkles,
@@ -28,10 +31,17 @@ import {
   Users,
   Waypoints,
   X,
-  Plus,
 } from "lucide-react";
+import {
+  workspaceAccess,
+  canVisitSection,
+  canVisitWorkspace,
+} from "@/features/access/permissions";
+import type { Permission } from "@/features/access/types";
+import { CreateMenu } from "./create-menu";
 import { isLocale, type Locale } from "@/content";
 import { workspaceContent } from "@/content/workspace";
+import { usageContent } from "@/content/usage";
 import { localizedPlan } from "./plan-label";
 import { dashboardContent } from "@/content/dashboard";
 import { Wordmark } from "@/components/ui/brand";
@@ -40,22 +50,25 @@ import { authService } from "@/features/auth/service";
 import { getDashboardService, type DashboardFixture } from "./service";
 import type { DashboardOverview, Section } from "./types";
 const icons = {
+  billing: Ticket,
   overview: LayoutDashboard,
   campaigns: Megaphone,
   offers: Gift,
   customers: Users,
+  "customer-page": PanelTop,
   loyalty: Sparkles,
   memberships: Ticket,
   automations: Waypoints,
   integrations: ArrowUpRight,
   settings: Settings,
+  team: Users,
 };
 const groups: Section[][] = [
   ["overview"],
   ["campaigns", "offers"],
-  ["customers", "loyalty", "memberships"],
+  ["customers", "customer-page", "loyalty", "memberships"],
   ["automations"],
-  ["integrations", "settings"],
+  ["team", "integrations", "settings"],
 ];
 interface WorkspaceState {
   data: DashboardOverview | null;
@@ -64,6 +77,7 @@ interface WorkspaceState {
   error: boolean;
   reload: () => void;
   href: (section?: Section) => string;
+  can: (permission: Permission) => boolean;
 }
 const Context = createContext<WorkspaceState | null>(null);
 export function useWorkspace() {
@@ -81,10 +95,16 @@ export function Workspace({
   const query = useSearchParams();
   const pathname = usePathname();
   const initialLang = query.get("lang") || initialLocale;
-  const [languageChoice, setLanguageChoice] = useState<{ source: string; value: Locale } | null>(null);
-  const locale: Locale = languageChoice?.source === initialLang
-    ? languageChoice.value
-    : isLocale(initialLang) ? initialLang : initialLocale;
+  const [languageChoice, setLanguageChoice] = useState<{
+    source: string;
+    value: Locale;
+  } | null>(null);
+  const locale: Locale =
+    languageChoice?.source === initialLang
+      ? languageChoice.value
+      : isLocale(initialLang)
+        ? initialLang
+        : initialLocale;
   const router = useRouter();
   const [data, setData] = useState<DashboardOverview | null>(null);
   const [loading, setLoading] = useState(true);
@@ -99,9 +119,17 @@ export function Workspace({
   const notification = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
   const c = dashboardContent[locale];
+  const { can } = workspaceAccess(data);
   const demo = query.get("demo");
   const fixture: DashboardFixture =
-    demo === "active" || demo === "error" || demo === "loading" ? demo : "new";
+    demo === "active" ||
+    demo === "manager" ||
+    demo === "staff" ||
+    demo === "partial" ||
+    demo === "error" ||
+    demo === "loading"
+      ? demo
+      : "new";
   useEffect(() => {
     document.documentElement.lang = locale;
     document.cookie = `memberflow_locale=${locale}; Path=/; SameSite=Lax; Max-Age=31536000`;
@@ -149,6 +177,17 @@ export function Workspace({
       );
     };
   }, []);
+  useEffect(() => {
+    if (
+      data &&
+      workspaceAccess(data).can("customer.scan") &&
+      !workspaceAccess(data).can("overview.read")
+    ) {
+      router.replace(
+        `/staff?lang=${locale}${data.source === "demo" ? "&demo=active" : ""}`,
+      );
+    }
+  }, [data, locale, router]);
   function changeLocale(value: Locale) {
     setLanguageChoice({ source: initialLang, value });
     document.cookie = `memberflow_locale=${value}; Path=/; SameSite=Lax; Max-Age=31536000`;
@@ -163,9 +202,11 @@ export function Workspace({
     return `/dashboard${section === "overview" ? "" : "/" + section}?${params}`;
   }
   function closeDrawer() {
-    drawer.current?.close();
-    document.body.style.overflow = "";
-    opener.current?.focus({ preventScroll: true });
+    animateDialogClose(drawer.current, () => {
+      drawer.current?.close();
+      document.body.style.overflow = "";
+      opener.current?.focus({ preventScroll: true });
+    });
   }
   useEffect(
     () => () => {
@@ -266,36 +307,45 @@ export function Workspace({
           </div>
         </details>
         <nav aria-label={c.menu} className="mf-nav">
-          {groups.map((group, index) => (
-            <div className="mf-nav-group" key={index}>
-              {index > 0 && index < 4 && (
-                <p className="mf-sidebar-label">{c.groups[index - 1]}</p>
-              )}
-              {group.map((section) => {
-                const Icon = icons[section];
-                const selected =
-                  pathname ===
-                  (section === "overview"
-                    ? "/dashboard"
-                    : "/dashboard/" + section);
-                return (
-                  <Link
-                    key={section}
-                    href={href(section)}
-                    title={c.nav[section]}
-                    aria-current={selected ? "page" : undefined}
-                    onClick={() => {
-                      if (mobile) closeDrawer();
-                    }}
-                  >
-                    <Icon size={18} />
-                    <span className="mf-sidebar-label">{c.nav[section]}</span>
-                    {selected && <i />}
-                  </Link>
-                );
-              })}
-            </div>
-          ))}
+          {groups
+            .map((group) =>
+              group.filter((section) => canVisitSection(data, section)),
+            )
+            .map(
+              (group, index) =>
+                group.length > 0 && (
+                  <div className="mf-nav-group" key={index}>
+                    {index > 0 && (
+                      <p className="mf-sidebar-label">{c.groups[index - 1]}</p>
+                    )}
+                    {group.map((section) => {
+                      const Icon = icons[section];
+                      const selected =
+                        pathname ===
+                        (section === "overview"
+                          ? "/dashboard"
+                          : "/dashboard/" + section);
+                      return (
+                        <Link
+                          key={section}
+                          href={href(section)}
+                          title={c.nav[section]}
+                          aria-current={selected ? "page" : undefined}
+                          onClick={() => {
+                            if (mobile) closeDrawer();
+                          }}
+                        >
+                          <Icon size={18} />
+                          <span className="mf-sidebar-label">
+                            {c.nav[section]}
+                          </span>
+                          {selected && <i />}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ),
+            )}
         </nav>
         <details className="mf-user">
           <summary>
@@ -304,32 +354,34 @@ export function Workspace({
             </span>
             <span className="mf-sidebar-label">
               <strong>{data?.user.firstName || c.noUser}</strong>
-              <small>{data ? c.roles[data.user.role] : c.account}</small>
+              <small>{data ? c.roles[data.membership.role] : c.account}</small>
             </span>
             <ChevronDown size={15} />
           </summary>
           <div className="mf-popover mf-user-popover">
-            <Link
-              onClick={() => mobile && closeDrawer()}
-              href={href("settings") + "&tab=profile"}
-            >
-              {c.profile}
-            </Link>
-            {data?.permissions.canManageBusiness && (
-              <>
-                <Link
-                  onClick={() => mobile && closeDrawer()}
-                  href={href("settings")}
-                >
-                  {c.businessSettings}
-                </Link>
-                <Link
-                  onClick={() => mobile && closeDrawer()}
-                  href={href("settings") + "&tab=billing"}
-                >
-                  {c.billing}
-                </Link>
-              </>
+            {can("profile.read") && (
+              <Link
+                onClick={() => mobile && closeDrawer()}
+                href={href("settings") + "&tab=profile"}
+              >
+                {c.profile}
+              </Link>
+            )}
+            {can("billing.read") && (
+              <Link
+                onClick={() => mobile && closeDrawer()}
+                href={href("billing")}
+              >
+                {usageContent[locale].title}
+              </Link>
+            )}
+            {can("profile.read") && (
+              <Link
+                onClick={() => mobile && closeDrawer()}
+                href={href("settings") + "&tab=profile"}
+              >
+                {usageContent[locale].accountSettings}
+              </Link>
             )}
             <button onClick={logout} disabled={loggingOut}>
               <LogOut size={15} />
@@ -343,6 +395,12 @@ export function Workspace({
   }
   const section = pathname.split("/")[2] as Section | undefined;
   const title = c.nav[section || "overview"] || c.nav.overview;
+  if (data && can("customer.scan") && !can("overview.read"))
+    return (
+      <main id="main" className="mf-boot" role="status">
+        {c.loading}
+      </main>
+    );
   return (
     <Context.Provider
       value={{
@@ -352,6 +410,7 @@ export function Workspace({
         error,
         reload: () => setAttempt((n) => n + 1),
         href,
+        can,
       }}
     >
       <div
@@ -370,6 +429,10 @@ export function Workspace({
         <dialog
           ref={drawer}
           className="mf-drawer"
+          onCancel={(event) => {
+            event.preventDefault();
+            closeDrawer();
+          }}
           aria-label={c.menu}
           onClose={() => {
             document.body.style.overflow = "";
@@ -408,54 +471,50 @@ export function Workspace({
               >
                 <Bell size={19} />
               </button>
-              {data?.permissions.canCreate && (
-                <details className="mf-create">
-                  <summary className="button button-primary">
-                    <Plus size={16} />
-                    {c.create}
-                  </summary>
-                  <div className="mf-popover">
-                    <p>{c.create}</p>
-                    {(
-                      [
-                        "campaigns",
-                        "offers",
-                        "customers",
-                        "loyalty",
-                        "memberships",
-                      ] as Section[]
-                    ).map((s) => (
-                      <Link
-                        href={href(s)}
-                        key={s}
-                        onClick={(event) =>
-                          event.currentTarget
-                            .closest("details")
-                            ?.removeAttribute("open")
-                        }
-                      >
-                        <span>{c.nav[s]}</span>
-                        <ArrowUpRight size={15} />
-                      </Link>
-                    ))}
-                  </div>
-                </details>
-              )}
+              <CreateMenu c={c} href={href} can={can} />
             </div>
           </header>
           <main key={pathname} id="main" className="mf-content">
-            {children}
+            {data &&
+            !canVisitWorkspace(
+              data,
+              section || "overview",
+              query.get("tab"),
+            ) ? (
+              <section className="mf-load-error">
+                <h1>{c.accessDenied}</h1>
+                <p>{c.accessDeniedText}</p>
+              </section>
+            ) : (
+              <Fragment key={data?.business.id}>{children}</Fragment>
+            )}
           </main>
         </div>
         <dialog
           ref={notification}
+          onClick={(event) => {
+            if (event.target === event.currentTarget)
+              animateDialogClose(notification.current, () =>
+                notification.current?.close(),
+              );
+          }}
+          onCancel={(event) => {
+            event.preventDefault();
+            animateDialogClose(notification.current, () =>
+              notification.current?.close(),
+            );
+          }}
           className="mf-notification"
           aria-labelledby="mf-notification-title"
         >
           <button
             className="mf-icon-button"
             aria-label={c.close}
-            onClick={() => notification.current?.close()}
+            onClick={() =>
+              animateDialogClose(notification.current, () =>
+                notification.current?.close(),
+              )
+            }
           >
             <X size={20} />
           </button>

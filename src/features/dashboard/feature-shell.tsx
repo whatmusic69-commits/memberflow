@@ -1,4 +1,5 @@
 "use client";
+import { customerEventPresentation } from "./customer-events";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -93,7 +94,7 @@ export function FeatureShell({ section }: { section: Section }) {
                   <dt>{c.owner}</dt>
                   <dd>{data.user.firstName}</dd>
                   <dt>{c.role}</dt>
-                  <dd>{d.roles[data.user.role]}</dd>
+                  <dd>{d.roles[data.membership.role]}</dd>
                 </>
               ) : (
                 <>
@@ -223,7 +224,8 @@ export function FeatureShell({ section }: { section: Section }) {
                     <Users size={17} />
                     <div>
                       <p>
-                        <strong>{item.name}</strong> {d.events[item.kind]}
+                        <strong>{item.name}</strong>{" "}
+                        {customerEventPresentation(item, d).copy}
                       </p>
                       {item.detail && <small>{item.detail}</small>}
                     </div>

@@ -1,4 +1,5 @@
 "use client";
+import { useDialogDismiss, animateDialogClose } from "@/lib/motion/dialog";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ImagePlus, X } from "lucide-react";
@@ -22,16 +23,17 @@ const empty: CampaignInput = {
 };
 export function CampaignEditor({
   draft,
-  onClose,
+  onClose: closeImmediately,
   onSaved,
 }: {
   draft?: CampaignDraft;
   onClose: () => void;
   onSaved: (draft: CampaignDraft) => void;
 }) {
-  const { locale, data } = useWorkspace();
+  const { locale, data, can } = useWorkspace();
   const c = workspaceContent[locale];
   const dialog = useRef<HTMLDialogElement>(null);
+  const onClose = useDialogDismiss(dialog, closeImmediately);
   const [input, setInput] = useState<CampaignInput>(draft || empty);
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
@@ -40,12 +42,14 @@ export function CampaignEditor({
   const imageInput = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const node = dialog.current;
+    const opener = document.activeElement as HTMLElement | null;
     const overflow = document.body.style.overflow;
     node?.showModal();
     document.body.style.overflow = "hidden";
     return () => {
       node?.close();
       document.body.style.overflow = overflow;
+      opener?.focus({ preventScroll: true });
     };
   }, []);
   const field = <K extends keyof CampaignInput>(
@@ -56,7 +60,7 @@ export function CampaignEditor({
     data?.source === "demo" && process.env.NODE_ENV === "development";
   async function save(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (lock.current || !data || !demo) return;
+    if (lock.current || !data || !demo || !can("campaign.create")) return;
     if (!input.name.trim()) {
       setError(c.required);
       return;
@@ -74,7 +78,7 @@ export function CampaignEditor({
         },
         draft?.id,
       );
-      onSaved(result);
+      animateDialogClose(dialog.current, () => onSaved(result));
     } catch {
       setError(c.saveError);
     } finally {
@@ -88,8 +92,8 @@ export function CampaignEditor({
       className="mf-campaign-dialog"
       aria-labelledby="campaign-editor-title"
       onCancel={(event) => {
-        if (busy) event.preventDefault();
-        else onClose();
+        event.preventDefault();
+        if (!busy) onClose();
       }}
     >
       <header>

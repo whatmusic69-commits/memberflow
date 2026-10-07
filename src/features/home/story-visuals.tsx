@@ -317,18 +317,19 @@ export function CommunicationVisual({ c }: { c: HomeContent }) {
         </span>
         <span className="reuse-marker">01</span>
       </div>
-      <svg
-        className="communication-flow"
-        viewBox="0 0 500 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <FlowPath d="M250 0V40" duration={700} />
-        <FlowPath d="M250 40H125V100" delay={650} duration={900} />
-        <FlowPath d="M250 40H375V100" delay={800} duration={900} />
-        <circle className="distribution-hub-ring" cx="250" cy="40" r="9" />
-        <circle cx="250" cy="40" r="4" fill="var(--accent)" />
-      </svg>
+      <div className="communication-connector" aria-hidden="true">
+        <svg
+          className="communication-flow"
+          viewBox="0 0 500 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <FlowPath d="M250 0V40" duration={700} />
+          <FlowPath d="M250 40H125V100" delay={650} duration={900} />
+          <FlowPath d="M250 40H375V100" delay={800} duration={900} />
+        </svg>
+        <span className="communication-hub" />
+      </div>
       <div className="audience-split">
         <div data-stage style={{ animationDelay: "1050ms" }}>
           <span>{c.communication[1]}</span>

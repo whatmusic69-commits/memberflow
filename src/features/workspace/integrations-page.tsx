@@ -1,5 +1,7 @@
 "use client";
+import { useDialogDismiss } from "@/lib/motion/dialog";
 import Image from "next/image";
+import Link from "next/link";
 import { SocialPlatformLogo } from "@/components/ui/platform-icon";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Waypoints, X } from "lucide-react";
@@ -40,7 +42,7 @@ function ChannelDialog({
   name,
   status,
   wallet,
-  onClose,
+  onClose: closeImmediately,
 }: {
   name: string;
   status: ConnectionStatus;
@@ -51,14 +53,17 @@ function ChannelDialog({
   const c = moduleContent[locale];
   const d = dashboardContent[locale];
   const ref = useRef<HTMLDialogElement>(null);
+  const onClose = useDialogDismiss(ref, closeImmediately);
   useEffect(() => {
     const node = ref.current;
+    const opener = document.activeElement as HTMLElement | null;
     const overflow = document.body.style.overflow;
     node?.showModal();
     document.body.style.overflow = "hidden";
     return () => {
       node?.close();
       document.body.style.overflow = overflow;
+      opener?.focus({ preventScroll: true });
     };
   }, []);
   return (
@@ -66,7 +71,13 @@ function ChannelDialog({
       ref={ref}
       className="mf-notification mf-channel-dialog"
       aria-labelledby="channel-heading"
-      onCancel={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
     >
       <button className="mf-icon-button" onClick={onClose} aria-label={c.close}>
         <X size={20} />
@@ -89,7 +100,7 @@ function ChannelDialog({
   );
 }
 export function IntegrationsPage() {
-  const { data, locale, loading, error, reload } = useWorkspace();
+  const { data, locale, loading, error, reload, href } = useWorkspace();
   const c = moduleContent[locale];
   const d = dashboardContent[locale];
   const [selected, setSelected] = useState<{
@@ -153,15 +164,25 @@ export function IntegrationsPage() {
                   {item.status === "ready" && <Check size={13} />}{" "}
                   {d.connectionStatuses[item.status]}
                 </p>
-                <button
-                  className="mf-text-link"
-                  onClick={() =>
-                    setSelected({ name, status: item.status, wallet: true })
-                  }
-                >
-                  {c.details}
-                  <ArrowRight size={15} />
-                </button>
+                {item.name === "qr" ? (
+                  <Link
+                    className="mf-text-link"
+                    href={href("customers").replace("?", "/connection?")}
+                  >
+                    {c.setupQr}
+                    <ArrowRight size={15} />
+                  </Link>
+                ) : (
+                  <button
+                    className="mf-text-link"
+                    onClick={() =>
+                      setSelected({ name, status: item.status, wallet: true })
+                    }
+                  >
+                    {c.details}
+                    <ArrowRight size={15} />
+                  </button>
+                )}
               </article>
             );
           })}

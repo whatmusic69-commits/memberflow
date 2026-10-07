@@ -1,4 +1,5 @@
 "use client";
+import { animateDialogClose } from "@/lib/motion/dialog";
 import { StartLink } from "./start-link";
 import { useRef } from "react";
 import { ArrowUpRight, X } from "lucide-react";
@@ -28,16 +29,23 @@ export function PreviewAction({
       </button>
       <dialog
         ref={dialog}
+        onCancel={(event) => {
+          event.preventDefault();
+          animateDialogClose(dialog.current, () => dialog.current?.close());
+        }}
         className="preview-dialog"
         onClick={(event) => {
-          if (event.target === event.currentTarget) dialog.current?.close();
+          if (event.target === event.currentTarget)
+            animateDialogClose(dialog.current, () => dialog.current?.close());
         }}
         aria-label={title}
       >
         <button
           className="dialog-close icon-button"
           aria-label={close}
-          onClick={() => dialog.current?.close()}
+          onClick={() =>
+            animateDialogClose(dialog.current, () => dialog.current?.close())
+          }
         >
           <X size={20} />
         </button>
@@ -46,7 +54,9 @@ export function PreviewAction({
         <p>{description}</p>
         <button
           className="button button-primary"
-          onClick={() => dialog.current?.close()}
+          onClick={() =>
+            animateDialogClose(dialog.current, () => dialog.current?.close())
+          }
         >
           {close}
         </button>

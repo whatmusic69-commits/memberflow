@@ -1,5 +1,8 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { createPermissions } from "@/features/access/permissions";
+import { customerEventPresentation } from "@/features/dashboard/customer-events";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Archive,
@@ -10,7 +13,6 @@ import {
   Ticket,
   Users,
   Waypoints,
-  X,
 } from "lucide-react";
 import { useWorkspace } from "@/features/dashboard/workspace";
 import { OverviewSkeleton } from "@/features/dashboard/overview";
@@ -32,53 +34,8 @@ function valuesOf(record: ModuleRecords[ModuleId]): Record<string, string> {
     Object.entries(record).filter(([, value]) => typeof value === "string"),
   );
 }
-function ConnectionDialog({ onClose }: { onClose: () => void }) {
-  const { locale } = useWorkspace();
-  const c = moduleContent[locale];
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const node = ref.current;
-    const overflow = document.body.style.overflow;
-    node?.showModal();
-    document.body.style.overflow = "hidden";
-    return () => {
-      node?.close();
-      document.body.style.overflow = overflow;
-    };
-  }, []);
-  return (
-    <dialog
-      className="mf-notification mf-connection-dialog"
-      ref={ref}
-      aria-labelledby="connection-heading"
-      onCancel={onClose}
-    >
-      <button className="mf-icon-button" aria-label={c.close} onClick={onClose}>
-        <X size={20} />
-      </button>
-      <QrCode size={30} />
-      <h2 id="connection-heading">{c.connection}</h2>
-      <p>{c.connectionIntro}</p>
-      <ol className="mf-mini-journey">
-        <li>
-          <strong>QR</strong>
-        </li>
-        <li>
-          <strong>{c.profile}</strong>
-        </li>
-        <li>
-          <strong>Apple Wallet / Google Wallet</strong>
-        </li>
-      </ol>
-      <p>{c.noQr}</p>
-      <button className="button" onClick={onClose}>
-        {c.close}
-      </button>
-    </dialog>
-  );
-}
 export function ModulePage({ feature }: { feature: ModuleId }) {
-  const { data, locale, loading, error, reload } = useWorkspace();
+  const { data, locale, loading, error, reload, can, href } = useWorkspace();
   const c = moduleContent[locale];
   const d = dashboardContent[locale];
   const [rows, setRows] = useState<ModuleRecords[ModuleId][]>([]);
@@ -93,7 +50,6 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
   const [archived, setArchived] = useState(false);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
-  const [connection, setConnection] = useState(false);
   const id = data?.business.id;
   const demo = data?.source === "demo";
   const Icon = icons[feature];
@@ -169,7 +125,7 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
         .toLocaleLowerCase(locale)
         .includes(search.toLocaleLowerCase(locale)),
   );
-  const writable = isDemoAdapter(demo) && data.permissions.canCreate;
+  const writable = isDemoAdapter(demo) && can(createPermissions[feature]);
   return (
     <section className={`mf-feature-page mf-module-${feature}`}>
       <header className="mf-feature-heading">
@@ -180,7 +136,7 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
           <h1>{d.nav[feature]}</h1>
           <p>{c.intro[feature]}</p>
         </div>
-        {data.permissions.canCreate && (
+        {can(createPermissions[feature]) && (
           <button
             className="button button-primary"
             onClick={() => setEditor("new")}
@@ -197,10 +153,13 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
             <h2>{c.connection}</h2>
             <p>{c.connectionIntro}</p>
           </div>
-          <button className="mf-text-link" onClick={() => setConnection(true)}>
+          <Link
+            className="mf-text-link"
+            href={href("customers").replace("?", "/connection?")}
+          >
             {c.setupQr}
             <ArrowRight size={15} />
-          </button>
+          </Link>
         </section>
       )}
       <div className="mf-campaign-toolbar">
@@ -243,7 +202,7 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
           <Icon size={36} strokeWidth={1.3} />
           <h2>{search || archived ? c.noResults : c.create[feature]}</h2>
           <p>{c.empty[feature]}</p>
-          {!search && !archived && data.permissions.canCreate && (
+          {!search && !archived && can(createPermissions[feature]) && (
             <button
               className="button button-primary"
               onClick={() => setEditor("new")}
@@ -352,7 +311,8 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
                 <Users size={17} />
                 <div>
                   <p>
-                    <strong>{item.name}</strong> {d.events[item.kind]}
+                    <strong>{item.name}</strong>{" "}
+                    {customerEventPresentation(item, d).copy}
                   </p>
                   {item.detail && <small>{item.detail}</small>}
                 </div>
@@ -379,7 +339,6 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
           }}
         />
       )}
-      {connection && <ConnectionDialog onClose={() => setConnection(false)} />}
     </section>
   );
 }

@@ -1,4 +1,6 @@
 "use client";
+import { useDialogDismiss, animateDialogClose } from "@/lib/motion/dialog";
+import { createPermissions } from "@/features/access/permissions";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, X } from "lucide-react";
@@ -12,7 +14,7 @@ export function ModuleEditor({
   feature,
   record,
   offers,
-  onClose,
+  onClose: closeImmediately,
   onSaved,
 }: {
   feature: ModuleId;
@@ -21,7 +23,7 @@ export function ModuleEditor({
   onClose: () => void;
   onSaved: (record: ModuleRecords[ModuleId]) => void;
 }) {
-  const { data, locale, href } = useWorkspace();
+  const { data, locale, href, can } = useWorkspace();
   const c = moduleContent[locale];
   const schema = schemas[feature];
   const [values, setValues] = useState<Record<string, string>>(() =>
@@ -38,16 +40,19 @@ export function ModuleEditor({
   const [error, setError] = useState("");
   const lock = useRef(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const onClose = useDialogDismiss(dialog, closeImmediately);
   const demo = isDemoAdapter(data?.source === "demo");
-  const writable = demo && Boolean(data?.permissions.canCreate);
+  const writable = demo && can(createPermissions[feature]);
   useEffect(() => {
     const node = dialog.current;
+    const opener = document.activeElement as HTMLElement | null;
     const before = document.body.style.overflow;
     node?.showModal();
     document.body.style.overflow = "hidden";
     return () => {
       node?.close();
       document.body.style.overflow = before;
+      opener?.focus({ preventScroll: true });
     };
   }, []);
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -70,7 +75,7 @@ export function ModuleEditor({
         input,
         record?.id,
       );
-      onSaved(result);
+      animateDialogClose(dialog.current, () => onSaved(result));
     } catch {
       setError(c.saveError);
     } finally {
@@ -84,8 +89,8 @@ export function ModuleEditor({
       className="mf-campaign-dialog"
       aria-labelledby="module-editor-heading"
       onCancel={(event) => {
-        if (busy) event.preventDefault();
-        else onClose();
+        event.preventDefault();
+        if (!busy) onClose();
       }}
     >
       <header>

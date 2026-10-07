@@ -1,4 +1,5 @@
 import { ApiError, apiRequest } from "@/lib/api/client";
+import type { SessionContext } from "@/features/access/types";
 export type AuthErrorCode =
   | "invalidCredentials"
   | "tooMany"
@@ -16,7 +17,7 @@ export class AuthServiceError extends Error {
   }
 }
 export interface AuthService {
-  login(data: { email: string; password: string }): Promise<void>;
+  login(data: { email: string; password: string }): Promise<SessionContext>;
   requestPasswordReset(email: string): Promise<void>;
   logout(): Promise<void>;
 }
@@ -56,11 +57,13 @@ const symfonyAuthService: AuthService = {
         body: JSON.stringify(data),
         credentials: "include",
       });
-      const session = await apiRequest<{ user?: { id?: string } }>(
-        "/api/v1/me",
-        { credentials: "include", cache: "no-store" },
-      );
-      if (!session.user?.id) throw new AuthServiceError("expired");
+      const session = await apiRequest<SessionContext>("/api/v1/me", {
+        credentials: "include",
+        cache: "no-store",
+      });
+      if (!session.user?.id || !Array.isArray(session.businesses))
+        throw new AuthServiceError("expired");
+      return session;
     } catch (error) {
       throw translateError(error);
     }

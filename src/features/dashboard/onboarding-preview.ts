@@ -96,6 +96,7 @@ export function applyOnboardingPreview(
     return {
       ...fixture,
       business: summary,
+      membership: { ...fixture.membership, businessId: summary.id },
       businesses: [summary],
       user: { ...fixture.user, firstName: draft.firstName },
     };

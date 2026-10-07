@@ -58,6 +58,9 @@ export function getCampaignService(demo: boolean): CampaignService {
           businessId,
           status: "DRAFT",
           updatedAt: new Date().toISOString(),
+          createdAt:
+            drafts.find((item) => item.id === id)?.createdAt ??
+            new Date().toISOString(),
         };
         sessionStorage.setItem(
           storageKey(businessId),

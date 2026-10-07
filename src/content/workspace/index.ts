@@ -1,5 +1,9 @@
 import type { Locale } from "@/content";
 const en = {
+  activeFilter: "Active",
+  completedFilter: "Completed",
+  openCampaign: "Open campaign",
+  created: "Created",
   campaignIntro: "Create the idea once. Prepare it for every channel.",
   newCampaign: "Create campaign",
   all: "All campaigns",
@@ -131,6 +135,10 @@ type Copy = {
       : { [P in keyof (typeof en)[K]]: string };
 };
 const ru: Copy = {
+  activeFilter: "Активные",
+  completedFilter: "Завершённые",
+  openCampaign: "Открыть кампанию",
+  created: "Создано",
   campaignIntro: "Создайте идею один раз. Подготовьте её для каждого канала.",
   newCampaign: "Создать кампанию",
   all: "Все кампании",
@@ -259,6 +267,10 @@ const ru: Copy = {
   unknown: "Не указано",
 };
 const lv: Copy = {
+  activeFilter: "Aktīvās",
+  completedFilter: "Pabeigtās",
+  openCampaign: "Atvērt kampaņu",
+  created: "Izveidota",
   campaignIntro: "Izveidojiet ideju vienreiz. Sagatavojiet to katram kanālam.",
   newCampaign: "Izveidot kampaņu",
   all: "Visas kampaņas",

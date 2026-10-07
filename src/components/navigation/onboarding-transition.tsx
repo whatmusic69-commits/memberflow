@@ -21,6 +21,9 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("idle");
   const destination = useRef<string | null>(null);
+  const brandTransition = useRef(false);
+  const [showBrand, setShowBrand] = useState(false);
+  const page = useRef<HTMLDivElement>(null);
   const started = useRef(0);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   function clearTimers() {
@@ -35,6 +38,8 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
     }
     clearTimers();
     destination.current = href;
+    brandTransition.current = /\/(en|lv|ru)\/onboarding(?:[?#]|$)/.test(href);
+    setShowBrand(brandTransition.current);
     started.current = performance.now();
     setPhase("leaving");
     timers.current.push(
@@ -50,10 +55,22 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
     );
   }
   useLayoutEffect(() => {
-    if (!destination.current) return;
-    const arrived = pathname === destination.current;
-    const abandoned = !arrived && !/^\/(en|lv|ru)$/.test(pathname);
-    if (!arrived && !abandoned) return;
+    if (!destination.current) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const target =
+        page.current?.querySelector<HTMLElement>(".mf-content") ?? page.current;
+      const animation = target?.animate(
+        [
+          { opacity: 0, transform: "translateY(8px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        { duration: 260, easing: "ease-out" },
+      );
+      return () => animation?.cancel();
+    }
+    const arrived =
+      pathname ===
+      new URL(destination.current, window.location.origin).pathname;
     const delay = arrived
       ? Math.max(0, 300 - (performance.now() - started.current))
       : 0;
@@ -64,7 +81,8 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
       if (arrived) {
         timers.current.push(
           setTimeout(() => {
-            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            if (brandTransition.current)
+              window.scrollTo({ top: 0, left: 0, behavior: "instant" });
             document
               .querySelector<HTMLElement>(".onboarding-form-area h1")
               ?.focus({ preventScroll: true });
@@ -79,13 +97,37 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
   return (
     <TransitionContext.Provider value={start}>
       <div
+        ref={page}
         className={`mf-route-content mf-route-${phase}`}
+        onClickCapture={(event) => {
+          if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+          )
+            return;
+          const link = (event.target as HTMLElement).closest<HTMLAnchorElement>(
+            "a[href]",
+          );
+          if (!link || link.target || link.hasAttribute("download")) return;
+          const url = new URL(link.href, window.location.origin);
+          if (
+            url.origin !== window.location.origin ||
+            url.pathname === pathname
+          )
+            return;
+          event.preventDefault();
+          start(url.pathname + url.search + url.hash);
+        }}
         inert={phase === "leaving"}
         aria-busy={phase === "leaving"}
       >
         {children}
       </div>
-      {phase !== "idle" && (
+      {phase !== "idle" && showBrand && (
         <div
           className={`mf-onboarding-transition mf-transition-${phase}`}
           aria-hidden="true"

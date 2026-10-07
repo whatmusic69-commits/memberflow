@@ -1,4 +1,5 @@
 "use client";
+import { sessionDestination } from "@/features/access/permissions";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { HomeLink } from "@/components/ui/home-link";
@@ -79,10 +80,15 @@ export function AuthPage({
         await authService.requestPasswordReset(email.trim());
         setSent(true);
       } else {
-        await authService.login({ email: email.trim(), password });
+        const session = await authService.login({
+          email: email.trim(),
+          password,
+        });
+        const experience = sessionDestination(session);
+        if (!experience) throw new AuthServiceError("unavailable");
         setPassword("");
         const destination = new URL(
-          safeAuthRedirect(redirectTo),
+          experience === "/staff" ? "/staff" : safeAuthRedirect(redirectTo),
           window.location.origin,
         );
         if (!destination.searchParams.has("lang"))

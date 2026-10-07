@@ -12,11 +12,11 @@ export function safeAuthRedirect(value: string | undefined): string {
     const url = new URL(decoded, "https://memberflow.invalid");
     if (
       url.origin !== "https://memberflow.invalid" ||
-      !/^\/(?:en\/|lv\/|ru\/)?dashboard(?:\/|$)/.test(url.pathname)
+      !/^\/(?:en\/|lv\/|ru\/)?(?:dashboard|staff)(?:\/|$)/.test(url.pathname)
     )
       return "/dashboard";
     const localized = url.pathname.match(
-      /^\/(en|lv|ru)(\/dashboard(?:\/.*)?)$/,
+      /^\/(en|lv|ru)(\/(?:dashboard|staff)(?:\/.*)?)$/,
     );
     if (localized) {
       url.pathname = localized[2];
