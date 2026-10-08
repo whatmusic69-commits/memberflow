@@ -47,6 +47,9 @@ export const managerPermissions: Permission[] = [
   "membership.create",
   "profile.read",
 ];
+export const adminPermissions: Permission[] = ownerPermissions.filter(
+  (permission) => permission !== "billing.read",
+);
 export const staffPermissions: Permission[] = [
   "customer.scan",
   "visit.record",
@@ -71,7 +74,9 @@ export function fixtureMembership(
         ? staffPermissions
         : role === "MANAGER"
           ? managerPermissions
-          : ownerPermissions,
+          : role === "ADMIN"
+            ? adminPermissions
+            : ownerPermissions,
     joinedAt: null,
     lastActiveAt: null,
   };

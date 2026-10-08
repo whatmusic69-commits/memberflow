@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { StartLink } from "./start-link";
 import { Wordmark } from "@/components/ui/brand";
-import { PreviewAction } from "./actions";
 import type { HomeContent } from "@/content/types";
 import { locales, type Locale } from "@/content";
 export function Header({
@@ -15,26 +14,13 @@ export function Header({
 }: {
   c: HomeContent;
   locale: Locale;
-  page?: "terms" | "privacy";
+  page?: "terms" | "privacy" | "pricing" | "about";
 }) {
   const [open, setOpen] = useState(false);
   const language = useRef<HTMLDetailsElement>(null);
-  const action = (
-    key: "login" | "pricing" | "resources" | "start",
-    label: string,
-    primary = false,
-  ) =>
-    key === "login" ? (
-      <Link href={`/login?lang=${locale}`}>{label}</Link>
-    ) : (
-      <PreviewAction
-        label={label}
-        title={c.dialogs[key][0]}
-        description={c.dialogs[key][1]}
-        close={c.close}
-        primary={primary}
-      />
-    );
+  const loginAvailable =
+    process.env.NEXT_PUBLIC_AUTH_MODE === "symfony" &&
+    Boolean(process.env.NEXT_PUBLIC_API_URL);
   const navigation = (
     <>
       <a
@@ -49,14 +35,25 @@ export function Header({
       >
         {c.nav[1]}
       </a>
-      {action("pricing", c.nav[2])}
+      <Link href={`/${locale}/pricing`} onClick={() => setOpen(false)}>
+        {c.nav[2]}
+      </Link>
       <a
         href={page ? `/${locale}#integrations` : "#integrations"}
         onClick={() => setOpen(false)}
       >
         {c.nav[3]}
       </a>
-      {action("resources", c.nav[4])}
+      <a href={page ? `/${locale}#faq` : "#faq"} onClick={() => setOpen(false)}>
+        {c.nav[4]}
+      </a>
+      <Link
+        href={`/${locale}/about`}
+        aria-current={page === "about" ? "page" : undefined}
+        onClick={() => setOpen(false)}
+      >
+        {c.about}
+      </Link>
     </>
   );
   return (
@@ -111,11 +108,22 @@ export function Header({
               ))}
             </div>
           </details>
-          {!page && <Link className="header-dashboard desktop-login" href={`/dashboard?lang=${locale}`}>
-            {c.dashboard}
-          </Link>}
-          <div className="desktop-login">{action("login", c.login)}</div>
-          <div className="header-cta">{action("start", c.start, true)}</div>
+          {!page && (
+            <Link
+              className="header-dashboard desktop-login"
+              href={`/dashboard?lang=${locale}`}
+            >
+              {c.dashboard}
+            </Link>
+          )}
+          {loginAvailable && (
+            <div className="desktop-login">
+              <Link href={`/login?lang=${locale}`}>{c.login}</Link>
+            </div>
+          )}
+          <div className="header-cta">
+            <StartLink label={c.start} />
+          </div>
           <button
             className="icon-button mobile-toggle"
             aria-label={open ? c.close : c.menu}
@@ -137,8 +145,17 @@ export function Header({
           }}
         >
           {navigation}
-          {!page && <Link href={`/dashboard?lang=${locale}`} onClick={() => setOpen(false)}>{c.dashboard}</Link>}
-          {action("login", c.login)}
+          {!page && (
+            <Link
+              href={`/dashboard?lang=${locale}`}
+              onClick={() => setOpen(false)}
+            >
+              {c.dashboard}
+            </Link>
+          )}
+          {loginAvailable && (
+            <Link href={`/login?lang=${locale}`}>{c.login}</Link>
+          )}
           <StartLink label={c.start} />
         </nav>
       )}

@@ -3,7 +3,6 @@ import { HomeLink } from "@/components/ui/home-link";
 import type { HomeContent } from "@/content/types";
 import { locales, type Locale } from "@/content";
 import { Wordmark } from "@/components/ui/brand";
-import { PreviewAction } from "./actions";
 export function Footer({
   c,
   locale,
@@ -11,19 +10,8 @@ export function Footer({
 }: {
   c: HomeContent;
   locale: Locale;
-  page?: "terms" | "privacy";
+  page?: "terms" | "privacy" | "pricing" | "about";
 }) {
-  const action = (
-    key: "pricing" | "resources" | "about" | "privacy" | "terms",
-    label: string,
-  ) => (
-    <PreviewAction
-      label={label}
-      title={c.dialogs[key][0]}
-      description={c.dialogs[key][1]}
-      close={c.close}
-    />
-  );
   return (
     <footer className="site-footer">
       <div className="container">
@@ -40,15 +28,20 @@ export function Footer({
             <a href={page ? `/${locale}#solutions` : "#solutions"}>
               {c.nav[1]}
             </a>
-            {action("pricing", c.nav[2])}
+            <Link href={`/${locale}/pricing`}>{c.nav[2]}</Link>
             <a href={page ? `/${locale}#integrations` : "#integrations"}>
               {c.nav[3]}
             </a>
-            {action("resources", c.nav[4])}
+            <a href={page ? `/${locale}#faq` : "#faq"}>{c.nav[4]}</a>
           </nav>
           <nav aria-label={c.company}>
             <strong>{c.company}</strong>
-            {action("about", c.about)}
+            <Link
+              href={`/${locale}/about`}
+              aria-current={page === "about" ? "page" : undefined}
+            >
+              {c.about}
+            </Link>
           </nav>
           <nav aria-label={c.legal}>
             <strong>{c.legal}</strong>

@@ -51,7 +51,7 @@ export function CampaignFlow({ c }: { c: HomeContent }) {
     <div className="hero-flow" data-flow>
       <div className="diagram-topline">
         <span>01 — {c.editor[5]}</span>
-        <span>02 — {c.sections[1][0]}</span>
+        <span>02 — {c.experience.channelHeading}</span>
       </div>
       <div className="hero-diagram">
         <div className="hero-campaign">
@@ -85,7 +85,7 @@ export function CampaignFlow({ c }: { c: HomeContent }) {
       </div>
       <div className="diagram-bottom">
         <span className="tiny-cross">+</span>
-        {c.heroNote}
+        {c.experience.why.example}
         <span className="tiny-cross">+</span>
       </div>
     </div>

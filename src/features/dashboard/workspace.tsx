@@ -38,6 +38,7 @@ import {
   canVisitWorkspace,
 } from "@/features/access/permissions";
 import type { Permission } from "@/features/access/types";
+import { RolePreview, readPreviewRole } from "@/features/access/role-preview";
 import { CreateMenu } from "./create-menu";
 import { isLocale, type Locale } from "@/content";
 import { workspaceContent } from "@/content/workspace";
@@ -121,6 +122,7 @@ export function Workspace({
   const c = dashboardContent[locale];
   const { can } = workspaceAccess(data);
   const demo = query.get("demo");
+  const previewRole = readPreviewRole(query.get("previewRole"));
   const fixture: DashboardFixture =
     demo === "active" ||
     demo === "manager" ||
@@ -137,7 +139,7 @@ export function Workspace({
   useEffect(() => {
     const controller = new AbortController();
     let disposed = false;
-    const contextKey = `${fixture}:${businessId || "current"}`;
+    const contextKey = `${fixture}:${businessId || "current"}:${previewRole || "default"}`;
     const changedContext = requestedContext.current !== contextKey;
     requestedContext.current = contextKey;
     Promise.resolve().then(() => {
@@ -146,7 +148,7 @@ export function Workspace({
         setError(false);
       }
     });
-    getDashboardService(fixture)
+    getDashboardService(fixture, previewRole)
       .getOverview(businessId, controller.signal)
       .then((result) => {
         if (!disposed) setData(result);
@@ -164,7 +166,7 @@ export function Workspace({
       disposed = true;
       controller.abort();
     };
-  }, [fixture, attempt, businessId]);
+  }, [fixture, attempt, businessId, previewRole]);
   useEffect(() => {
     const refresh = () => setAttempt((value) => value + 1);
     window.addEventListener("memberflow:campaign-drafts-changed", refresh);
@@ -199,6 +201,7 @@ export function Workspace({
     const params = new URLSearchParams({ lang: locale });
     if (process.env.NODE_ENV === "development" && demo)
       params.set("demo", demo);
+    if (previewRole) params.set("previewRole", previewRole);
     return `/dashboard${section === "overview" ? "" : "/" + section}?${params}`;
   }
   function closeDrawer() {
@@ -247,6 +250,7 @@ export function Workspace({
               onClick={() => setCompact(!compact)}
               className="mf-icon-button mf-collapse"
               aria-label={compact ? c.expand : c.collapse}
+              aria-expanded={!compact}
             >
               {compact ? (
                 <ChevronsRight size={17} />
@@ -460,6 +464,9 @@ export function Workspace({
               <span>{title}</span>
             </div>
             <div className="mf-top-actions">
+              {data?.source === "demo" && (
+                <RolePreview locale={locale} role={data.membership.role} />
+              )}
               <OnboardingLanguageSwitcher
                 locale={locale}
                 onChange={changeLocale}

@@ -11,6 +11,7 @@ import { Wordmark } from "@/components/ui/brand";
 import { Modal } from "@/components/ui/modal";
 import { OnboardingLanguageSwitcher } from "@/features/onboarding/language-switcher";
 import { accessFor } from "@/features/access/permissions";
+import { RolePreview } from "@/features/access/role-preview";
 import { authService } from "@/features/auth/service";
 import { CameraScanner } from "./camera-scanner";
 import { StaffCustomer } from "./customer-view";
@@ -30,6 +31,10 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
     process.env.NODE_ENV === "development" &&
     process.env.NEXT_PUBLIC_DASHBOARD_MODE !== "api";
   const fixture = demo ? query.get("demo") : null;
+  const previewWorkspace =
+    demo && query.get("previewRole") === "STAFF"
+      ? (query.get("workspaceDemo") ?? "new")
+      : null;
   const [context, setContext] = useState<StaffContext | null>(null);
   const [customer, setCustomer] = useState<StaffCustomerView | null>(null);
   const [loading, setLoading] = useState(true),
@@ -71,7 +76,30 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
     });
     const load = async () => {
       if (fixture === "error") throw new Error("fixture");
-      const value = await getStaffService(demo).context(controller.signal);
+      let value = await getStaffService(demo).context(controller.signal);
+      if (previewWorkspace) {
+        const { getDashboardService } =
+          await import("@/features/dashboard/service");
+        const fixture = ["active", "partial", "manager"].includes(
+          previewWorkspace,
+        )
+          ? (previewWorkspace as "active" | "partial" | "manager")
+          : "new";
+        const overview = await getDashboardService(
+          fixture,
+          "STAFF",
+        ).getOverview(undefined, controller.signal);
+        value = {
+          ...value,
+          business: {
+            id: overview.business.id,
+            name: overview.business.name,
+            logoUrl: overview.business.logoUrl,
+          },
+          user: overview.user,
+          membership: overview.membership,
+        };
+      }
       const fixtureCustomer =
         fixture === "customer"
           ? (await import("@/mocks/staff/fixtures")).staffCustomer
@@ -93,7 +121,7 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
       controller.abort();
       operation.current?.abort();
     };
-  }, [demo, fixture, retry]);
+  }, [demo, fixture, retry, previewWorkspace]);
   async function resolve(value: string) {
     if (!context || !can("customer.scan") || lock.current) return;
     lock.current = true;
@@ -199,7 +227,10 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
         <span className="mf-staff-brand">
           <Wordmark />
         </span>
-        <OnboardingLanguageSwitcher locale={locale} onChange={changeLocale} />
+        <div className="mf-staff-header-actions">
+          {demo && <RolePreview locale={locale} role="STAFF" staff />}
+          <OnboardingLanguageSwitcher locale={locale} onChange={changeLocale} />
+        </div>
       </header>
       <main id="main" className="mf-staff-main">
         {loading ? (

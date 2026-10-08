@@ -4,6 +4,7 @@ import { readDemoDrafts } from "@/features/campaigns/service";
 import { applyOnboardingPreview } from "./onboarding-preview";
 import { getLifecycle, getNextAction, getSetupSummary } from "./overview-model";
 import type { DashboardOverview } from "./types";
+import type { BusinessRole } from "@/features/access/types";
 export type DashboardFixture =
   "new" | "partial" | "active" | "manager" | "staff" | "error" | "loading";
 export interface DashboardService {
@@ -26,6 +27,7 @@ export const dashboardService: DashboardService = {
 };
 export function getDashboardService(
   fixture: DashboardFixture,
+  previewRole?: BusinessRole,
 ): DashboardService {
   if (
     process.env.NODE_ENV !== "development" ||
@@ -34,6 +36,20 @@ export function getDashboardService(
     return dashboardService;
   return {
     async getOverview(_businessId, signal) {
+      const { fixtureMembership } =
+        await import("@/mocks/dashboard/permissions");
+      const present = (overview: DashboardOverview) =>
+        prepareOverview(
+          previewRole
+            ? {
+                ...overview,
+                membership: fixtureMembership(
+                  overview.business.id,
+                  previewRole,
+                ),
+              }
+            : overview,
+        );
       if (fixture === "loading")
         await new Promise<void>((resolve, reject) => {
           const timer = setTimeout(resolve, 8000);
@@ -54,11 +70,9 @@ export function getDashboardService(
         fixture === "manager" ||
         fixture === "staff"
       ) {
-        const { fixtureMembership } =
-          await import("@/mocks/dashboard/permissions");
         const { activeBusiness } =
           await import("@/mocks/dashboard/activeBusiness");
-        return prepareOverview(
+        return present(
           applyBusinessSettings({
             ...activeBusiness,
             membership: fixtureMembership(
@@ -75,12 +89,12 @@ export function getDashboardService(
       if (fixture === "partial") {
         const { partialBusiness } =
           await import("@/mocks/dashboard/partialBusiness");
-        return prepareOverview(applyBusinessSettings(partialBusiness));
+        return present(applyBusinessSettings(partialBusiness));
       }
       const base = applyOnboardingPreview(newBusiness);
       const overview = applyBusinessSettings(base);
       const drafts = readDemoDrafts(overview.business.id);
-      return prepareOverview({
+      return present({
         ...overview,
         state: drafts.length > 0 ? "partial" : "new",
         setup: { ...overview.setup, campaign: drafts.length > 0 },

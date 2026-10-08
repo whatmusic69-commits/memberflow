@@ -17,7 +17,7 @@ export const developmentPlanCatalog = [
     monthlyPrice: 79,
     yearlyPrice: 663.6,
     pricingModel: "from",
-    limits: { activeCustomers: 1500 },
+    limits: { activeCustomers: 1500, locations: 2 },
   },
   {
     id: "business",

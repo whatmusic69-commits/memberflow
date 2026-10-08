@@ -1,10 +1,12 @@
 import type { HomeContent } from "./types";
+import { lv as experience } from "./home/lv";
 export const lv: HomeContent = {
+  experience,
   nav: ["Produkts", "Risinājumi", "Cenas", "Integrācijas", "Resursi"],
   dashboard: "Darba telpa",
   login: "Ieiet",
   start: "Sākt bez maksas",
-  how: "Iepazīt plūsmu",
+  how: "Kāpēc MemberFlow",
   menu: "Atvērt navigāciju",
   close: "Aizvērt",
   language: "Valoda",
@@ -12,9 +14,9 @@ export const lv: HomeContent = {
   label: "TAVS BIZNESS. VISUR.",
   hero: ["Radi vienreiz.", "Audz visur."],
   intro:
-    "Pārvērt piedāvājumus, produktus un pasākumus saturā sociālajiem tīkliem, Apple Wallet un Google Wallet un saviem klientiem. Piesaisti jaunus klientus. Dod iemeslu atgriezties.",
-  heroNote: "Viena ideja. Jauns klienta ceļš.",
-  demo: "PRODUKTA PRIEKŠSKATĪJUMS · DEMO DATI",
+    "Piesaisti jaunus klientus. Pārvērt pirmās vizītes ilgstošās attiecībās ar klienta lapu, lojalitāti, abonementiem un digitālo Wallet karti.",
+  heroNote: "Pārvērt pirmās vizītes ilgstošās attiecībās.",
+  demo: "PIESAISTI · SAVIENO · DOD IEMESLU ATGRIEZTIES",
   newOffer: "JAUNS PIEDĀVĀJUMS",
   stamps: "zīmogi",
   channelFormats: [
@@ -23,56 +25,12 @@ export const lv: HomeContent = {
     "Pin + saite",
     "Klienta karte",
   ],
-  sections: [
-    [
-      "RADĪT",
-      "Radi piedāvājumu.\nNevis saturu.",
-      "Tu zini, kas padara tavu biznesu īpašu. Sāc ar produktu, pakalpojumu, pasākumu vai piedāvājumu. Viens foto. Dažas detaļas. Viens avots visam turpmākajam.",
-      "Šeit sākas tava nākamā kampaņa.",
-    ],
-    [
-      "IZPLATĪT",
-      "Viena kampaņa.\nKatram kanālam.",
-      "Reel tiem, kas pārlūko. Pin, ko saglabāt. Jaunums cilvēkiem tuvumā. MemberFlow veidots, lai pielāgotu tavu ideju videi, kurā ir tavi klienti.",
-      "Viens avots. Pielāgots saturs.",
-    ],
-    [
-      "PIESAISTĪT",
-      "Pārvērt uzmanību\nīstā apmeklējumā.",
-      "Atklāšana ir tikai sākums. Piedāvā cilvēkiem skaidru ieguvumu, vietu, kur tevi atrast, un iemeslu ienākt.",
-      "No sociālā tīkla līdz tavām durvīm.",
-    ],
-    [
-      "SAVIENOТ",
-      "Pārvērt apmeklējumu\nattiecībās.",
-      "Ātra QR skenēšana savieno klientu ar tavu biznesu. MemberFlow profils un personīga Apple Wallet un Google Wallet karte saglabā šo saikni arī pēc pirmās kafijas.",
-      "Mazs solis. Ilgstoša saikne.",
-    ],
-    [
-      "NOTURĒT",
-      "Vairāk iemeslu\natgriezties.",
-      "Zīmogi, atlīdzības, priekšapmaksas apmeklējumi un abonementi. Vienota klienta pieredze ar kaut ko, ko gaidīt katrā apmeklējumā.",
-      "Viens klients. Ilgstošas attiecības.",
-    ],
-    [
-      "SAZINĀTIES",
-      "Tas pats piedāvājums.\nJauna saruna.",
-      "Nākamā kampaņa var sasniegt gan jaunus cilvēkus, gan esošos klientus. Sociālo tīklu saturs piesaista. Wallet un MemberFlow paziņojumi palīdz uzturēt saikni.",
-      "Atgādini par sevi īstajā brīdī.",
-    ],
-    [
-      "SAPRAST",
-      "Zini, kurš\natgriežas.",
-      "Skaties tālāk par atzīmēm “patīk”. Apmeklējumi, lojalitāte un abonementi palīdz pazīt pastāvīgos klientus un pamanīt tos, kuri kādu laiku nav bijuši.",
-      "Attiecības kļūst redzamas.",
-    ],
-    [
-      "ATGRIEZT",
-      "Dod iemeslu\nnākamajai vizītei.",
-      "Veidots, lai palīdzētu atjaunot saikni, kad klients pārstāj atgriezties. Pamani pauzi, sagatavo pārdomātu piedāvājumu un uzaicini atkal.",
-      "Katrs apmeklējums ir nākamā sākums.",
-    ],
-  ],
+  sections: experience.stories.map((story) => [
+    story.label,
+    story.title,
+    story.text,
+    story.takeaway,
+  ]),
   editor: [
     "Kampaņas detaļas",
     "Piedāvājuma nosaukums",
@@ -105,7 +63,7 @@ export const lv: HomeContent = {
     "Nākamā atlīdzība",
     "Bezmaksas kafija",
     "Abonements",
-    "Demo QR · nav skenējams",
+    "Klienta QR piemērs",
   ],
   retention: [
     "Lojalitāte",
@@ -148,7 +106,7 @@ export const lv: HomeContent = {
     "Sagatavot piedāvājumu",
     "Ienāc šonedēļ. Tevi gaida kas īpašs.",
     "Iemesls atgriezties",
-    "Demo ceļš — plānota automatizācija",
+    "Klienta ceļa piemērs",
   ],
   replayLoop: "Atkārtot izaugsmes cikla animāciju",
   loopTitle: "Izaugsme ir cikls.\nTurpini kustību.",
@@ -172,41 +130,10 @@ export const lv: HomeContent = {
   footerLine: "Viens ievads. Vairāk saikņu.",
   company: "Uzņēmums",
   legal: "Juridiskā informācija",
-  about: "Par MemberFlow",
+  about: "Par mums",
   privacy: "Privātums",
   terms: "Noteikumi",
-  previewNote:
-    "MemberFlow ir izstrādes stadijā. Vizuālie piemēri rāda plānoto pieredzi; integrācijas vēl nav pieejamas.",
-  dialogs: {
-    start: [
-      "Top kas labs.",
-      "MemberFlow ir izstrādes stadijā. Bezmaksas reģistrācija vēl nav pieejama. Iepazīsti klienta ceļu, kamēr gatavojamies palaišanai.",
-    ],
-    login: [
-      "Tava darba vide drīzumā.",
-      "Ieiet varēs pēc MemberFlow palaišanas. Šis priekšskatījums neveido kontus un nevāc piekļuves datus.",
-    ],
-    pricing: [
-      "Skaidra cena, kad būsim gatavi.",
-      "Plāni un cenas tiek izstrādāti. Šajā priekšskatījumā nav abonēšanas vai maksājumu.",
-    ],
-    resources: [
-      "MemberFlow ideja.",
-      "Radi vienreiz. Izplati dažādos kanālos. Savienojies pēc apmeklējuma. Veido attiecības un aicini klientus atgriezties.",
-    ],
-    about: [
-      "Veidots nākamajai vizītei.",
-      "MemberFlow ir vietējo biznesu izaugsmes platforma, kas savieno atklāšanu, attiecības ar klientiem un atkārtotus apmeklējumus.",
-    ],
-    privacy: [
-      "Privātuma informācija",
-      "Priekšskatījumā nav reģistrācijas formu, reklāmas analītikas vai klientu izsekošanas. Pilna privātuma informācija tiks publicēta pirms reģistrācijas palaišanas.",
-    ],
-    terms: [
-      "Noteikumu informācija",
-      "Šis ir produkta priekšskatījums. Pakalpojuma noteikumi tiks publicēti pirms MemberFlow palaišanas.",
-    ],
-  },
+  previewNote: "Attiecības ar klientiem — no pirmās vizītes.",
   imageAlt: "Krēmīga latte kafija keramikas tasē uz silta kafejnīcas galda",
   seo: "MemberFlow — Radi vienreiz. Audz visur.",
 };

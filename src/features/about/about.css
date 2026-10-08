@@ -1,0 +1,458 @@
+.about-page {
+  overflow-wrap: break-word;
+}
+.about-hero {
+  padding-block: 64px 42px;
+}
+.about-hero h1 {
+  max-width: 1040px;
+  white-space: pre-line;
+  font-size: clamp(40px, 4.7vw, 64px);
+  line-height: 1.12;
+  letter-spacing: -0.06em;
+  margin-top: 24px;
+}
+.about-hero-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 65px;
+  align-items: end;
+  margin-top: 32px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid var(--line);
+}
+.about-hero-bottom > p {
+  max-width: 630px;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.about-signature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 290px;
+  justify-self: end;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+.about-two-signals {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.about-two-signals i {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--green);
+  border-radius: 50%;
+}
+.about-two-signals i:last-child {
+  background: var(--green);
+}
+.about-two-signals > span {
+  height: 1px;
+  width: 26px;
+  background: var(--line-strong);
+}
+.about-chapter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 80px;
+  align-items: start;
+}
+.about-chapter-label {
+  gap: 13px;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+.about-chapter-label > span {
+  color: var(--accent);
+  letter-spacing: 0;
+}
+.about-chapter h2 {
+  margin-top: 18px;
+  font-size: clamp(31px, 3.3vw, 43px);
+  max-width: 470px;
+  line-height: 1.18;
+}
+.about-prose {
+  max-width: 525px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.about-prose p + p {
+  margin-top: 18px;
+}
+.about-prose .about-lead {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink);
+  letter-spacing: -0.025em;
+  font-weight: 550;
+}
+.about-prose .about-everyday {
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1.75;
+  max-width: 420px;
+}
+.about-prose .about-closing {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.8;
+  padding-top: 3px;
+}
+.about-problem {
+  padding-block: 24px 54px;
+}
+.about-purpose {
+  padding-block: 48px 0;
+  border-top: 1px solid var(--line);
+}
+.about-pullquote {
+  position: relative;
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  background: #e9eedf;
+  border: 1px solid #d6decc;
+  border-radius: 13px;
+  margin: 35px 0 0;
+  padding: 32px 40px;
+}
+.about-pullquote p {
+  white-space: pre-line;
+  font-size: clamp(28px, 3vw, 39px);
+  line-height: 1.25;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+}
+.about-quote-line {
+  height: 68px;
+  width: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.about-quote-end {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-left: auto;
+  align-self: flex-end;
+}
+.about-team {
+  padding-block: 58px;
+}
+.about-team-mark {
+  display: flex;
+  gap: 19px;
+  align-items: center;
+  margin-top: 25px;
+  max-width: 390px;
+}
+.about-team-count {
+  font-size: 83px;
+  line-height: 1;
+  font-weight: 450;
+  letter-spacing: -0.08em;
+  color: #859777;
+}
+.about-team-mark > div {
+  border-left: 1px solid var(--line);
+  padding-left: 19px;
+}
+.about-team-mark p {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.about-team-mark > div > span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 190px;
+  margin-top: 5px;
+}
+.about-people {
+  background: var(--surface);
+  border-block: 1px solid var(--line);
+  padding-block: 48px;
+}
+.about-people-heading {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-people-heading .eyebrow {
+  padding-top: 6px;
+}
+.about-people-heading h2 {
+  font-size: clamp(30px, 3.2vw, 41px);
+}
+.about-local-lines {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 26px;
+}
+.about-local-lines li {
+  display: flex;
+  gap: 30px;
+  align-items: baseline;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.about-local-lines li:first-child {
+  border-top: 1px solid var(--line);
+}
+.about-local-lines li > span:first-child {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.07em;
+  flex-shrink: 0;
+}
+.about-local-lines p {
+  font-size: clamp(23px, 2.6vw, 34px);
+  font-weight: 450;
+  letter-spacing: -0.035em;
+  line-height: 1.45;
+}
+.about-local-dot {
+  margin-left: auto;
+  width: 5px;
+  height: 5px;
+  background: #a5b199;
+  border-radius: 50%;
+  align-self: center;
+  flex-shrink: 0;
+}
+.about-people-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 80px;
+}
+.about-people-bottom p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 480px;
+}
+.about-people-bottom p:last-child {
+  color: var(--ink);
+  font-weight: 550;
+}
+.about-belief {
+  padding-block: 49px 53px;
+  background: #e4eadb;
+  border-bottom: 1px solid #cbd5c1;
+}
+.about-belief h2 {
+  font-size: clamp(32px, 3.8vw, 49px);
+  line-height: 1.2;
+  max-width: 940px;
+  margin-top: 20px;
+}
+.about-belief .status-dot {
+  background: var(--green);
+}
+.about-final {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 80px;
+  padding-block: 58px 64px;
+}
+.about-final h2 {
+  font-size: clamp(34px, 3.6vw, 47px);
+  margin-top: 19px;
+}
+.about-final-line {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--accent);
+}
+.about-final .button {
+  margin-top: 25px;
+  max-width: 100%;
+}
+@media (max-width: 1150px) {
+  .about-chapter,
+  .about-people-heading,
+  .about-people-bottom,
+  .about-final {
+    gap: 48px;
+  }
+  .about-hero-bottom {
+    gap: 40px;
+  }
+  .about-hero h1 {
+    font-size: 55px;
+  }
+}
+@media (max-width: 950px) {
+  .about-hero {
+    padding-top: 48px;
+  }
+  .about-hero h1 {
+    font-size: 48px;
+  }
+  .about-hero-bottom {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 26px;
+  }
+  .about-signature {
+    justify-self: start;
+    max-width: none;
+  }
+  .about-chapter,
+  .about-people-heading,
+  .about-people-bottom,
+  .about-final {
+    gap: 32px;
+  }
+  .about-prose {
+    font-size: 13px;
+  }
+  .about-chapter h2 {
+    font-size: 33px;
+  }
+  .about-team-count {
+    font-size: 72px;
+  }
+}
+@media (max-width: 700px) {
+  .about-hero {
+    padding-block: 36px 26px;
+  }
+  .about-hero h1 {
+    font-size: clamp(35px, 8.5vw, 47px);
+    line-height: 1.16;
+    letter-spacing: -0.055em;
+    margin-top: 20px;
+    white-space: normal;
+  }
+  .about-hero-bottom {
+    margin-top: 22px;
+    padding-bottom: 27px;
+    gap: 20px;
+  }
+  .about-hero-bottom > p {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+  .about-signature {
+    font-size: 10px;
+    gap: 12px;
+  }
+  .about-chapter,
+  .about-people-heading,
+  .about-people-bottom,
+  .about-final {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .about-problem {
+    padding-block: 9px 34px;
+  }
+  .about-chapter h2 {
+    margin-top: 14px;
+    font-size: 32px;
+  }
+  .about-prose {
+    max-width: none;
+    font-size: 13px;
+    line-height: 1.9;
+  }
+  .about-prose .about-lead {
+    font-size: 18px;
+  }
+  .about-prose .about-everyday {
+    font-size: 16px;
+  }
+  .about-prose p + p {
+    margin-top: 14px;
+  }
+  .about-purpose {
+    padding-top: 34px;
+  }
+  .about-pullquote {
+    padding: 25px 22px;
+    margin-top: 26px;
+    gap: 17px;
+  }
+  .about-pullquote p {
+    font-size: 28px;
+    white-space: normal;
+  }
+  .about-quote-line {
+    height: 65px;
+  }
+  .about-quote-end {
+    display: none;
+  }
+  .about-team {
+    padding-block: 36px;
+  }
+  .about-team-mark {
+    margin-top: 20px;
+    gap: 15px;
+  }
+  .about-team-count {
+    font-size: 63px;
+  }
+  .about-team-mark > div {
+    padding-left: 15px;
+  }
+  .about-people {
+    padding-block: 33px;
+  }
+  .about-people-heading {
+    gap: 14px;
+  }
+  .about-people-heading h2 {
+    font-size: 31px;
+  }
+  .about-local-lines {
+    margin-block: 24px;
+  }
+  .about-local-lines li {
+    gap: 15px;
+    padding-block: 17px;
+  }
+  .about-local-lines p {
+    font-size: 25px;
+  }
+  .about-local-dot {
+    display: none;
+  }
+  .about-people-bottom {
+    gap: 14px;
+  }
+  .about-belief {
+    padding-block: 32px 36px;
+  }
+  .about-belief h2 {
+    font-size: 32px;
+    white-space: normal;
+    margin-top: 17px;
+  }
+  .about-final {
+    padding-block: 36px 43px;
+    gap: 23px;
+  }
+  .about-final h2 {
+    font-size: 35px;
+    margin-top: 16px;
+  }
+  .about-final .button {
+    font-size: 12px;
+  }
+}

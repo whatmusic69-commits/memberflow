@@ -1,10 +1,12 @@
 import type { HomeContent } from "./types";
+import { en as experience } from "./home/en";
 export const en: HomeContent = {
+  experience,
   nav: ["Product", "Solutions", "Pricing", "Integrations", "Resources"],
   dashboard: "Dashboard",
   login: "Log in",
   start: "Start free",
-  how: "Explore the flow",
+  how: "Why MemberFlow",
   menu: "Open navigation",
   close: "Close",
   language: "Language",
@@ -12,62 +14,18 @@ export const en: HomeContent = {
   label: "YOUR BUSINESS. EVERYWHERE.",
   hero: ["Create once.", "Grow everywhere."],
   intro:
-    "Turn your offers, products and events into content for social media, Apple Wallet and Google Wallet and your customers. Get new clients. Keep them coming back.",
-  heroNote: "One idea. A whole new customer journey.",
-  demo: "PRODUCT PREVIEW · ILLUSTRATIVE DATA",
+    "Bring new customers in. Turn first visits into lasting relationships with a customer page, loyalty, memberships and a digital Wallet card.",
+  heroNote: "Turn first visits into lasting relationships.",
+  demo: "CREATE · CONNECT · KEEP THEM COMING BACK",
   newOffer: "NEW OFFER",
   stamps: "stamps",
   channelFormats: ["Reel + Post", "Short video", "Pin + Link", "Customer card"],
-  sections: [
-    [
-      "CREATE",
-      "Create the offer.\nNot the content.",
-      "You know what makes your business special. Start with a product, a service, an event or an offer. One photo. A few details. One source for everything that follows.",
-      "Your next campaign starts here.",
-    ],
-    [
-      "DISTRIBUTE",
-      "One campaign.\nMade for each channel.",
-      "A reel for a scrolling audience. A pin worth saving. An update for people nearby. MemberFlow is designed to adapt your idea to the places your customers spend time.",
-      "One source. Adapted outputs.",
-    ],
-    [
-      "ACQUIRE",
-      "Turn attention\ninto a real visit.",
-      "Discovery is just the beginning. Give people a clear offer, a place to find you and a reason to walk through your door.",
-      "From their feed to your front door.",
-    ],
-    [
-      "CONNECT",
-      "Turn a visit\ninto a relationship.",
-      "A quick QR scan connects a customer to your business. Their MemberFlow profile and personal Apple Wallet and Google Wallet card keep that connection close — long after the first coffee.",
-      "A small scan. A lasting connection.",
-    ],
-    [
-      "RETAIN",
-      "More reasons\nto come back.",
-      "Stamps, rewards, prepaid visits and memberships. Bring the relationship together in one clear customer experience, with something to look forward to every visit.",
-      "One customer. An ongoing relationship.",
-    ],
-    [
-      "COMMUNICATE",
-      "The same offer.\nA new conversation.",
-      "Your next campaign can reach both new people and the customers who already know you. Social content for discovery. Wallet updates and MemberFlow notifications for staying connected.",
-      "Reach out. Stay relevant.",
-    ],
-    [
-      "UNDERSTAND",
-      "Know who\ncomes back.",
-      "Look beyond likes. See visits, loyalty progress and membership status. Recognise your regulars — and notice when someone has been away.",
-      "Real relationships, made visible.",
-    ],
-    [
-      "RETURN",
-      "Make room for\nthe next visit.",
-      "Designed to help you reconnect when a customer stops returning. Spot the pause, prepare a thoughtful offer and give them a reason to visit again.",
-      "The end of one visit is the start of the next.",
-    ],
-  ],
+  sections: experience.stories.map((story) => [
+    story.label,
+    story.title,
+    story.text,
+    story.takeaway,
+  ]),
   editor: [
     "Campaign details",
     "Offer name",
@@ -100,7 +58,7 @@ export const en: HomeContent = {
     "Next reward",
     "Free coffee",
     "Membership",
-    "Demo QR · not scannable",
+    "Example customer QR",
   ],
   retention: [
     "Loyalty",
@@ -143,7 +101,7 @@ export const en: HomeContent = {
     "Prepare an offer",
     "Come back this week. There’s something special waiting for you.",
     "A reason to return",
-    "Illustrative journey — planned automation",
+    "Example customer journey",
   ],
   replayLoop: "Replay the growth loop",
   loopTitle: "Growth is a loop.\nKeep it moving.",
@@ -167,41 +125,10 @@ export const en: HomeContent = {
   footerLine: "One input. More connections.",
   company: "Company",
   legal: "Legal",
-  about: "About MemberFlow",
+  about: "About us",
   privacy: "Privacy",
   terms: "Terms",
-  previewNote:
-    "MemberFlow is in development. Product visuals illustrate the planned experience; integrations are not live.",
-  dialogs: {
-    start: [
-      "Good things are brewing.",
-      "MemberFlow is in development. Free signup is not available yet. Explore the product journey while we prepare the launch.",
-    ],
-    login: [
-      "Your workspace is on its way.",
-      "Login will be available when MemberFlow launches. This preview does not create accounts or collect credentials.",
-    ],
-    pricing: [
-      "A clear price. When we’re ready.",
-      "Plans and pricing are being developed. No subscriptions or payments are available in this preview.",
-    ],
-    resources: [
-      "The idea behind MemberFlow.",
-      "Create once. Share across channels. Connect after a visit. Build the relationship and invite customers back. Explore the journey on this page.",
-    ],
-    about: [
-      "Built around the next visit.",
-      "MemberFlow is a growth platform for local businesses, connecting discovery, customer relationships and repeat visits.",
-    ],
-    privacy: [
-      "Privacy information",
-      "This preview has no signup forms, advertising analytics or customer tracking. Full privacy information will be published before account registration launches.",
-    ],
-    terms: [
-      "Terms information",
-      "This is a product preview. Service terms will be published before MemberFlow becomes available.",
-    ],
-  },
+  previewNote: "Customer relationships, from the first visit onwards.",
   imageAlt: "A creamy latte in a ceramic cup on a warm café table",
   seo: "MemberFlow — Create once. Grow everywhere.",
 };

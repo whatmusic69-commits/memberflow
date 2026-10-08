@@ -14,7 +14,7 @@ export function RetentionVisual({ c }: { c: HomeContent }) {
       <div className="member-greeting">
         Anna<span>{c.retention[12]}</span>
       </div>
-      <div className="member-tabs" role="tablist" aria-label={c.sections[4][0]}>
+      <div className="member-tabs" role="tablist" aria-label={c.retention[0]}>
         {c.retention.slice(0, 3).map((label, i) => (
           <button
             key={label}

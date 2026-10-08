@@ -607,3 +607,24 @@ segment, so existing archive/restore UX remains available. Archived contacts do
 not contribute to current directory counts. Contact archive/restore currently
 remains development-only as before; no production CRM mutation is enabled by
 adding the analytics screens.
+
+### Development role preview
+The local dashboard top bar and staff header contain a role-preview selector:
+OWNER, ADMIN, MANAGER, STAFF. `previewRole` changes explicit mock membership grants
+only, while preserving the business draft/fixture and locale across routes. STAFF
+opens the focused `/staff` experience, with a selector to return to other roles.
+The illustrative ADMIN fixture omits billing access; this is not a production
+role policy. Backend-returned permissions remain authoritative in production.
+The selector and role override are disabled outside development and when
+NEXT_PUBLIC_DASHBOARD_MODE=api. No account role changes, auth/session mutation or
+production impersonation endpoint is introduced.
+
+## Public marketing pricing catalog
+
+Homepage refinement adds `/en/pricing`, `/lv/pricing`, `/ru/pricing`. At the owner’s explicit request, Pricing displays the same Starter / Growth / Business catalog, prices, limits and localized feature lists as the existing onboarding and development dashboard via `getDevelopmentPlans`. There is no separate marketing price catalog. Available non-placeholder Symfony plans take priority when supplied. Displaying the catalog does not activate subscriptions or grant entitlements. The “Try for free” button opens the existing localized onboarding form; it does not imply an activated trial.
+
+Required read-only contract: `GET /api/v1/plans`, anonymous/public access, `Accept-Language: en | lv | ru`, no credentials, no-store. Confirm this public access and localization with the Symfony developer before configuring `NEXT_PUBLIC_API_URL` for marketing. Response: `Plan[]` using the existing onboarding `Plan` DTO (`id`, `name`, localized `description` and `features`, `pricingModel`, `monthlyPrice`, `yearlyPrice`, ISO `currency`, confirmed `limits.activeCustomers` / `limits.locations`, `available`, `developmentPlaceholder`). Only available non-placeholder plans are shown. Omitted limits are never interpreted as unlimited. Prices are displayed only when both amount and currency are supplied. When no backend catalog is returned, the owner-authorized existing local catalog supplies display data only; production billing, availability and entitlements remain Symfony-owned.
+
+At the owner's explicit request, public homepage CTAs retain "Start free" and open the existing localized `/onboarding` form with its original transition. The current onboarding remains a tab-local preview; this navigation does not implement live registration, subscription or trial activation. Login navigation is shown only when the existing Symfony auth adapter and API URL are configured. Live account creation and billing still require separately authorized Symfony integration. Internal onboarding previews, fixtures and tools remain unchanged.
+
+Marketing Customer Page / Staff Scanner illustrations use isolated Your Coffee data, with no production customer reads or mutations. Staff permission checks, visit history, loyalty accrual, campaign publishing, offer eligibility, automations, Wallet issuance and notifications remain Symfony responsibilities. Wallet notifications are platform-dependent and are not guaranteed.
