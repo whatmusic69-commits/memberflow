@@ -84,6 +84,7 @@ export function Header({
                   key={l}
                   href={`/${l}${page ? "/" + page : ""}`}
                   scroll={false}
+                  data-preserve-scroll
                   onNavigate={() => {
                     // Language changes should preserve the reading position.
                     // Return focus before hiding the currently focused option.

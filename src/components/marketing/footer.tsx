@@ -54,6 +54,7 @@ export function Footer({
               <Link
                 href={`/${l}${page ? "/" + page : ""}`}
                 scroll={false}
+                data-preserve-scroll
                 lang={l}
                 aria-current={l === locale ? "page" : undefined}
                 key={l}
