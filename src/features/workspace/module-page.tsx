@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { EmptyExample } from "./empty-example";
 import { createPermissions } from "@/features/access/permissions";
 import { customerEventPresentation } from "@/features/dashboard/customer-events";
 import { useEffect, useState } from "react";
@@ -210,6 +211,9 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
               {c.create[feature]}
               <ArrowRight size={15} />
             </button>
+          )}
+          {!search && !archived && rows.length === 0 && (
+            <EmptyExample feature={feature} locale={locale} />
           )}
         </section>
       ) : feature === "customers" ? (

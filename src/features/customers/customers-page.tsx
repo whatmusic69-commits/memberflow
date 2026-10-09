@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { EmptyExample } from "@/features/workspace/empty-example";
 import { useDeferredValue, useState } from "react";
 import { Plus, ArrowRight, QrCode, Search } from "lucide-react";
 import { useWorkspace } from "@/features/dashboard/workspace";
@@ -190,7 +191,12 @@ export function CustomersPage() {
                     ? c.noResults
                     : c.noCustomers}
                 </h3>
-                {!search && segment === "all" && !archived && <p>{c.empty}</p>}
+                {!search && segment === "all" && !archived && (
+                  <>
+                    <p>{c.empty}</p>
+                    <EmptyExample feature="customers" locale={locale} />
+                  </>
+                )}
               </div>
             ) : (
               <div className="mf-client-rows">

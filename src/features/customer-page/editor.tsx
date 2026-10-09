@@ -328,9 +328,10 @@ export function CustomerPageEditor() {
                 </div>
               </div>
             )}
+            <div className="cp-editor-status-actions">
             {writable && (
               <button
-                className="mf-text-link"
+                className="button"
                 disabled={busy || !!uploading}
                 onClick={() => void changeStatus()}
               >
@@ -339,12 +340,13 @@ export function CustomerPageEditor() {
               </button>
             )}
             <Link
-              className="mf-text-link"
+              className="button"
               href={href("customers").replace("?", "/connection?")}
             >
               <QrCode size={16} />
               {c.qr}
             </Link>
+            </div>
           </section>
           <form
             onSubmit={(e) => void save(e)}
@@ -604,33 +606,6 @@ export function CustomerPageEditor() {
                     />
                   ),
                 )}
-              </section>
-              <section className="cp-editor-section">
-                <h2>{c.invitation}</h2>
-                <p>{c.invitationHint}</p>
-                <TextField
-                  label={c.headline}
-                  maxLength={90}
-                  value={state.invitation.headline}
-                  onChange={(v) =>
-                    setConfig({
-                      ...state,
-                      invitation: { ...state.invitation, headline: v },
-                    })
-                  }
-                />
-                <TextField
-                  label={c.message}
-                  maxLength={180}
-                  value={state.invitation.message}
-                  multiline
-                  onChange={(v) =>
-                    setConfig({
-                      ...state,
-                      invitation: { ...state.invitation, message: v },
-                    })
-                  }
-                />
               </section>
             </fieldset>
             <section className="cp-editor-section">

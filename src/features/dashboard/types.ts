@@ -105,9 +105,20 @@ export interface AttentionItem {
   reason: "inactive" | "expiring" | "rewardNear";
   value: number;
 }
+/** Symfony-calculated results. Monetary values must come from confirmed purchases, never visits. */
+export interface BusinessResults {
+  period: { from: string; to: string };
+  newCustomers: number | null;
+  returnedCustomers: number | null;
+  offersRedeemed: number | null;
+  offerRevenue: import("@/features/customers/types").Money | null;
+  returnRevenue: import("@/features/customers/types").Money | null;
+  trend: { date: string; visits: number; returnedCustomers: number }[];
+}
 /** Screen DTO, not a mirror of backend entities. Null metrics mean unavailable, never zero. */
 export interface DashboardOverview {
   source: "api" | "demo";
+  results?: BusinessResults;
   business: BusinessSummary;
   businesses: BusinessSummary[];
   user: UserSummary;
@@ -142,5 +153,9 @@ export interface DashboardOverview {
     name: "qr" | "profile" | "apple" | "google";
     status: ConnectionStatus;
   }[];
-  integrations: { name: string; status: ConnectionStatus }[];
+  integrations: {
+    name: string;
+    status: ConnectionStatus;
+    authorizationUrl?: string | null;
+  }[];
 }

@@ -5571,6 +5571,15 @@ dialog.mf-drawer[open][data-closing] { animation-name:mf-modal-exit !important; 
 .mf-print-intro h2 { font-size:20px;letter-spacing:-.5px;margin:0 0 8px; }
 .mf-print-intro p,.mf-print-note,.mf-print-placement p { color:var(--muted);font-size:13px;line-height:1.65; }
 .mf-print-controls h3,.mf-print-placement h3 { font-size:14px;margin:0; }
+.mf-poster-editor fieldset { border:0;margin:0;padding:0;display:grid;gap:14px;min-width:0; }
+.mf-poster-editor label { display:grid;gap:7px;font-size:12px;font-weight:600; }
+.mf-poster-editor input,.mf-poster-editor textarea { width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line-strong);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-weight:400;line-height:1.6; }
+.mf-poster-editor textarea { resize:vertical; }
+.mf-poster-editor input:focus-visible,.mf-poster-editor textarea:focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
+.mf-poster-editor .button { width:100%;justify-content:center; }
+.mf-poster-editor > p { font-size:12px;line-height:1.6;color:var(--muted);margin-top:10px; }
+.mf-poster-editor > p:empty { display:none; }
+.mf-poster-editor > [role="alert"] { color:var(--accent); }
 .mf-print-status { padding:14px;background:var(--sage);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;gap:7px; }
 .mf-print-status strong { font-size:13px;font-weight:600; }
 .mf-print-check { display:flex;gap:10px;align-items:center;font-size:13px; }
