@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { planPresentation } from "@/content/usage/presentation";
+import { ArrowRight, ArrowLeft, Check, CreditCard } from "lucide-react";
 import { useWorkspace } from "@/features/dashboard/workspace";
 import { usageContent } from "@/content/usage";
 import { onboardingContent } from "@/content/onboarding";
@@ -192,6 +193,7 @@ function PlanChooser({
   backHref: string;
 }) {
   const c = usageContent[locale];
+  const presentation = planPresentation[locale];
   const [preview, setPreview] = useState<UsagePlan | null>(null);
   const [selected, setSelected] = useState<UsagePlan | null>(null);
   const [busy, setBusy] = useState(false);
@@ -227,20 +229,46 @@ function PlanChooser({
   }
   return (
     <div className="mf-plans-page">
-      <Link className="mf-text-link" href={backHref}>
-        ← {c.title}
+      <Link className="mf-text-link mf-plans-back" href={backHref}>
+        <ArrowLeft size={15} />
+        {c.title}
       </Link>
-      <header className="mf-feature-heading">
-        <h1>{c.change}</h1>
+      <header className="mf-feature-heading mf-plans-heading">
+        <div>
+          <p className="mf-kicker">{c.change}</p>
+          <h1>{presentation.title}</h1>
+          <p>{presentation.intro}</p>
+        </div>
+        <div className="mf-plans-current">
+          <CreditCard size={19} aria-hidden="true" />
+          <div>
+            <small>{c.current}</small>
+            <strong>{usage.plan?.name ?? c.noPlan}</strong>
+          </div>
+        </div>
       </header>
       <div className="mf-usage-plans">
         {usage.availablePlans.map((p) => (
           <article
             data-selected={selected?.id === p.id}
+            data-current={p.id === usage.plan?.id}
             className="mf-usage-option"
             key={p.id}
           >
-            <strong>{p.name}</strong>
+            <div className="mf-plan-card-heading">
+              <strong>{p.name}</strong>
+              {p.id === usage.plan?.id ? (
+                <span className="mf-plan-card-badge">
+                  <Check size={12} />
+                  {c.current}
+                </span>
+              ) : selected?.id === p.id ? (
+                <span className="mf-plan-card-badge">
+                  <Check size={12} />
+                  {presentation.selected}
+                </span>
+              ) : null}
+            </div>
             <span className="mf-plan-price">{price(p, locale)}</span>
             {usage.metrics.find(
               (metric) => metric.key === "activeCustomers",
@@ -264,7 +292,10 @@ function PlanChooser({
             {!demo && !!p.features?.length && (
               <ul>
                 {p.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
+                  <li key={feature}>
+                    <Check size={15} aria-hidden="true" />
+                    <span>{feature}</span>
+                  </li>
                 ))}
               </ul>
             )}
@@ -281,7 +312,10 @@ function PlanChooser({
                   {onboardingContent[locale].planCopy[
                     p.id as "starter" | "growth" | "business"
                   ].features.map((feature) => (
-                    <li key={feature}>{feature}</li>
+                    <li key={feature}>
+                      <Check size={15} aria-hidden="true" />
+                      <span>{feature}</span>
+                    </li>
                   ))}
                 </ul>
               </>
@@ -292,10 +326,14 @@ function PlanChooser({
                   key !== "activeCustomers" && limit !== undefined,
               )
               .map(([key, limit]) => (
-                <small key={key}>
-                  {resource(key, locale)}:{" "}
-                  {limit === null ? c.unlimited : limit}
-                </small>
+                <div className="mf-plan-limit" key={key}>
+                  <span>{resource(key, locale)}</span>
+                  <strong>
+                    {limit === null
+                      ? c.unlimited
+                      : new Intl.NumberFormat(locale).format(limit!)}
+                  </strong>
+                </div>
               ))}
             <button
               className="button"
@@ -325,14 +363,21 @@ function PlanChooser({
         </section>
       )}
       {error && <p role="alert">{c.unavailable}</p>}
-      <button
-        className="button button-primary"
-        disabled={!selected || busy || !usage.canChangePlan}
-        onClick={continuePlan}
-      >
-        {busy ? c.loading : demo ? c.change : c.checkout}
-        <ArrowRight size={15} />
-      </button>
+      <footer className="mf-plan-selection-bar">
+        <div>
+          <small>{selected ? presentation.selected : c.change}</small>
+          <strong>{selected ? selected.name : presentation.selectHint}</strong>
+          {selected && <span>{price(selected, locale)}</span>}
+        </div>
+        <button
+          className="button button-primary"
+          disabled={!selected || busy || !usage.canChangePlan}
+          onClick={continuePlan}
+        >
+          {busy ? c.loading : demo ? c.change : c.checkout}
+          <ArrowRight size={15} />
+        </button>
+      </footer>
     </div>
   );
 }
