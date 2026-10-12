@@ -1,7 +1,7 @@
+import { LoyaltyProgress } from "@/components/customer/loyalty-progress";
 import type { CSSProperties } from "react";
 import {
   ArrowUpRight,
-  BadgeCheck,
   Clock,
   Gift,
   MapPin,
@@ -184,35 +184,10 @@ export function CustomerPageView({
             </p>
             {personal?.loyalty ? (
               <>
-                <div className="cp-stamps" aria-hidden="true">
-                  {Array.from(
-                    {
-                      length: Math.min(
-                        Math.max(0, personal.loyalty.target),
-                        12,
-                      ),
-                    },
-                    (_, i) => (
-                      <span
-                        key={i}
-                        className={i < personal.loyalty!.stamps ? "filled" : ""}
-                      >
-                        {i < personal.loyalty!.stamps ? (
-                          <BadgeCheck size={28} strokeWidth={1.6} />
-                        ) : i === personal.loyalty!.target - 1 ? (
-                          <Gift size={23} strokeWidth={1.5} />
-                        ) : (
-                          <span>{String(i + 1).padStart(2, "0")}</span>
-                        )}
-                      </span>
-                    ),
-                  )}
-                </div>
-                <p className="cp-progress">
-                  {c.progress
-                    .replace("{current}", String(personal.loyalty.stamps))
-                    .replace("{target}", String(personal.loyalty.target))}
-                </p>
+                <LoyaltyProgress
+                  loyalty={personal.loyalty}
+                  progressLabel={c.progress}
+                />
                 <div className="cp-reward">
                   <span>{c.nextReward}</span>
                   <strong>{personal.loyalty.nextReward}</strong>

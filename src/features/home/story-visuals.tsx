@@ -71,7 +71,6 @@ export function CreateVisual({ c }: { c: HomeContent }) {
       >
         <Check size={15} />
         {c.editor[4]}
-        <ArrowUpRight size={16} />
       </div>
     </div>
   );

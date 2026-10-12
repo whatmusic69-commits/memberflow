@@ -21,6 +21,11 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("idle");
   const destination = useRef<string | null>(null);
+  const preservedScroll = useRef<{
+    pathname: string;
+    top: number;
+    left: number;
+  } | null>(null);
   const brandTransition = useRef(false);
   const [showBrand, setShowBrand] = useState(false);
   const page = useRef<HTMLDivElement>(null);
@@ -55,6 +60,26 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
     );
   }
   useLayoutEffect(() => {
+    const position = preservedScroll.current;
+    if (position?.pathname === pathname) {
+      preservedScroll.current = null;
+      const restore = () =>
+        window.scrollTo({
+          top: position.top,
+          left: position.left,
+          behavior: "instant",
+        });
+      restore();
+      let secondFrame = 0;
+      const firstFrame = requestAnimationFrame(() => {
+        restore();
+        secondFrame = requestAnimationFrame(restore);
+      });
+      return () => {
+        cancelAnimationFrame(firstFrame);
+        cancelAnimationFrame(secondFrame);
+      };
+    }
     if (!destination.current) {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const target =
@@ -119,6 +144,15 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
             url.pathname === pathname
           )
             return;
+          if (link.hasAttribute("data-preserve-scroll")) {
+            preservedScroll.current = {
+              pathname: url.pathname,
+              top: window.scrollY,
+              left: window.scrollX,
+            };
+            // Let Next Link honor scroll={false} and close the language menu.
+            return;
+          }
           event.preventDefault();
           start(url.pathname + url.search + url.hash);
         }}

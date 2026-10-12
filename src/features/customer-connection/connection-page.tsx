@@ -1,16 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Wordmark } from "@/components/ui/brand";
 import {
   ArrowLeft,
+  ArrowUpRight,
   Check,
   Copy,
   Download,
   Printer,
+  Pencil,
   QrCode,
   ScanLine,
+  Save,
 } from "lucide-react";
 import { useWorkspace } from "@/features/dashboard/workspace";
 import { OverviewSkeleton } from "@/features/dashboard/overview";
@@ -25,7 +28,7 @@ import { connectionContent } from "@/content/customer-connection";
 import { validPublicUrl, type CustomerConnection } from "./service";
 
 export function ConnectionPage() {
-  const { data, locale, loading, error, reload, href } = useWorkspace();
+  const { data, locale, loading, error, reload, href, can } = useWorkspace();
   const c = connectionContent[locale];
   const [connection, setConnection] = useState<CustomerConnection | null>(null);
   const [pending, setPending] = useState(true),
@@ -33,6 +36,11 @@ export function ConnectionPage() {
   const [retry, setRetry] = useState(0);
   const [sampleUrl, setSampleUrl] = useState("");
   const [pageConfig, setPageConfig] = useState<CustomerPageConfig | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saveFailed, setSaveFailed] = useState(false);
+  const saveLock = useRef(false);
+  const alive = useRef(true);
   const [qr, setQr] = useState(""),
     [svg, setSvg] = useState("");
   const [qrFailed, setQrFailed] = useState(false);
@@ -49,6 +57,15 @@ export function ConnectionPage() {
   const demo =
     data?.source === "demo" && process.env.NODE_ENV === "development";
   const businessId = data?.business.id;
+  const currentBusiness = useRef(businessId);
+  useEffect(() => {
+    currentBusiness.current = businessId;
+  }, [businessId]);
+  const writable = can("customer-page.manage");
+  useEffect(() => {
+    alive.current = true;
+    return () => { alive.current = false; };
+  }, []);
   useEffect(() => {
     if (!businessId || !data) return;
     const controller = new AbortController();
@@ -160,6 +177,42 @@ export function ConnectionPage() {
       setCopyState("error");
     }
   }
+  function updateInvitation(field: "headline" | "message", value: string) {
+    setPageConfig((previous) => previous ? {
+      ...previous,
+      invitation: { ...previous.invitation, [field]: value },
+    } : null);
+    setSaveMessage("");
+    setSaveFailed(false);
+  }
+  async function saveInvitation(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!data || !pageConfig || !writable || pending || saveLock.current || pageConfig.businessId !== businessId) return;
+    const savedBusinessId = data.business.id;
+    saveLock.current = true;
+    setSaving(true);
+    setSaveMessage("");
+    setSaveFailed(false);
+    try {
+      const saved = await customerPageService(data.business, demo).save({
+        branding: pageConfig.branding,
+        business: pageConfig.business,
+        modules: pageConfig.modules,
+        social: pageConfig.social,
+        invitation: pageConfig.invitation,
+      });
+      if (saved.businessId !== savedBusinessId) throw new Error("Business mismatch");
+      if (alive.current && currentBusiness.current === savedBusinessId) {
+        setPageConfig(saved);
+        setSaveMessage(demo ? pageCopy.previewSaved : pageCopy.saved);
+      }
+    } catch {
+      if (alive.current && currentBusiness.current === savedBusinessId) setSaveFailed(true);
+    } finally {
+      saveLock.current = false;
+      if (alive.current) setSaving(false);
+    }
+  }
   function download() {
     if (!svg) return;
     const blob = URL.createObjectURL(
@@ -196,9 +249,39 @@ export function ConnectionPage() {
             <strong>{readyUrl ? c.ready : c.pending}</strong>
           </div>
           <h3>{c.settings}</h3>
-          <Link className="mf-text-link" href={href("customer-page")}>
+          <form className="mf-poster-editor" onSubmit={(event) => void saveInvitation(event)}>
+            <fieldset disabled={!writable || pending || saving || !pageConfig}>
+              <label>
+                <span>{c.headingLabel}</span>
+                <input
+                  value={pageConfig?.invitation.headline ?? ""}
+                  placeholder={c.headline}
+                  maxLength={90}
+                  onChange={(event) => updateInvitation("headline", event.target.value)}
+                />
+              </label>
+              <label>
+                <span>{c.descriptionLabel}</span>
+                <textarea
+                  rows={3}
+                  value={pageConfig?.invitation.message ?? ""}
+                  placeholder={c.description}
+                  maxLength={180}
+                  onChange={(event) => updateInvitation("message", event.target.value)}
+                />
+              </label>
+              <button className="button button-primary" type="submit">
+                <Save size={16} aria-hidden="true" />
+                {saving ? pageCopy.saving : pageCopy.save}
+              </button>
+            </fieldset>
+            {saveFailed && <p role="alert">{pageCopy.error}</p>}
+            <p role="status">{saveMessage}</p>
+          </form>
+          <div className="mf-poster-page-actions">
+          <Link className="button" href={href("customer-page")}>
+            <Pencil size={16} aria-hidden="true" />
             {pageCopy.title}
-            <ArrowLeft size={15} />
           </Link>
           {url && (
             <a
@@ -208,8 +291,10 @@ export function ConnectionPage() {
               rel="noopener noreferrer"
             >
               {pageCopy.open}
+              <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           )}
+          </div>
           {posterLogo && (
             <label className="mf-print-check">
               <input
@@ -230,8 +315,9 @@ export function ConnectionPage() {
               {c.showCity}
             </label>
           )}
+          <div className="mf-poster-export-actions">
           <button
-            className="button button-primary"
+            className="button mf-poster-print-button"
             disabled={!qr || pending || qrFailed}
             onClick={() => window.print()}
           >
@@ -246,6 +332,7 @@ export function ConnectionPage() {
             <Download size={17} />
             {c.download}
           </button>
+          </div>
           {url && (
             <div className="mf-print-link">
               <label htmlFor="customer-public-link">{c.link}</label>

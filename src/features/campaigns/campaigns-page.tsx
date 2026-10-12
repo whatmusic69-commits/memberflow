@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { EmptyExample } from "@/features/workspace/empty-example";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowRight, Megaphone, Plus, Search, Waypoints } from "lucide-react";
@@ -214,19 +215,7 @@ export function CampaignsPage() {
               <ArrowRight size={16} />
             </button>
           )}
-          <ol className="mf-mini-journey">
-            {[
-              [c.source, c.sourceText],
-              [c.adapt, c.adaptText],
-              [c.distribute, c.distributeText],
-            ].map(([title, text], i) => (
-              <li key={title}>
-                <span>0{i + 1}</span>
-                <strong>{title}</strong>
-                <small>{text}</small>
-              </li>
-            ))}
-          </ol>
+          <EmptyExample feature="campaigns" locale={locale} />
         </div>
       ) : !list.length ? (
         <div className="mf-module-empty">

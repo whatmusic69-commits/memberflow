@@ -1,3 +1,5 @@
+import "@/features/home/home.css";
+import { WhyMemberFlow, Benefits, FAQ } from "@/features/home/why";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, isLocale, content } from "@/content";
@@ -6,7 +8,7 @@ import { Header } from "@/components/marketing/header";
 import { Footer } from "@/components/marketing/footer";
 import { Hero } from "@/features/home/hero";
 import { Story } from "@/features/home/story";
-import { GrowthLoop, Solutions, FinalCTA } from "@/features/home/closing";
+import { Solutions, FinalCTA } from "@/features/home/closing";
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -47,9 +49,11 @@ export default async function HomePage({
       <Header c={c} locale={locale} />
       <main id="main">
         <Hero c={c} />
-        <Story c={c} />
-        <GrowthLoop c={c} />
+        <WhyMemberFlow c={c} />
+        <Benefits c={c} />
+        <Story c={c} locale={locale} />
         <Solutions c={c} />
+        <FAQ c={c} />
         <FinalCTA c={c} />
       </main>
       <Footer c={c} locale={locale} />

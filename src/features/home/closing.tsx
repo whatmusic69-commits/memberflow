@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { ReplayFlow } from "./replay-flow";
 import type { HomeContent } from "@/content/types";
-import { PreviewAction } from "@/components/marketing/actions";
+import { StartLink } from "@/components/marketing/start-link";
 import { FlowPath } from "@/components/ui/flow-path";
 import { FlowMark } from "@/components/ui/brand";
 export function GrowthLoop({ c }: { c: HomeContent }) {
@@ -105,13 +105,7 @@ export function FinalCTA({ c }: { c: HomeContent }) {
       </div>
       <h2>{c.final[0]}</h2>
       <p>{c.final[1]}</p>
-      <PreviewAction
-        label={c.start}
-        title={c.dialogs.start[0]}
-        description={c.dialogs.start[1]}
-        close={c.close}
-        primary
-      />
+      <StartLink label={c.start} />
       <div className="final-flow" aria-hidden="true">
         <span />
         <ArrowRight size={15} />

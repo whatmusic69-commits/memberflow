@@ -1,4 +1,6 @@
+import type { HomeRefinement } from "./home/types";
 export interface HomeContent {
+  experience: HomeRefinement;
   nav: string[];
   login: string;
   dashboard: string;
@@ -40,10 +42,6 @@ export interface HomeContent {
   privacy: string;
   terms: string;
   previewNote: string;
-  dialogs: Record<
-    "start" | "login" | "pricing" | "resources" | "about" | "privacy" | "terms",
-    string[]
-  >;
   imageAlt: string;
   seo: string;
 }

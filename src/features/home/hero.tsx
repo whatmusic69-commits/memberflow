@@ -1,6 +1,6 @@
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight } from "lucide-react";
 import type { HomeContent } from "@/content/types";
-import { PreviewAction } from "@/components/marketing/actions";
+import { StartLink } from "@/components/marketing/start-link";
 import { CampaignFlow } from "./campaign-flow";
 export function Hero({ c }: { c: HomeContent }) {
   return (
@@ -19,14 +19,8 @@ export function Hero({ c }: { c: HomeContent }) {
         </h1>
         <p className="hero-description">{c.intro}</p>
         <div className="hero-ctas">
-          <PreviewAction
-            label={c.start}
-            title={c.dialogs.start[0]}
-            description={c.dialogs.start[1]}
-            close={c.close}
-            primary
-          />
-          <a className="secondary-link" href="#product">
+          <StartLink label={c.start} />
+          <a className="secondary-link" href="#why">
             {c.how}
             <ArrowDownRight size={17} />
           </a>
@@ -39,9 +33,6 @@ export function Hero({ c }: { c: HomeContent }) {
       <CampaignFlow c={c} />
       <div className="hero-bottom">
         <span>{c.demo}</span>
-        <a href="#product" aria-label={c.how}>
-          <ArrowUpRight size={16} />
-        </a>
       </div>
     </section>
   );

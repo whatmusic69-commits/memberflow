@@ -31,3 +31,11 @@ export const membership: MembershipState = {
   active: true,
   remainingVisits: 4,
 };
+
+/** Marketing illustration, never a production customer response. */
+export const marketingLoyalty = {
+  stamps: 4,
+  target: 6,
+  nextReward: "coffee",
+} satisfies import("@/features/customer-page/types").CustomerLoyaltyState;
+export const returnCustomer = { name: "Anna", daysSinceVisit: 30 };
