@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { ArrowRight, LogOut, RefreshCw } from "lucide-react";
 import { isLocale, type Locale } from "@/content";
+import { membershipContent } from "@/content/memberships";
+import { readPrototypeLedger } from "@/features/prototype/repository";
+import { prototypeContent } from "@/content/prototype";
 import { staffContent } from "@/content/staff";
 import { dashboardContent } from "@/content/dashboard";
 import { Wordmark } from "@/components/ui/brand";
@@ -31,6 +34,7 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
     process.env.NODE_ENV === "development" &&
     process.env.NEXT_PUBLIC_DASHBOARD_MODE !== "api";
   const fixture = demo ? query.get("demo") : null;
+  const businessId = query.get("business");
   const previewWorkspace =
     demo && query.get("previewRole") === "STAFF"
       ? (query.get("workspaceDemo") ?? "new")
@@ -88,7 +92,7 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
         const overview = await getDashboardService(
           fixture,
           "STAFF",
-        ).getOverview(undefined, controller.signal);
+        ).getOverview(businessId ?? undefined, controller.signal);
         value = {
           ...value,
           business: {
@@ -121,7 +125,7 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
       controller.abort();
       operation.current?.abort();
     };
-  }, [demo, fixture, retry, previewWorkspace]);
+  }, [demo, fixture, retry, previewWorkspace, businessId]);
   async function resolve(value: string) {
     if (!context || !can("customer.scan") || lock.current) return;
     lock.current = true;
@@ -188,9 +192,18 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
       setCustomer(result.customer);
       setContext({
         ...context,
-        recentActions: [result.event, ...context.recentActions].slice(0, 8),
+        recentActions: [
+          result.event,
+          ...context.recentActions.filter((e) => e.id !== result.event.id),
+        ].slice(0, 8),
       });
-      setSuccess(c.success[action.type]);
+      setSuccess(
+        demo &&
+          action.type === "SUBSCRIPTION_USED" &&
+          action.remainingAfter === undefined
+          ? dashboardContent[locale].eventCopy.MEMBERSHIP_ACCESS_VERIFIED
+          : c.success[action.type],
+      );
       animateDialogClose(modalNode.current, () => setSelected(null));
       request.current = null;
     } catch {
@@ -223,6 +236,9 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
   };
   return (
     <div className="mf-staff-app">
+      {demo && (
+        <p className="mf-draft-notice">{prototypeContent[locale].notice}</p>
+      )}
       <header className="mf-staff-header">
         <span className="mf-staff-brand">
           <Wordmark />
@@ -381,7 +397,13 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
         <Modal
           dialogRef={modalNode}
           closeDisabled={busy}
-          title={c.confirmations[selected.type]}
+          title={
+            demo && selected.type === "SUBSCRIPTION_USED"
+              ? selected.remainingAfter === undefined
+                ? membershipContent[locale].verify
+                : membershipContent[locale].use
+              : c.confirmations[selected.type]
+          }
           closeLabel={c.close}
           className="mf-staff-confirm"
           onClose={() => {
@@ -395,14 +417,30 @@ export function StaffApp({ initialLocale }: { initialLocale: Locale }) {
             <strong>{customer.name}</strong>
           </p>
           {selected.type === "SUBSCRIPTION_USED" && (
-            <p>{customer.membership?.name}</p>
+            <p>{selected.label ?? customer.membership?.name}</p>
           )}
+          {demo &&
+            selected.type === "SUBSCRIPTION_USED" &&
+            selected.remainingAfter !== undefined && (
+              <p>
+                {membershipContent[locale].before}:{" "}
+                {
+                  readPrototypeLedger(customer.businessId).memberships?.find(
+                    (m) => m.id === selected.resourceId,
+                  )?.remainingVisits
+                }
+              </p>
+            )}
           {selected.remainingAfter !== undefined && (
             <p>
               {c.remainingAfter.replace("{n}", String(selected.remainingAfter))}
             </p>
           )}
-          {demo && <p className="mf-staff-preview-note">{c.previewNotice}</p>}
+          {demo && (
+            <p className="mf-staff-preview-note">
+              {prototypeContent[locale].notice}
+            </p>
+          )}
           {error === "action" && (
             <p role="alert" className="mf-form-error">
               {c.actionError}

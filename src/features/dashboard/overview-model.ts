@@ -65,7 +65,7 @@ export function getLifecycle(data: DashboardOverview): LifecycleSummary {
     reach: data.setup.campaign,
     connect: data.setup.customers,
     retain: data.setup.retention,
-    return: data.state === "active",
+    return: data.flow.return !== null && data.flow.return > 0,
   };
   return {
     mode: data.state === "active" ? "active" : "setup",

@@ -1,3 +1,8 @@
+import {
+  readBusinessProfile,
+  saveBusinessProfile,
+} from "@/features/workspace/business-profile";
+import { readLocalRecords } from "@/features/workspace/repository";
 import { apiRequest } from "@/lib/api/client";
 import { uploadMultipart, type UploadProgress } from "@/lib/api/upload";
 import type { BusinessSummary } from "@/features/dashboard/types";
@@ -22,20 +27,31 @@ export interface CustomerPageService {
 }
 /** Local presentation drafts only. No customer session, balance or entitlement is persisted. */
 export function readPageDraft(id: string): CustomerPageConfig | null {
-  if (process.env.NODE_ENV !== "development") return null;
+  if (
+    process.env.NODE_ENV !== "development" ||
+    process.env.NEXT_PUBLIC_DASHBOARD_MODE === "api"
+  )
+    return null;
   try {
     const value = JSON.parse(
       localStorage.getItem(draftKey(id)) || "null",
     ) as CustomerPageConfig | null;
-    return value?.businessId === id &&
+    const valid =
+      value?.businessId === id &&
       value.branding &&
       value.business &&
       value.modules &&
       value.social &&
       value.invitation &&
-      value.content
-      ? value
-      : null;
+      value.content &&
+      ["DRAFT", "ACTIVE", "DISABLED"].includes(value.status) &&
+      typeof value.slug === "string" &&
+      typeof value.business.name === "string" &&
+      typeof value.business.description === "string" &&
+      Object.values(value.modules).every((v) => typeof v === "boolean")
+        ? value
+        : null;
+    return valid ? hydratePageDraft(valid) : null;
   } catch {
     return null;
   }
@@ -49,7 +65,10 @@ export function customerPageService(
 ): CustomerPageService {
   const path =
     `/api/v1/businesses/${encodeURIComponent(business.id)}/customer-page` as const;
-  const isDemo = demo && process.env.NODE_ENV === "development";
+  const isDemo =
+    demo &&
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_PUBLIC_DASHBOARD_MODE !== "api";
   const get = async (signal?: AbortSignal) => {
     if (!isDemo)
       return apiRequest<CustomerPageConfig>(path, {
@@ -67,13 +86,13 @@ export function customerPageService(
         ...initial,
         branding: {
           ...initial.branding,
-          logoUrl: initial.branding.logoUrl?.startsWith("data:")
+          logoUrl: initial.branding.logoUrl?.match(/^(data:|blob:)/g)
             ? null
             : initial.branding.logoUrl,
         },
       }),
     );
-    return initial;
+    return hydratePageDraft(initial);
   };
   return {
     get,
@@ -88,19 +107,30 @@ export function customerPageService(
       // Never serialize base64 image contents. Blob URLs are temporary upload previews.
       const stored = {
         ...config,
+        content: { offers: [], loyalty: null, memberships: [] },
         branding: {
           ...config.branding,
-          logoUrl: config.branding.logoUrl?.startsWith("data:")
+          logoUrl: config.branding.logoUrl?.match(/^(data:|blob:)/g)
             ? null
             : config.branding.logoUrl,
-          coverUrl: config.branding.coverUrl?.startsWith("data:")
+          coverUrl: config.branding.coverUrl?.match(/^(data:|blob:)/g)
             ? null
             : config.branding.coverUrl,
         },
       };
+      // Page toggles and invitation remain separate; shared public business fields
+      // have one canonical source across Settings, dashboard and page preview.
+      saveBusinessProfile({
+        businessId: business.id,
+        country:
+          readBusinessProfile(business.id)?.country ?? business.country ?? "",
+        business: config.business,
+        branding: config.branding,
+        social: config.social,
+      });
       localStorage.setItem(draftKey(business.id), JSON.stringify(stored));
       window.dispatchEvent(new Event(customerPageDraftEvent));
-      return config;
+      return hydratePageDraft(config);
     },
     async upload(file, kind, onProgress, signal) {
       if (
@@ -124,7 +154,27 @@ export function customerPageService(
       return result.url;
     },
     async setStatus(status) {
-      if (isDemo) throw new Error("activation-unavailable");
+      if (isDemo) {
+        const config = { ...(await get()), status, publicUrl: null };
+        localStorage.setItem(
+          draftKey(business.id),
+          JSON.stringify({
+            ...config,
+            content: { offers: [], loyalty: null, memberships: [] },
+            branding: {
+              ...config.branding,
+              logoUrl: /^(data:|blob:)/.test(config.branding.logoUrl ?? "")
+                ? null
+                : config.branding.logoUrl,
+              coverUrl: /^(data:|blob:)/.test(config.branding.coverUrl ?? "")
+                ? null
+                : config.branding.coverUrl,
+            },
+          }),
+        );
+        window.dispatchEvent(new Event(customerPageDraftEvent));
+        return config;
+      }
       return apiRequest<CustomerPageConfig>(`${path}/status`, {
         method: "PATCH",
         credentials: "include",
@@ -190,4 +240,37 @@ export async function getPublicCustomerPage(slug: string) {
     })),
     connection: { joinEnabled: page.connection.joinEnabled },
   } satisfies CustomerPagePublic;
+}
+
+function hydratePageDraft(config: CustomerPageConfig): CustomerPageConfig {
+  const id = config.businessId;
+  const p = readBusinessProfile(id);
+  const loyalty = readLocalRecords(id, "loyalty").filter((r) => !r.archived);
+  const offers = readLocalRecords(id, "offers").filter((r) => !r.archived);
+  const memberships = readLocalRecords(id, "memberships").filter(
+    (r) => !r.archived,
+  );
+  return {
+    ...config,
+    ...(p
+      ? { business: p.business, branding: p.branding, social: p.social }
+      : {}),
+    content: {
+      offers: offers.map((o) => ({
+        id: o.id,
+        title: o.name,
+        description: o.description,
+        priceLabel: null,
+        bonusLabel: null,
+        validUntil: o.expiresAt || null,
+        imageUrl: null,
+      })),
+      loyalty: loyalty[0] ? { reward: loyalty[0].reward } : null,
+      memberships: memberships.map((m) => ({
+        id: m.id,
+        name: m.name,
+        description: m.description,
+      })),
+    },
+  };
 }

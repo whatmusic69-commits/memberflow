@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { prototypeContent } from "@/content/prototype";
 import { EmptyExample } from "./empty-example";
 import { createPermissions } from "@/features/access/permissions";
 import { customerEventPresentation } from "@/features/dashboard/customer-events";
@@ -89,6 +90,8 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
   }, [id, demo, feature, attempt]);
   async function archive(record: ModuleRecords[ModuleId]) {
     if (busy || !id) return;
+    if (!record.archived && !window.confirm(prototypeContent[locale].confirm))
+      return;
     setBusy(record.id);
     setNotice("");
     try {
@@ -103,8 +106,12 @@ export function ModulePage({ feature }: { feature: ModuleId }) {
         ),
       );
       setNotice(c.saved);
-    } catch {
-      setNotice(c.saveError);
+    } catch (error) {
+      setNotice(
+        error instanceof Error && error.message === "referenced"
+          ? prototypeContent[locale].archivalError
+          : c.saveError,
+      );
     } finally {
       setBusy(null);
     }

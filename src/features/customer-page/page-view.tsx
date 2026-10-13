@@ -79,6 +79,7 @@ export function CustomerPageView({
   onJoin,
   preview = false,
   onLogout,
+  localMemberships,
 }: {
   page: CustomerPagePublic;
   personal?: CustomerPagePersonal | null;
@@ -86,6 +87,7 @@ export function CustomerPageView({
   onJoin?: () => void;
   preview?: boolean;
   onLogout?: () => void;
+  localMemberships?: React.ReactNode;
 }) {
   const c = customerPageContent[locale];
   const initials = page.business.name
@@ -227,30 +229,31 @@ export function CustomerPageView({
                 <Ticket size={15} />
                 {c.memberships}
               </p>
-              {personal.memberships.map((membership) => (
-                <article className="cp-membership" key={membership.id}>
-                  <h3>{membership.name}</h3>
-                  {membership.remainingVisits !== null && (
-                    <p>
-                      {c.visits.replace(
-                        "{n}",
-                        String(membership.remainingVisits),
-                      )}
-                    </p>
-                  )}
-                  {membership.statusLabel && (
-                    <small>{membership.statusLabel}</small>
-                  )}
-                  {membership.validUntil && (
-                    <small>
-                      {c.validUntil.replace(
-                        "{date}",
-                        date(membership.validUntil),
-                      )}
-                    </small>
-                  )}
-                </article>
-              ))}
+              {localMemberships ??
+                personal.memberships.map((membership) => (
+                  <article className="cp-membership" key={membership.id}>
+                    <h3>{membership.name}</h3>
+                    {membership.remainingVisits !== null && (
+                      <p>
+                        {c.visits.replace(
+                          "{n}",
+                          String(membership.remainingVisits),
+                        )}
+                      </p>
+                    )}
+                    {membership.statusLabel && (
+                      <small>{membership.statusLabel}</small>
+                    )}
+                    {membership.validUntil && (
+                      <small>
+                        {c.validUntil.replace(
+                          "{date}",
+                          date(membership.validUntil),
+                        )}
+                      </small>
+                    )}
+                  </article>
+                ))}
             </section>
           )}
         {page.modules.memberships &&

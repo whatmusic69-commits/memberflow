@@ -54,7 +54,7 @@
 }
 .why-index {
   font-size: 10px;
-  color: var(--accent);
+  color: #b8401c;
   padding-top: 4px;
 }
 .why-reasons h3 {
@@ -159,7 +159,7 @@
   padding-top: 15px;
 }
 .benefits-list > div > span {
-  color: var(--accent);
+  color: #b8401c;
   font-size: 9px;
 }
 .benefits-list h3 {

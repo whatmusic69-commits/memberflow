@@ -12,6 +12,17 @@ export function ActivityChart({
   const c = customersContent[locale];
   const rows = statistics.trend;
   const max = Math.max(1, ...rows.flatMap((r) => [r.visits, r.newCustomers]));
+  const dateFormatter = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "short",
+  });
+  const labelIndexes = new Set(
+    Array.from({ length: Math.min(5, rows.length) }, (_, index) =>
+      Math.round(
+        (index * (rows.length - 1)) / Math.max(1, Math.min(5, rows.length) - 1),
+      ),
+    ),
+  );
   return (
     <section className="mf-panel mf-customers-chart">
       <div className="mf-panel-heading">
@@ -58,6 +69,7 @@ export function ActivityChart({
                 const x = 35 + i * step;
                 return (
                   <g key={r.date}>
+                    <title>{`${dateFormatter.format(new Date(r.date))}: ${c.visits} — ${r.visits}, ${c.newCustomers} — ${r.newCustomers}`}</title>
                     <rect
                       x={x}
                       y={140 - (r.visits / max) * 120}
@@ -74,18 +86,23 @@ export function ActivityChart({
                       rx="2"
                       fill="var(--accent)"
                     />
-                    <text
-                      x={x + step * 0.3}
-                      y="162"
-                      textAnchor="middle"
-                      fontSize="10"
-                      fill="var(--muted)"
-                    >
-                      {new Intl.DateTimeFormat(locale, {
-                        day: "numeric",
-                        month: "short",
-                      }).format(new Date(r.date))}
-                    </text>
+                    {labelIndexes.has(i) && (
+                      <text
+                        x={x + step * 0.3}
+                        y="162"
+                        textAnchor={
+                          i === 0
+                            ? "start"
+                            : i === rows.length - 1
+                              ? "end"
+                              : "middle"
+                        }
+                        fontSize="10"
+                        fill="var(--muted)"
+                      >
+                        {dateFormatter.format(new Date(r.date))}
+                      </text>
+                    )}
                   </g>
                 );
               })}
@@ -97,9 +114,9 @@ export function ActivityChart({
               <table>
                 <thead>
                   <tr>
-                    <th>{c.period}</th>
-                    <th>{c.visits}</th>
-                    <th>{c.newCustomers}</th>
+                    <th scope="col">{c.period}</th>
+                    <th scope="col">{c.visits}</th>
+                    <th scope="col">{c.newCustomers}</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -29,6 +29,13 @@ export type CampaignStatus =
   | "PAUSED"
   | "COMPLETED";
 export interface BusinessSummary {
+  address?: string;
+  openingHours?: string;
+  phone?: string;
+  email?: string;
+  coverUrl?: string | null;
+  tiktok?: string;
+  facebook?: string;
   country?: string;
   description?: string;
   website?: string;
@@ -54,8 +61,15 @@ export type CustomerEventType =
   | "QR_SCANNED"
   | "VISIT_CREATED"
   | "STAMP_ADDED"
+  | "POINTS_ADDED"
   | "REWARD_EARNED"
   | "REWARD_REDEEMED"
+  | "MEMBERSHIP_ASSIGNED"
+  | "MEMBERSHIP_FROZEN"
+  | "MEMBERSHIP_RESUMED"
+  | "MEMBERSHIP_CANCELLED"
+  | "MEMBERSHIP_ACCESS_VERIFIED"
+  | "MEMBERSHIP_EXPIRED"
   | "SUBSCRIPTION_USED"
   | "OFFER_REDEEMED"
   | "CUSTOMER_RETURNED";

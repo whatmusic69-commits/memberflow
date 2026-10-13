@@ -1,0 +1,217 @@
+{
+  "nav": [
+    "Solutions",
+    "Integrations",
+    "Help"
+  ],
+  "solutionsTitle": "Made for businesses like yours.",
+  "solutionsIntro": "From your neighbourhood coffee shop to your favourite fitness studio, MemberFlow helps turn everyday visits into lasting customer relationships.",
+  "problem": "The everyday challenge",
+  "tools": "A reason to come back",
+  "scenario": "The customer journey",
+  "demo": "Illustrative product preview",
+  "ctaTitle": "Different businesses. One simpler way to grow.",
+  "ctaText": "Start with your business. Shape the customer experience around the people who visit it.",
+  "start": "Set up your business",
+  "integrationTitle": "Your tools, working together.",
+  "integrationIntro": "A clear path from discovering your business to joining your programme and keeping a digital card close.",
+  "walletCategory": "Digital Wallets",
+  "socialCategory": "Social & Distribution",
+  "planned": "Planned workflow",
+  "linkOnly": "Customer Page link",
+  "walletNote": "Pass updates and notifications are different. A supported card can reflect changes to a programme. Notification delivery depends on the provider, device and customer settings; push notifications are not guaranteed.",
+  "integrationNote": "These are intended workflows represented in the product. Availability depends on business activation and a supported backend connection. No platform is connected by visiting this page.",
+  "walletSteps": [
+    "Open the business Customer Page via a link or QR.",
+    "Join an available programme and open your customer profile.",
+    "Use the provider’s save action when Wallet issuance is enabled.",
+    "Return to the card or Customer Page to check your rewards."
+  ],
+  "walletDescriptions": [
+    "Keep a digital loyalty card in Apple Wallet on supported Apple devices. The issued pass can display programme details and a customer QR.",
+    "Keep a digital loyalty card in Google Wallet on supported devices. Saving the card requires a valid provider link issued for the customer."
+  ],
+  "socialDescriptions": [
+    "Prepare campaign content and a route to your Customer Page; publishing requires authorised platform access.",
+    "Display your Facebook link on the Customer Page so visitors can open your business profile. Automatic campaign publishing is not confirmed.",
+    "Prepare a campaign for your TikTok audience, with a link to your Customer Page. Publishing requires a supported connection.",
+    "Prepare visual campaign content for Pinterest. Server-side publishing and platform permissions are required.",
+    "Google Business is represented as a distribution channel in the workspace. The exact publishing capabilities remain to be confirmed."
+  ],
+  "helpTitle": "How can we help?",
+  "helpIntro": "Practical guides to setting up your business and understanding your customer experience.",
+  "search": "Search guides",
+  "all": "All topics",
+  "noResults": "No guides found. Try another phrase or topic.",
+  "results": "guides",
+  "helpHome": "Help Center",
+  "related": "Related guides",
+  "contents": "In this guide",
+  "previewNote": "Some screens currently show local configuration previews. Saving a preview does not activate billing, publish a campaign or issue a Wallet card.",
+  "comparisonTitle": "Find the right fit.",
+  "comparisonNote": "A check marks a listed feature. A dash means availability is not confirmed in the catalog.",
+  "unknown": "Not specified",
+  "listed": "Listed",
+  "comparisonRows": [
+    "Active customers",
+    "Business locations",
+    "Loyalty programmes",
+    "Customer Page",
+    "Wallet support",
+    "Campaign tools",
+    "CRM",
+    "Analytics",
+    "Staff access",
+    "Automations",
+    "Visit packages",
+    "Customer export",
+    "Subscriptions & renewals",
+    "Priority support",
+    "Personal offers"
+  ],
+  "planFeatures": "Full catalog features",
+  "pricingFaqTitle": "A few things to know.",
+  "pricingFaq": [
+    [
+      "Are these final prices?",
+      "These are the current display prices. Production pricing, availability and access are confirmed by the business plan catalog and billing flow."
+    ],
+    [
+      "Does choosing a plan activate my account?",
+      "No. Plan selection is a step in setup. Payment or trial activation must be confirmed before access is activated."
+    ],
+    [
+      "Does “not specified” mean a feature is excluded?",
+      "No. The current catalog does not define every entitlement. Check the confirmed plan details before choosing."
+    ]
+  ],
+  "legalPending": "The approved document will appear here after legal review. The final text is not yet available.",
+  "industries": [
+    {
+      "name": "Cafés & Restaurants",
+      "problem": "A first visit is easy. Giving guests a reason to return takes care.",
+      "solution": "Digital stamps, rewards and a simple QR entry point keep the next visit in sight.",
+      "tools": [
+        "Digital stamps",
+        "Rewards",
+        "QR registration",
+        "Wallet",
+        "Guest offers"
+      ],
+      "steps": [
+        "Buy a coffee",
+        "Scan the business QR",
+        "Collect a stamp",
+        "Save a Wallet card",
+        "Return for a reward"
+      ],
+      "business": "Neighbourhood café",
+      "cardTitle": "Your coffee card",
+      "detail": "Stamps",
+      "reward": "A coffee on your next completed card",
+      "kind": "stamps"
+    },
+    {
+      "name": "Beauty & Wellness",
+      "problem": "Busy schedules make regular appointments easy to miss.",
+      "solution": "Bring visit history, loyalty programmes and relevant offers into one customer experience.",
+      "tools": [
+        "Loyalty",
+        "Memberships",
+        "Visit history",
+        "Inactive customer offers"
+      ],
+      "steps": [
+        "Visit the salon",
+        "Open the Customer Page",
+        "Join a programme",
+        "Check previous visits",
+        "Plan the next appointment"
+      ],
+      "business": "Neighbourhood salon",
+      "cardTitle": "Your care routine",
+      "detail": "Recent visit",
+      "reward": "Your next visit, in one place",
+      "kind": "history"
+    },
+    {
+      "name": "Fitness & Studios",
+      "problem": "Keeping members engaged starts with a clear view of their visits.",
+      "solution": "Memberships and visit packages give customers and staff a shared reference.",
+      "tools": [
+        "Memberships",
+        "Visit packages",
+        "Staff QR scanner",
+        "Customer Page"
+      ],
+      "steps": [
+        "Choose a visit package",
+        "Open the customer QR",
+        "Staff scan at arrival",
+        "View the recorded visit",
+        "Check the package"
+      ],
+      "business": "Local studio",
+      "cardTitle": "Your studio pass",
+      "detail": "Visit package",
+      "reward": "Yoga · a place for your next session",
+      "kind": "package"
+    },
+    {
+      "name": "Retail",
+      "problem": "After a purchase, the connection can end at the checkout.",
+      "solution": "Give customers a place for points, coupons and relevant offers beyond the receipt.",
+      "tools": [
+        "Points",
+        "Coupons",
+        "Campaigns",
+        "Wallet",
+        "Customer segments"
+      ],
+      "steps": [
+        "Make a purchase",
+        "Join through QR",
+        "Open the loyalty programme",
+        "Keep the digital card",
+        "Explore a new offer"
+      ],
+      "business": "Neighbourhood shop",
+      "cardTitle": "Your shop card",
+      "detail": "Your rewards",
+      "reward": "An offer for your next visit",
+      "kind": "offer"
+    },
+    {
+      "name": "Local Services",
+      "problem": "Repeat customers need an easy way to find you again.",
+      "solution": "Keep customer history and relevant offers close to your business details.",
+      "tools": [
+        "Customer database",
+        "Personal offers",
+        "Interaction history",
+        "Customer Page"
+      ],
+      "steps": [
+        "Visit the business",
+        "Open its Customer Page",
+        "Save the business link",
+        "Check your history",
+        "Find a relevant offer"
+      ],
+      "business": "Local service",
+      "cardTitle": "Your customer page",
+      "detail": "Visit history",
+      "reward": "Your business details, easy to find",
+      "kind": "history"
+    }
+  ],
+  "comparisonLabels": [
+    "Compare plans",
+    "Capabilities",
+    "Business size",
+    "Customer experience",
+    "Growth tools",
+    "Operations & support"
+  ],
+  "comparisonScrollHint": "Scroll sideways to compare all plans"
+}

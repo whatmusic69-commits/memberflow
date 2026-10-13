@@ -40,3 +40,13 @@ export function getDevelopmentPlans(c: OnboardingContent): Plan[] {
   }));
 }
 export const onboardingMode = "preview" as const;
+
+/** Exact positions in the owner-approved translated feature lists; no inherited entitlements. */
+export const developmentComparisonFeatures: Record<
+  string,
+  Partial<Record<number, number>>
+> = {
+  starter: { 2: 1, 3: 0, 7: 4 },
+  growth: { 14: 0, 9: 1, 10: 2, 11: 3 },
+  business: { 7: 1, 8: 2, 12: 3, 13: 4 },
+};

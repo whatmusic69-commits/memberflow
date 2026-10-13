@@ -15,6 +15,7 @@ export const campaignChannels = [
   "Google Wallet",
 ] as const;
 export interface CampaignDraft {
+  archived?: boolean;
   id: string;
   businessId: string;
   name: string;

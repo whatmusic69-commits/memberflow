@@ -1,0 +1,209 @@
+[
+  {
+    "slug": "getting-started",
+    "category": "Getting Started",
+    "title": "Set up your first business",
+    "summary": "Understand the steps from owner account to workspace.",
+    "sections": [
+      {
+        "title": "Follow the setup sequence",
+        "paragraphs": [
+          "Start with the owner account, then enter your business name, type and location. The owner and business are separate: one user may manage multiple businesses.",
+          "Choose your goals, optionally add a public profile, then select a plan. Wallet, loyalty and staff setup come after payment or trial activation."
+        ]
+      },
+      {
+        "title": "Know when setup is complete",
+        "paragraphs": [
+          "Only a confirmed payment or trial can unlock the ready step and workspace. Selecting a price is not a subscription activation.",
+          "In the development preview, account and plan steps are illustrative. Do not use it as proof that a business account or subscription exists."
+        ]
+      }
+    ],
+    "related": ["business-setup", "customer-page"]
+  },
+  {
+    "slug": "business-setup",
+    "category": "Business Setup",
+    "title": "Keep your business details clear",
+    "summary": "Find the right place for business and public presentation settings.",
+    "sections": [
+      {
+        "title": "Review your business profile",
+        "paragraphs": [
+          "Open Settings in the workspace to review the business details. Keep the name and location recognisable to customers.",
+          "The business profile and the owner account describe different things. Update each in its own section."
+        ]
+      },
+      {
+        "title": "Prepare the public presentation",
+        "paragraphs": [
+          "Open Customer Page to edit the public description, branding and contact links. Use the preview to check how a customer will see them.",
+          "Production saving, media uploads and public slug availability need the backend. A local preview is not a published page."
+        ]
+      }
+    ],
+    "related": ["customer-page", "loyalty-rewards"]
+  },
+  {
+    "slug": "customer-page",
+    "category": "Customer Page",
+    "title": "Prepare your Customer Page and business QR",
+    "summary": "Use one public entry point for the customer experience.",
+    "sections": [
+      {
+        "title": "Configure the page",
+        "paragraphs": [
+          "Open Customer Page in the dashboard. Review your description, contact information, social links and visual branding.",
+          "The page presents the business and available programmes or offers. Configure those in their own workspace sections; do not duplicate them in the description."
+        ]
+      },
+      {
+        "title": "Share the right entry point",
+        "paragraphs": [
+          "The public page uses /b/{business slug}. Its business QR opens this same experience. QR and poster presentation come from the Customer Page configuration.",
+          "A public business page and a private customer profile are different. The backend handles customer identification, account linkage and activation. Preview changes are not evidence of publication."
+        ]
+      }
+    ],
+    "related": ["loyalty-rewards", "wallet"]
+  },
+  {
+    "slug": "loyalty-rewards",
+    "category": "Loyalty & Rewards",
+    "title": "Prepare a loyalty programme",
+    "summary": "Understand configuration, rewards and customer progress.",
+    "sections": [
+      {
+        "title": "Choose the programme structure",
+        "paragraphs": [
+          "Open Loyalty to review a stamp or points programme and its reward. Keep the explanation and eligibility clear to the customer.",
+          "Use local drafts to review the configuration. A draft does not award points or stamps to anyone."
+        ]
+      },
+      {
+        "title": "Read customer progress correctly",
+        "paragraphs": [
+          "Customer progress comes from confirmed business records. The frontend does not calculate earned loyalty or turn a visit into a sale.",
+          "Reward eligibility and redemption require backend validation. Do not treat illustrative previews as live balances."
+        ]
+      }
+    ],
+    "related": ["wallet", "customers-crm"]
+  },
+  {
+    "slug": "wallet",
+    "category": "Apple Wallet & Google Wallet",
+    "title": "Understand digital cards",
+    "summary": "Learn how saving a card differs from receiving notifications.",
+    "sections": [
+      {
+        "title": "Follow the customer path",
+        "paragraphs": [
+          "Customers enter through the business QR or link and open the Customer Page. After joining an available programme, they can use a supported Wallet save action.",
+          "Apple Wallet and Google Wallet need a valid card or provider URL issued for the customer. If no action is available, a preview cannot issue a real pass."
+        ]
+      },
+      {
+        "title": "Understand updates",
+        "paragraphs": [
+          "A pass update can change displayed programme information. It is separate from a notification being delivered.",
+          "Notifications depend on provider support, the device and customer settings. Delivery on every device is not guaranteed."
+        ]
+      }
+    ],
+    "related": ["customers-crm", "staff-scanner"]
+  },
+  {
+    "slug": "customers-crm",
+    "category": "Customers & CRM",
+    "title": "Read customer records and activity",
+    "summary": "Use the customer list, profiles and analytics without guessing results.",
+    "sections": [
+      {
+        "title": "Find the customer",
+        "paragraphs": [
+          "Open Customers to review the business-scoped list. Select a customer to see their profile, available contact information and recorded activity.",
+          "Contact edits in development are tab-local drafts. They do not create visits, sales or customer history."
+        ]
+      },
+      {
+        "title": "Interpret the records",
+        "paragraphs": [
+          "Visits, inactivity, loyalty, memberships and spending come from the business backend. A recorded visit is not automatically a sale.",
+          "An empty list means no customer data is available for this business. Example records, where shown, are illustrative."
+        ]
+      }
+    ],
+    "related": ["staff-scanner", "campaigns-offers"]
+  },
+  {
+    "slug": "staff-scanner",
+    "category": "Staff & QR Scanner",
+    "title": "Prepare staff access and scanning",
+    "summary": "Distinguish the business entry QR from a customer identification QR.",
+    "sections": [
+      {
+        "title": "Choose the correct QR",
+        "paragraphs": [
+          "The business QR opens the public Customer Page. The customer QR identifies the customer during a staff workflow.",
+          "Use the Staff section to review the scanning interface. In production, access and allowed actions depend on confirmed staff permissions."
+        ]
+      },
+      {
+        "title": "Confirm the result",
+        "paragraphs": [
+          "A scan alone is not proof that a visit was recorded. The backend must validate the customer, business and permitted action.",
+          "Development previews do not accrue loyalty or create visit history. Staff roles and permissions are enforced by the backend."
+        ]
+      }
+    ],
+    "related": ["campaigns-offers", "billing-plans"]
+  },
+  {
+    "slug": "campaigns-offers",
+    "category": "Campaigns & Offers",
+    "title": "Prepare an offer without publishing it",
+    "summary": "Review content and distribution before a live campaign exists.",
+    "sections": [
+      {
+        "title": "Prepare the draft",
+        "paragraphs": [
+          "Open Offers to review the customer-facing offer, then Campaigns to prepare campaign content and intended channels.",
+          "Keep the title, description and customer entry link consistent. Social distribution depends on supported platform authorisation."
+        ]
+      },
+      {
+        "title": "Separate preview from publication",
+        "paragraphs": [
+          "Development campaign drafts stay in the current tab. Previewing or saving a draft does not publish to social networks or send Wallet updates.",
+          "A live campaign needs backend publishing, platform permissions and a confirmed result. The integrations screen must receive a valid authorisation action before an account can be connected."
+        ]
+      }
+    ],
+    "related": ["billing-plans", "getting-started"]
+  },
+  {
+    "slug": "billing-plans",
+    "category": "Billing & Plans",
+    "title": "Compare plans and understand activation",
+    "summary": "Know what displayed prices and limits mean.",
+    "sections": [
+      {
+        "title": "Compare the catalog",
+        "paragraphs": [
+          "Open Pricing to compare monthly and annual display prices, active-customer limits, locations and explicitly listed features.",
+          "Not specified is not the same as unavailable or unlimited. The current catalog does not define every entitlement."
+        ]
+      },
+      {
+        "title": "Confirm before activation",
+        "paragraphs": [
+          "Choosing a plan does not charge a card or activate a subscription. Payment or trial activation needs confirmation from the backend.",
+          "Final pricing, availability and access come from the production plan catalog. Do not treat a development plan selection as a billing record."
+        ]
+      }
+    ],
+    "related": ["getting-started", "business-setup"]
+  }
+]

@@ -348,7 +348,7 @@ a:hover {
 }
 .campaign-number {
   margin-left: auto;
-  color: #939689;
+  color: var(--muted);
 }
 .campaign-image {
   position: relative;
@@ -3126,7 +3126,7 @@ a:hover {
   border-radius: 3px;
 }
 .relationship-quiet .loyalty-count {
-  color: #7d7667;
+  color: var(--muted);
 }
 .relationship-quiet .loyalty-count > div > span {
   background: #baa183;
@@ -5639,4 +5639,42 @@ dialog.mf-drawer[open][data-closing] { animation-name:mf-modal-exit !important; 
  body:has(.mf-connection-poster) .mf-route-content,body:has(.mf-connection-poster) .mf-workspace,body:has(.mf-connection-poster) .mf-main,body:has(.mf-connection-poster) .mf-content,body:has(.mf-connection-poster) .mf-connection-page,body:has(.mf-connection-poster) .mf-print-layout,body:has(.mf-connection-poster) .mf-print-preview { display:block!important;position:static!important;width:210mm!important;max-width:none!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;transform:none!important;animation:none!important;opacity:1!important;overflow:visible!important; }
  .mf-connection-poster { width:210mm;height:297mm;box-sizing:border-box;border:0;box-shadow:none;aspect-ratio:auto;padding:17mm 20mm 28mm;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact; }
  .mf-poster-business { font-size:25pt; } .mf-poster-invitation h2 { font-size:29pt; } .mf-poster-invitation p { font-size:12pt; } .mf-poster-city,.mf-poster-scan { font-size:11pt; } .mf-poster-logo { width:22mm;max-width:none; } .mf-poster-access { font-size:9pt; } .mf-poster-connector { height:9mm; } .mf-poster-wordmark { font-size:15pt; } .mf-connection-poster>footer { bottom:12mm;left:20mm;right:20mm; } .mf-connection-poster>footer small { font-size:8pt; }
+}
+
+/* Shared local membership presentation for CRM, customer preview and scanner. */
+.mf-membership-list {display:grid;gap:14px;min-width:0;}
+.mf-membership-card {border:1px solid #deded4;border-radius:16px;padding:18px;background:#faf9f2;min-width:0;overflow-wrap:anywhere;}
+.mf-membership-card .mf-panel-heading {display:flex;gap:10px;justify-content:space-between;align-items:start;flex-wrap:wrap;}
+.mf-membership-card .mf-status {font-size:12px;padding:4px 9px;border-radius:20px;background:#e6ecdf;}
+.mf-membership-card p {margin:10px 0;}
+.mf-membership-card dl {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;font-size:13px;}
+.mf-membership-card dd {margin:0;text-align:right;}
+.mf-membership-card progress {width:100%;height:6px;accent-color:#739176;}
+.mf-membership-card details {margin-top:14px;font-size:13px;}
+.mf-membership-card summary {cursor:pointer;}
+.mf-membership-card ol {padding-left:18px;display:grid;gap:8px;}
+.mf-membership-actions {display:flex;flex-wrap:wrap;gap:12px;margin:14px 0;}
+.mf-membership-statistics {display:flex;gap:24px;flex-wrap:wrap;border-top:1px solid #deded4;border-bottom:1px solid #deded4;padding:18px 0;}
+.mf-membership-statistics div {display:grid;gap:5px;}
+.mf-membership-statistics strong {font-size:24px;}
+.mf-membership-statistics span {font-size:13px;}
+.mf-membership-form {display:grid;gap:15px;padding:20px;}
+.mf-membership-form input,.mf-membership-form select {min-width:0;max-width:100%;}
+
+/* Keep native select behaviour, with a consistent inset for the disclosure arrow. */
+:root select:not([multiple]):not([size]) {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m4 6 4 4 4-4' stroke='%23353d35' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 12px;
+}
+@media (forced-colors: active) {
+  :root select:not([multiple]):not([size]) {
+    appearance: auto;
+    -webkit-appearance: auto;
+    background-image: none;
+  }
 }

@@ -9,6 +9,7 @@ import { OverviewSkeleton } from "@/features/dashboard/overview";
 import { CustomerPageView } from "./page-view";
 import { CustomerImage } from "./customer-image";
 import { publicProjection, safeLink } from "./public-model";
+import { prototypeContent } from "@/content/prototype";
 import { customerPageService, previewUrl } from "./service";
 import type {
   CustomerPageConfig,
@@ -117,7 +118,7 @@ export function CustomerPageEditor() {
           throw new Error("Business mismatch");
         setConfig(value);
         setPublicUrl(
-          demo ? previewUrl(value, "en") : safeLink(value.publicUrl),
+          demo ? previewUrl(value, locale) : safeLink(value.publicUrl),
         );
       })
       .catch(() => {
@@ -127,7 +128,7 @@ export function CustomerPageEditor() {
         if (!controller.signal.aborted) setPending(false);
       });
     return () => controller.abort();
-  }, [business, demo, retry]);
+  }, [business, demo, retry, locale]);
   useEffect(() => {
     let disposed = false;
     if (view === "customer")
@@ -293,8 +294,8 @@ export function CustomerPageEditor() {
           <a
             className="button"
             href={publicUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={demo ? undefined : "_blank"}
+            rel={demo ? undefined : "noopener noreferrer"}
           >
             {c.open}
             <ArrowUpRight size={16} />
@@ -304,6 +305,11 @@ export function CustomerPageEditor() {
       <div className="cp-editor-layout">
         <div>
           <section className="cp-editor-status">
+            {demo && (
+              <p className="mf-draft-notice">
+                {prototypeContent[locale].notice}
+              </p>
+            )}
             <div>
               <span className="mf-kicker">{c.status}</span>
               <strong className="mf-status">{c[state.status]}</strong>
@@ -329,23 +335,29 @@ export function CustomerPageEditor() {
               </div>
             )}
             <div className="cp-editor-status-actions">
-            {writable && (
-              <button
+              {writable && (
+                <button
+                  className="button"
+                  disabled={busy || !!uploading}
+                  onClick={() => void changeStatus()}
+                >
+                  {demo
+                    ? state.status === "ACTIVE"
+                      ? prototypeContent[locale].disable
+                      : prototypeContent[locale].activate
+                    : state.status === "ACTIVE"
+                      ? c.disable
+                      : c.activate}
+                  <ArrowUpRight size={15} />
+                </button>
+              )}
+              <Link
                 className="button"
-                disabled={busy || !!uploading}
-                onClick={() => void changeStatus()}
+                href={href("customers").replace("?", "/connection?")}
               >
-                {state.status === "ACTIVE" ? c.disable : c.activate}
-                <ArrowUpRight size={15} />
-              </button>
-            )}
-            <Link
-              className="button"
-              href={href("customers").replace("?", "/connection?")}
-            >
-              <QrCode size={16} />
-              {c.qr}
-            </Link>
+                <QrCode size={16} />
+                {c.qr}
+              </Link>
             </div>
           </section>
           <form

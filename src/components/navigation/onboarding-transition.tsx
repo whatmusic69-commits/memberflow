@@ -93,9 +93,24 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
       );
       return () => animation?.cancel();
     }
-    const arrived =
-      pathname ===
-      new URL(destination.current, window.location.origin).pathname;
+    const destinationUrl = new URL(
+      destination.current,
+      window.location.origin,
+    );
+    const arrived = pathname === destinationUrl.pathname;
+    // The shared route wrapper can remain visible, so Next's automatic scroll
+    // handling may keep the previous page's position. Reset after arrival.
+    let firstFrame = 0;
+    let secondFrame = 0;
+    if (arrived && !destinationUrl.hash) {
+      const reset = () =>
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      reset();
+      firstFrame = requestAnimationFrame(() => {
+        reset();
+        secondFrame = requestAnimationFrame(reset);
+      });
+    }
     const delay = arrived
       ? Math.max(0, 300 - (performance.now() - started.current))
       : 0;
@@ -116,7 +131,11 @@ export function OnboardingTransition({ children }: { children: ReactNode }) {
         timers.current.push(setTimeout(() => setPhase("idle"), 320));
       }
     }, delay);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+    };
   }, [pathname]);
   useEffect(() => () => clearTimers(), []);
   return (

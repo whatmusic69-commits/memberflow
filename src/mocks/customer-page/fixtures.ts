@@ -7,12 +7,12 @@ import type {
 export function emptyPageConfig(business: BusinessSummary): CustomerPageConfig {
   return {
     businessId: business.id,
-    slug: "your-coffee",
+    slug: `preview-${encodeURIComponent(business.id)}`,
     publicUrl: null,
     status: "DRAFT",
     branding: {
       logoUrl: business.logoUrl,
-      coverUrl: null,
+      coverUrl: business.coverUrl || null,
       accent: business.accent || "#c84a27",
     },
     business: {
@@ -20,16 +20,16 @@ export function emptyPageConfig(business: BusinessSummary): CustomerPageConfig {
       category: business.category,
       description: business.description || "",
       city: business.city,
-      address: "",
-      openingHours: "",
-      phone: "",
-      email: "",
+      address: business.address || "",
+      openingHours: business.openingHours || "",
+      phone: business.phone || "",
+      email: business.email || "",
     },
     modules: { offers: true, loyalty: true, memberships: true, social: true },
     social: {
       instagram: business.instagram || "",
-      tiktok: "",
-      facebook: "",
+      tiktok: business.tiktok || "",
+      facebook: business.facebook || "",
       website: business.website || "",
     },
     invitation: { headline: "", message: "" },

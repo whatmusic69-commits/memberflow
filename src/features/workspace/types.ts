@@ -1,6 +1,7 @@
 export type ModuleId =
   "customers" | "loyalty" | "memberships" | "offers" | "automations";
 interface Base {
+  businessId?: string;
   id: string;
   name: string;
   archived: boolean;
@@ -43,6 +44,13 @@ export interface ModuleRecords {
   automations: AutomationDraft;
 }
 export interface BusinessSettingsDraft {
+  address?: string;
+  openingHours?: string;
+  phone?: string;
+  email?: string;
+  coverUrl?: string | null;
+  tiktok?: string;
+  facebook?: string;
   name: string;
   category: string;
   city: string;
@@ -56,5 +64,5 @@ export interface BusinessSettingsDraft {
 }
 export type RecordInput<K extends ModuleId> = Omit<
   ModuleRecords[K],
-  "id" | "archived" | "updatedAt"
+  "id" | "businessId" | "archived" | "updatedAt"
 >;

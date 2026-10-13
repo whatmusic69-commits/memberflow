@@ -1,3 +1,7 @@
+import {
+  prototypeDirectory,
+  prototypeDetail,
+} from "@/features/prototype/customer-model";
 import type {
   CustomerSummary,
   CustomerDetail,
@@ -5,7 +9,7 @@ import type {
   CustomerQuery,
 } from "@/features/customers/types";
 import { readLocalRecords } from "@/features/workspace/repository";
-const customers: CustomerSummary[] = [
+export const customers: CustomerSummary[] = [
   {
     id: "anna",
     name: "Anna Ozola",
@@ -52,6 +56,13 @@ const customers: CustomerSummary[] = [
     loyalty: null,
   },
 ];
+export const customerMembershipFixture = {
+  id: "coffee-club",
+  name: "Coffee Club",
+  remainingVisits: 8,
+  validUntil: "2026-11-01",
+  status: "ACTIVE",
+} as const;
 const emptyStats = {
   totalCustomers: 0,
   newCustomers: 0,
@@ -67,18 +78,29 @@ function records(businessId: string) {
     new URLSearchParams(window.location.search).get("demo") ?? "",
   );
   const drafts = readLocalRecords(businessId, "customers");
+  const local = prototypeDirectory(businessId, {
+    period: 30,
+    segment: "all",
+    search: "",
+    page: 1,
+  }).customers;
   const base = active ? customers : [];
   return [
-    ...drafts.map((d) => ({
-      ...base.find((c) => c.id === d.id),
-      ...d,
-      joinedAt: base.find((c) => c.id === d.id)?.joinedAt ?? null,
-      lastVisitAt: base.find((c) => c.id === d.id)?.lastVisitAt ?? null,
-      visitCount: base.find((c) => c.id === d.id)?.visitCount ?? null,
-      state: base.find((c) => c.id === d.id)?.state ?? ("UNKNOWN" as const),
-      spending: base.find((c) => c.id === d.id)?.spending ?? null,
-      loyalty: base.find((c) => c.id === d.id)?.loyalty ?? null,
-    })),
+    ...drafts.map((d) =>
+      base.some((c) => c.id === d.id)
+        ? {
+            ...base.find((c) => c.id === d.id),
+            ...d,
+            joinedAt: base.find((c) => c.id === d.id)?.joinedAt ?? null,
+            lastVisitAt: base.find((c) => c.id === d.id)?.lastVisitAt ?? null,
+            visitCount: base.find((c) => c.id === d.id)?.visitCount ?? null,
+            state:
+              base.find((c) => c.id === d.id)?.state ?? ("UNKNOWN" as const),
+            spending: base.find((c) => c.id === d.id)?.spending ?? null,
+            loyalty: base.find((c) => c.id === d.id)?.loyalty ?? null,
+          }
+        : local.find((c) => c.id === d.id)!,
+    ),
     ...base.filter((c) => !drafts.some((d) => d.id === c.id)),
   ];
 }
@@ -86,6 +108,12 @@ export function directoryFixture(
   businessId: string,
   q: CustomerQuery,
 ): CustomerDirectory {
+  const fixtureId = "demo-business";
+  const populated = ["active", "partial", "manager"].includes(
+    new URLSearchParams(window.location.search).get("demo") ?? "",
+  );
+  if (!populated || businessId !== fixtureId)
+    return prototypeDirectory(businessId, q);
   const recordsForBusiness = records(businessId);
   const all = recordsForBusiness.filter((c) => !c.archived);
   const active = ["active", "partial", "manager"].includes(
@@ -151,6 +179,14 @@ export function directoryFixture(
   };
 }
 export function detailFixture(businessId: string, id: string): CustomerDetail {
+  if (
+    !customers.some((c) => c.id === id) ||
+    businessId !== "demo-business" ||
+    !["active", "partial", "manager"].includes(
+      new URLSearchParams(window.location.search).get("demo") ?? "",
+    )
+  )
+    return prototypeDetail(businessId, id);
   const customer = records(businessId).find((c) => c.id === id);
   if (!customer) throw new Error("not found");
   const known =
@@ -160,18 +196,7 @@ export function detailFixture(businessId: string, id: string): CustomerDetail {
     customer,
     rewardsEarned: known ? 1 : null,
     offersRedeemed: known ? 1 : null,
-    memberships:
-      known && id !== "robert"
-        ? [
-            {
-              id: "coffee-club",
-              name: "Coffee Club",
-              remainingVisits: 8,
-              validUntil: "2026-11-01",
-              status: "ACTIVE",
-            },
-          ]
-        : [],
+    memberships: known && id !== "robert" ? [customerMembershipFixture] : [],
     events: known
       ? [
           {

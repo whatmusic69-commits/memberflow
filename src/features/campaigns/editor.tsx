@@ -11,6 +11,8 @@ import {
   type CampaignDraft,
   type CampaignInput,
 } from "./types";
+import { prototypeContent } from "@/content/prototype";
+import { readLocalRecords } from "@/features/workspace/repository";
 import { getCampaignService } from "./service";
 const empty: CampaignInput = {
   name: "",
@@ -56,6 +58,11 @@ export function CampaignEditor({
     key: K,
     value: CampaignInput[K],
   ) => setInput((previous) => ({ ...previous, [key]: value }));
+  const offers = data ? readLocalRecords(data.business.id, "offers") : [];
+  const sourceOffer =
+    input.source?.kind === "offer"
+      ? offers.find((o) => o.id === input.source!.id)
+      : undefined;
   const demo =
     data?.source === "demo" && process.env.NODE_ENV === "development";
   async function save(event: React.FormEvent<HTMLFormElement>) {
@@ -68,6 +75,7 @@ export function CampaignEditor({
     lock.current = true;
     setBusy(true);
     setError("");
+    let saved = false;
     try {
       const result = await getCampaignService(true).save(
         data.business.id,
@@ -78,12 +86,19 @@ export function CampaignEditor({
         },
         draft?.id,
       );
+      saved = true;
       animateDialogClose(dialog.current, () => onSaved(result));
-    } catch {
-      setError(c.saveError);
+    } catch (error) {
+      setError(
+        error instanceof Error && error.message === "reference"
+          ? prototypeContent[locale].missingOffer
+          : c.saveError,
+      );
     } finally {
-      lock.current = false;
-      setBusy(false);
+      if (!saved) {
+        lock.current = false;
+        setBusy(false);
+      }
     }
   }
   return (
@@ -130,7 +145,11 @@ export function CampaignEditor({
             <select
               value={input.kind}
               onChange={(e) =>
-                field("kind", e.target.value as CampaignInput["kind"])
+                setInput((previous) => ({
+                  ...previous,
+                  kind: e.target.value as CampaignInput["kind"],
+                  source: undefined,
+                }))
               }
             >
               {campaignKinds.map((kind) => (
@@ -140,10 +159,42 @@ export function CampaignEditor({
               ))}
             </select>
           </label>
+          {demo && input.kind === "offer" && (
+            <label className="mf-form-field">
+              <span>{prototypeContent[locale].source}</span>
+              <select
+                value={input.source?.kind === "offer" ? input.source.id : ""}
+                onChange={(e) =>
+                  setInput((previous) => ({
+                    ...previous,
+                    source: e.target.value
+                      ? { kind: "offer", id: e.target.value }
+                      : undefined,
+                  }))
+                }
+              >
+                <option value="">{prototypeContent[locale].none}</option>
+                {input.source?.kind === "offer" && !sourceOffer && (
+                  <option value={input.source.id} disabled>
+                    {prototypeContent[locale].unavailableOffer}
+                  </option>
+                )}
+                {offers
+                  .filter((o) => !o.archived || o.id === input.source?.id)
+                  .map((o) => (
+                    <option key={o.id} value={o.id} disabled={o.archived}>
+                      {o.name}
+                    </option>
+                  ))}
+              </select>
+              <small>{prototypeContent[locale].linked}</small>
+            </label>
+          )}
           <label className="mf-form-field">
             <span>{c.description}</span>
             <textarea
-              value={input.description}
+              readOnly={!!sourceOffer}
+              value={sourceOffer?.description ?? input.description}
               maxLength={2000}
               rows={3}
               placeholder={c.descriptionHint}
@@ -295,7 +346,7 @@ export function CampaignEditor({
                 {input.price} {input.currency}
               </strong>
             )}
-            <p>{input.description}</p>
+            <p>{sourceOffer?.description ?? input.description}</p>
             <small>
               {data?.business.name} · {data?.business.city}
             </small>

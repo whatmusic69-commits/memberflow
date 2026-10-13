@@ -14,6 +14,9 @@ import { dashboardContent } from "@/content/dashboard";
 import { customerEventPresentation } from "@/features/dashboard/customer-events";
 import { ModuleEditor } from "@/features/workspace/module-editor";
 import { useCustomers } from "./use-customers";
+import { MembershipControls } from "@/features/prototype/membership-controls";
+import { PrototypeCustomerControls } from "@/features/prototype/customer-controls";
+import { prototypeContent } from "@/content/prototype";
 import { date, money } from "./format";
 export function CustomerProfile({ customerId }: { customerId: string }) {
   const { data, locale, can, href, loading } = useWorkspace();
@@ -49,6 +52,8 @@ export function CustomerProfile({ customerId }: { customerId: string }) {
       !isDemoAdapter(data.source === "demo") ||
       !can("customer.create")
     )
+      return;
+    if (!customer.archived && !window.confirm(prototypeContent[locale].confirm))
       return;
     setArchiving(true);
     setMutationError(false);
@@ -114,6 +119,17 @@ export function CustomerProfile({ customerId }: { customerId: string }) {
         )}
       </header>
       {mutationError && <p role="alert">{moduleContent[locale].saveError}</p>}
+      {isDemoAdapter(data.source === "demo") && (
+        <PrototypeCustomerControls
+          businessId={data.business.id}
+          customerId={customer.id}
+          locale={locale}
+          can={can}
+          memberId={data.membership.id}
+          actorName={data.user.firstName}
+          onChanged={reload}
+        />
+      )}
       <section className="mf-customer-stats mf-profile-stats">
         {[
           [c.lastVisit, date(customer.lastVisitAt, locale, c.never)],
@@ -163,24 +179,37 @@ export function CustomerProfile({ customerId }: { customerId: string }) {
           )}
         </section>
         <section className="mf-panel">
-          <h2>{c.membership}</h2>
-          {detail.memberships.length ? (
-            detail.memberships.map((m) => (
-              <div className="mf-customer-membership" key={m.id}>
-                <strong>{m.name}</strong>
-                <span className="mf-status">
-                  {c.membershipStates[m.status]}
-                </span>
-                <dl>
-                  <dt>{c.remainingVisits}</dt>
-                  <dd>{m.remainingVisits ?? "—"}</dd>
-                  <dt>{c.validUntil}</dt>
-                  <dd>{date(m.validUntil, locale, c.unknown)}</dd>
-                </dl>
-              </div>
-            ))
+          {isDemoAdapter(data.source === "demo") ? (
+            <MembershipControls
+              businessId={data.business.id}
+              customerId={customer.id}
+              locale={locale}
+              can={can}
+              memberId={data.membership.id}
+              actorName={data.user.firstName}
+            />
           ) : (
-            <p>{c.noMembership}</p>
+            <>
+              <h2>{c.membership}</h2>
+              {detail.memberships.length ? (
+                detail.memberships.map((m) => (
+                  <div className="mf-customer-membership" key={m.id}>
+                    <strong>{m.name}</strong>
+                    <span className="mf-status">
+                      {c.membershipStates[m.status]}
+                    </span>
+                    <dl>
+                      <dt>{c.remainingVisits}</dt>
+                      <dd>{m.remainingVisits ?? "—"}</dd>
+                      <dt>{c.validUntil}</dt>
+                      <dd>{date(m.validUntil, locale, c.unknown)}</dd>
+                    </dl>
+                  </div>
+                ))
+              ) : (
+                <p>{c.noMembership}</p>
+              )}
+            </>
           )}
         </section>
       </div>

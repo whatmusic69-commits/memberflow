@@ -65,6 +65,7 @@ export function ModuleEditor({
     lock.current = true;
     setBusy(true);
     setError("");
+    let saved = false;
     try {
       const input = {
         ...values,
@@ -75,12 +76,15 @@ export function ModuleEditor({
         input,
         record?.id,
       );
+      saved = true;
       animateDialogClose(dialog.current, () => onSaved(result));
     } catch {
       setError(c.saveError);
     } finally {
-      lock.current = false;
-      setBusy(false);
+      if (!saved) {
+        lock.current = false;
+        setBusy(false);
+      }
     }
   }
   return (
@@ -116,8 +120,8 @@ export function ModuleEditor({
               (field) =>
                 !(
                   feature === "memberships" &&
-                  values.kind === "package" &&
-                  field.key === "interval"
+                  values.kind === "membership" &&
+                  field.key === "visits"
                 ),
             )
             .map((field) => {
@@ -128,7 +132,12 @@ export function ModuleEditor({
                   {field.type === "textarea" ? (
                     <textarea
                       rows={3}
-                      required={field.required}
+                      required={
+                        field.required ||
+                        (feature === "memberships" &&
+                          values.kind === "package" &&
+                          field.key === "visits")
+                      }
                       maxLength={2000}
                       value={values[field.key]}
                       onChange={(e) =>
@@ -170,7 +179,12 @@ export function ModuleEditor({
                       min={field.min}
                       step={field.step || "1"}
                       max={field.type === "number" ? 1000000 : undefined}
-                      required={field.required}
+                      required={
+                        field.required ||
+                        (feature === "memberships" &&
+                          values.kind === "package" &&
+                          field.key === "visits")
+                      }
                       maxLength={field.type === "number" ? undefined : 240}
                       value={values[field.key]}
                       onChange={(e) =>

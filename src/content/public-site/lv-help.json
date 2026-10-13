@@ -1,0 +1,209 @@
+[
+  {
+    "slug": "getting-started",
+    "category": "Darba sākšana",
+    "title": "Iestati pirmo uzņēmumu",
+    "summary": "Soļi no īpašnieka konta līdz darba videi.",
+    "sections": [
+      {
+        "title": "Izpildi iestatīšanas soļus",
+        "paragraphs": [
+          "Vispirms izveido īpašnieka kontu, tad ievadi uzņēmuma nosaukumu, veidu un atrašanās vietu. Lietotājs un uzņēmums ir atsevišķas vienības: viens lietotājs var pārvaldīt vairākus uzņēmumus.",
+          "Izvēlies mērķus, pēc vēlēšanās aizpildi publisko profilu, tad izvēlies plānu. Wallet, lojalitāti un darbiniekus iestata pēc maksājuma vai izmēģinājuma aktivizācijas."
+        ]
+      },
+      {
+        "title": "Pārbaudi pabeigšanu",
+        "paragraphs": [
+          "Gatavības solis un darba vide kļūst pieejami pēc maksājuma vai izmēģinājuma apstiprināšanas. Cenas izvēle neaktivizē abonementu.",
+          "Izstrādes priekšskatījumā konta un plāna soļi ir ilustratīvi. Tie neapstiprina uzņēmuma konta vai abonementa esamību."
+        ]
+      }
+    ],
+    "related": ["business-setup", "customer-page"]
+  },
+  {
+    "slug": "business-setup",
+    "category": "Uzņēmuma iestatīšana",
+    "title": "Pārbaudi uzņēmuma informāciju",
+    "summary": "Kur mainīt uzņēmuma datus un publisko noformējumu.",
+    "sections": [
+      {
+        "title": "Pārskati uzņēmuma profilu",
+        "paragraphs": [
+          "Atver darba vides iestatījumus. Nosaukumam un atrašanās vietai jābūt klientiem atpazīstamiem.",
+          "Uzņēmuma profils un īpašnieka konts apraksta dažādas lietas. Rediģē tos atbilstošajās sadaļās."
+        ]
+      },
+      {
+        "title": "Sagatavo publisko lapu",
+        "paragraphs": [
+          "Atver klienta lapu, lai mainītu aprakstu, noformējumu un kontaktu saites. Pārbaudi rezultātu priekšskatījumā.",
+          "Saglabāšanai produkcijā, attēlu augšupielādei un publiskās adreses pieejamībai vajadzīgs backend. Lokāls priekšskatījums nav publicēta lapa."
+        ]
+      }
+    ],
+    "related": ["customer-page", "loyalty-rewards"]
+  },
+  {
+    "slug": "customer-page",
+    "category": "Klienta lapa",
+    "title": "Sagatavo klienta lapu un uzņēmuma QR",
+    "summary": "Viens publisks sākumpunkts klientiem.",
+    "sections": [
+      {
+        "title": "Iestati lapu",
+        "paragraphs": [
+          "Darba vidē atver klienta lapu. Pārbaudi aprakstu, kontaktus, sociālās saites un noformējumu.",
+          "Lapa parāda uzņēmumu un pieejamās programmas vai piedāvājumus. Iestati tos atsevišķajās sadaļās, nedublējot aprakstā."
+        ]
+      },
+      {
+        "title": "Kopīgo pareizo saiti",
+        "paragraphs": [
+          "Publiskā lapa izmanto /b/{uzņēmuma slug}. Uzņēmuma QR atver šo pašu pieredzi. QR un plakāta noformējums nāk no klienta lapas iestatījumiem.",
+          "Publiskā uzņēmuma lapa un privātais klienta profils ir atšķirīgi. Backend atbild par klienta identifikāciju, piesaisti un aktivizāciju. Priekšskatījums neapstiprina publicēšanu."
+        ]
+      }
+    ],
+    "related": ["loyalty-rewards", "wallet"]
+  },
+  {
+    "slug": "loyalty-rewards",
+    "category": "Lojalitāte un atlīdzības",
+    "title": "Sagatavo lojalitātes programmu",
+    "summary": "Programmas iestatījumi, atlīdzības un klienta progress.",
+    "sections": [
+      {
+        "title": "Izvēlies programmas struktūru",
+        "paragraphs": [
+          "Atver lojalitāti un pārskati zīmogu vai punktu programmu un tās atlīdzību. Nosacījumiem jābūt klientam saprotamiem.",
+          "Lokālie melnraksti ļauj izvērtēt iestatījumus. Tie nepiešķir punktus vai zīmogus."
+        ]
+      },
+      {
+        "title": "Pareizi lasi progresu",
+        "paragraphs": [
+          "Klienta progress nāk no apstiprinātiem uzņēmuma datiem. Frontend neaprēķina nopelnīto lojalitāti un nepārvērš apmeklējumu pārdošanā.",
+          "Tiesības uz atlīdzību un tās izmantošanu pārbauda backend. Ilustratīvs atlikums nav reāls."
+        ]
+      }
+    ],
+    "related": ["wallet", "customers-crm"]
+  },
+  {
+    "slug": "wallet",
+    "category": "Apple Wallet un Google Wallet",
+    "title": "Izproti digitālās kartes",
+    "summary": "Kartes saglabāšana un paziņojumu piegāde ir dažādas darbības.",
+    "sections": [
+      {
+        "title": "Izseko klienta ceļu",
+        "paragraphs": [
+          "Klients atver klienta lapu ar uzņēmuma QR vai saiti. Pēc pievienošanās pieejamai programmai viņš var izmantot atbalstītu Wallet saglabāšanas darbību.",
+          "Apple Wallet un Google Wallet vajadzīga derīga karte vai klientam izsniegta platformas saite. Priekšskatījums nevar izsniegt īstu karti."
+        ]
+      },
+      {
+        "title": "Atšķir atjauninājumus",
+        "paragraphs": [
+          "Kartes atjauninājums var mainīt parādīto programmas informāciju. Tas ir atsevišķs no paziņojuma piegādes.",
+          "Paziņojumi ir atkarīgi no platformas atbalsta, ierīces un klienta iestatījumiem. Piegāde visās ierīcēs netiek garantēta."
+        ]
+      }
+    ],
+    "related": ["customers-crm", "staff-scanner"]
+  },
+  {
+    "slug": "customers-crm",
+    "category": "Klienti un CRM",
+    "title": "Apskati klientus un aktivitāti",
+    "summary": "Saraksts, profili un analītika bez minējumiem.",
+    "sections": [
+      {
+        "title": "Atrodi klientu",
+        "paragraphs": [
+          "Atver klientu sarakstu un izvēlies ierakstu, lai apskatītu profilu, pieejamos kontaktus un šī uzņēmuma reģistrēto aktivitāti.",
+          "Kontaktu izmaiņas izstrādē ir pašreizējās cilnes melnraksti. Tie neveido apmeklējumus, pārdošanu vai vēsturi."
+        ]
+      },
+      {
+        "title": "Izproti ierakstus",
+        "paragraphs": [
+          "Apmeklējumi, neaktivitāte, lojalitāte, abonementi un tēriņi nāk no uzņēmuma backend. Reģistrēts apmeklējums nenozīmē pārdošanu.",
+          "Tukšs saraksts nozīmē, ka uzņēmumam nav pieejamu klientu datu. Paraugu ieraksti, ja tādi parādīti, ir ilustratīvi."
+        ]
+      }
+    ],
+    "related": ["staff-scanner", "campaigns-offers"]
+  },
+  {
+    "slug": "staff-scanner",
+    "category": "Darbinieki un QR skeneris",
+    "title": "Sagatavo piekļuvi un skenēšanu",
+    "summary": "Uzņēmuma QR un klienta QR pilda dažādus uzdevumus.",
+    "sections": [
+      {
+        "title": "Izvēlies pareizo QR",
+        "paragraphs": [
+          "Uzņēmuma QR atver publisko klienta lapu. Klienta QR identificē klientu darbinieka darba procesā.",
+          "Darbinieku sadaļā var apskatīt skenēšanas saskarni. Produkcijā piekļuve un atļautās darbības ir atkarīgas no apstiprinātām tiesībām."
+        ]
+      },
+      {
+        "title": "Apstiprini rezultātu",
+        "paragraphs": [
+          "Skenēšana pati par sevi neapstiprina apmeklējuma ierakstu. Backend jāpārbauda klients, uzņēmums un atļautā darbība.",
+          "Priekšskatījumi nepiešķir lojalitāti un neveido apmeklējumu vēsturi. Darbinieku lomas un tiesības pārbauda backend."
+        ]
+      }
+    ],
+    "related": ["campaigns-offers", "billing-plans"]
+  },
+  {
+    "slug": "campaigns-offers",
+    "category": "Kampaņas un piedāvājumi",
+    "title": "Sagatavo piedāvājumu bez publicēšanas",
+    "summary": "Pārbaudi saturu un kanālus pirms kampaņas palaišanas.",
+    "sections": [
+      {
+        "title": "Sagatavo melnrakstu",
+        "paragraphs": [
+          "Piedāvājumu sadaļā pārskati klienta piedāvājumu, tad kampaņās sagatavo saturu un paredzētos izplatīšanas kanālus.",
+          "Virsrakstam, aprakstam un klienta saitei jābūt saskaņotiem. Sociālajiem kanāliem vajadzīga atbalstīta autorizācija."
+        ]
+      },
+      {
+        "title": "Atšķir priekšskatījumu no publicēšanas",
+        "paragraphs": [
+          "Izstrādes kampaņu melnraksti paliek pašreizējā cilnē. To apskate vai saglabāšana nepublicē saturu sociālajos tīklos un nesūta Wallet atjauninājumus.",
+          "Palaišanai vajadzīga publicēšana caur backend, platformas atļaujas un apstiprināts rezultāts. Konta pievienošanai backend jānodrošina derīga autorizācijas darbība."
+        ]
+      }
+    ],
+    "related": ["billing-plans", "getting-started"]
+  },
+  {
+    "slug": "billing-plans",
+    "category": "Maksājumi un plāni",
+    "title": "Salīdzini plānus un aktivizāciju",
+    "summary": "Ko nozīmē parādītās cenas un limiti.",
+    "sections": [
+      {
+        "title": "Salīdzini katalogu",
+        "paragraphs": [
+          "Atver plānus, lai salīdzinātu mēneša un gada cenas, aktīvo klientu limitus, atrašanās vietas un skaidri norādītās iespējas.",
+          "“Nav norādīts” nenozīmē nepieejamu vai neierobežotu iespēju. Katalogs vēl nenosaka visas piekļuves tiesības."
+        ]
+      },
+      {
+        "title": "Pārbaudi aktivizāciju",
+        "paragraphs": [
+          "Plāna izvēle neiekasē naudu un neaktivizē abonementu. Maksājums vai izmēģinājums jāapstiprina backend.",
+          "Galīgās cenas, pieejamība un tiesības nāk no produkcijas kataloga. Plāna izvēle izstrādē nav maksājuma ieraksts."
+        ]
+      }
+    ],
+    "related": ["getting-started", "business-setup"]
+  }
+]

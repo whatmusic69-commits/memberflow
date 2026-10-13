@@ -1,3 +1,7 @@
+import {
+  rememberBusiness,
+  selectLocalBusiness,
+} from "@/features/workspace/business-catalog";
 import type {
   BusinessDraft,
   GoalId,
@@ -38,6 +42,24 @@ export function saveOnboardingPreview(value: Preview) {
         ? previous.businessId
         : `preview-${crypto.randomUUID()}`;
     sessionStorage.setItem(key, JSON.stringify({ ...value, businessId }));
+    rememberBusiness({
+      id: businessId,
+      name: value.business.name,
+      category:
+        value.business.type === "other"
+          ? (value.business.otherType ?? "other")
+          : value.business.type,
+      city: value.business.city,
+      country: value.business.country,
+      description: value.profile?.description ?? "",
+      website: value.profile?.website ?? "",
+      instagram: value.profile?.instagram ?? "",
+      logoUrl: null,
+      accent: value.profile?.accent ?? "#c84720",
+      planName: value.planName,
+      goals: value.goals,
+    });
+    selectLocalBusiness(businessId);
   } catch {
     /* Preview navigation still works when storage is blocked. */
   }

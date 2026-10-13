@@ -1,5 +1,8 @@
 "use client";
 import Link from "next/link";
+import { MembershipStatistics } from "@/features/prototype/membership-cards";
+import { isDemoAdapter } from "@/features/workspace/repository";
+import { SetupChecklist } from "./setup-checklist";
 import { BusinessResultsPanel } from "./business-results";
 import { setupNoticeContent } from "@/content/business-results/setup-notice";
 import { businessResultsContent } from "@/content/business-results";
@@ -144,6 +147,10 @@ export function Overview() {
             </Link>
           )}
         </section>
+      )}
+      <SetupChecklist />
+      {isDemoAdapter(data.source === "demo") && can("membership.read") && (
+        <MembershipStatistics businessId={data.business.id} locale={locale} />
       )}
       <BusinessResultsPanel data={data} locale={locale} />
       <details className="mf-results-setup">

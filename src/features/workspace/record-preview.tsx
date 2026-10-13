@@ -76,7 +76,8 @@ export function RecordPreview({
               ? " · " + option(values.interval)
               : ""}
           </p>
-          {values.visits && (
+          <p>{values.description}</p>
+          {values.kind === "package" && values.visits && (
             <p>
               {c.usage}: {values.visits}
             </p>

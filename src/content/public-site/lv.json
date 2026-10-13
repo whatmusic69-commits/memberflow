@@ -1,0 +1,217 @@
+{
+  "nav": [
+    "Risinājumi",
+    "Integrācijas",
+    "Palīdzība"
+  ],
+  "solutionsTitle": "Radīts tādiem uzņēmumiem kā tavējais.",
+  "solutionsIntro": "No kaimiņu kafejnīcas līdz iecienītajai fitnesa studijai — MemberFlow palīdz ikdienas apmeklējumus pārvērst ilgstošās attiecībās ar klientiem.",
+  "problem": "Ikdienas izaicinājums",
+  "tools": "Iemesls atgriezties",
+  "scenario": "Klienta ceļš",
+  "demo": "Ilustratīvs saskarnes piemērs",
+  "ctaTitle": "Dažādi uzņēmumi. Viens vienkāršāks izaugsmes ceļš.",
+  "ctaText": "Sāc ar savu uzņēmumu. Veido klientu pieredzi cilvēkiem, kuri tevi apmeklē.",
+  "start": "Iestatīt uzņēmumu",
+  "integrationTitle": "Tavi rīki strādā kopā.",
+  "integrationIntro": "Saprotams ceļš no iepazīšanās ar uzņēmumu līdz dalībai programmā un digitālajai kartei pa rokai.",
+  "walletCategory": "Digitālie maki",
+  "socialCategory": "Sociālie tīkli un izplatīšana",
+  "planned": "Plānots scenārijs",
+  "linkOnly": "Saite klienta lapā",
+  "walletNote": "Kartes atjauninājumi un paziņojumi atšķiras. Atbalstīta karte var atspoguļot izmaiņas programmā. Paziņojumu piegāde ir atkarīga no platformas, ierīces un klienta iestatījumiem; push paziņojumi netiek garantēti.",
+  "integrationNote": "Šeit aprakstīti produktā paredzētie scenāriji. Pieejamība ir atkarīga no uzņēmuma aktivizācijas un atbalstīta backend savienojuma. Šīs lapas apskate nepievieno platformas.",
+  "walletSteps": [
+    "Atver uzņēmuma klienta lapu ar saiti vai QR.",
+    "Pievienojies pieejamai programmai un atver savu profilu.",
+    "Saglabā karti ar platformas darbību, kad Wallet karšu izdošana ir pieejama.",
+    "Pārbaudi atlīdzības kartē vai klienta lapā."
+  ],
+  "walletDescriptions": [
+    "Digitālā lojalitātes karte Apple Wallet atbalstītās Apple ierīcēs. Izsniegtajā kartē var būt programmas informācija un klienta QR.",
+    "Digitālā lojalitātes karte Google Wallet atbalstītās ierīcēs. Saglabāšanai vajadzīga klientam izsniegta derīga platformas saite."
+  ],
+  "socialDescriptions": [
+    "Sagatavo kampaņas saturu un ceļu uz klienta lapu. Publicēšanai vajadzīga autorizēta piekļuve platformai.",
+    "Facebook saite klienta lapā ļauj atvērt uzņēmuma profilu. Automātiska kampaņu publicēšana nav apstiprināta.",
+    "Sagatavo kampaņu TikTok auditorijai ar saiti uz klienta lapu. Publicēšanai vajadzīgs atbalstīts savienojums.",
+    "Sagatavo vizuālu saturu Pinterest. Publicēšanai vajadzīgs backend un platformas atļaujas.",
+    "Google Business darba vidē ir paredzēts kā izplatīšanas kanāls. Konkrētas publicēšanas iespējas vēl jāapstiprina."
+  ],
+  "helpTitle": "Kā varam palīdzēt?",
+  "helpIntro": "Praktiskas instrukcijas uzņēmuma iestatīšanai un klientu pieredzes izpratnei.",
+  "search": "Meklēt instrukcijas",
+  "all": "Visas tēmas",
+  "noResults": "Instrukcijas nav atrastas. Izmēģini citu frāzi vai tēmu.",
+  "results": "instrukcijas",
+  "helpHome": "Palīdzības centrs",
+  "related": "Saistītās instrukcijas",
+  "contents": "Šajā instrukcijā",
+  "previewNote": "Dažos ekrānos pašlaik ir lokāli iestatījumu priekšskatījumi. Šāda melnraksta saglabāšana neaktivizē maksājumus, nepublicē kampaņu un neizsniedz Wallet karti.",
+  "comparisonTitle": "Atrodi piemērotāko plānu.",
+  "comparisonNote": "Ķeksītis apzīmē plānā norādītu iespēju. Svītra nozīmē, ka katalogā pieejamība nav apstiprināta.",
+  "unknown": "Nav norādīts",
+  "listed": "Norādīts",
+  "comparisonRows": [
+    "Aktīvie klienti",
+    "Uzņēmuma atrašanās vietas",
+    "Lojalitātes programmas",
+    "Klienta lapa",
+    "Wallet atbalsts",
+    "Kampaņu rīki",
+    "CRM",
+    "Analītika",
+    "Darbinieku piekļuve",
+    "Automatizācijas",
+    "Apmeklējumu paketes",
+    "Klientu eksports",
+    "Abonementi un atjaunošana",
+    "Prioritārs atbalsts",
+    "Personīgi piedāvājumi"
+  ],
+  "planFeatures": "Visas katalogā norādītās iespējas",
+  "pricingFaqTitle": "Noderīgi zināt.",
+  "pricingFaq": [
+    [
+      "Vai šīs ir galīgās cenas?",
+      "Šeit redzamas pašreizējās informatīvās cenas. Galīgās cenas, pieejamību un piekļuvi apstiprina plānu katalogs un maksājumu process."
+    ],
+    [
+      "Vai plāna izvēle aktivizē kontu?",
+      "Nē. Plāna izvēle ir iestatīšanas solis. Piekļuve tiek aktivizēta pēc maksājuma vai izmēģinājuma apstiprināšanas."
+    ],
+    [
+      "Vai “Nav norādīts” nozīmē, ka iespēja nav iekļauta?",
+      "Nē. Pašreizējais katalogs nenosaka visas piekļuves tiesības. Pirms izvēles pārbaudi apstiprinātos plāna nosacījumus."
+    ]
+  ],
+  "legalPending": "Apstiprinātais dokuments šeit būs pieejams pēc juridiskās saskaņošanas. Galīgais teksts vēl nav pieejams.",
+  "industries": [
+    {
+      "name": "Kafejnīcas un restorāni",
+      "problem": "Pirmais apmeklējums ir noticis. Kā dot viesim iemeslu atgriezties?",
+      "solution": "Digitālie zīmogi, atlīdzības un vienkārša pievienošanās ar QR palīdz veidot ieradumu atgriezties.",
+      "tools": [
+        "Digitālie zīmogi",
+        "Atlīdzības",
+        "Reģistrācija ar QR",
+        "Wallet",
+        "Piedāvājumi viesiem"
+      ],
+      "steps": [
+        "Iegādāties kafiju",
+        "Skenēt uzņēmuma QR",
+        "Saņemt zīmogu",
+        "Saglabāt karti Wallet",
+        "Atgriezties pēc atlīdzības"
+      ],
+      "business": "Kaimiņu kafejnīca",
+      "cardTitle": "Tava kafijas karte",
+      "detail": "Zīmogi",
+      "reward": "Kafija par nākamo aizpildīto karti",
+      "kind": "stamps"
+    },
+    {
+      "name": "Skaistums un labsajūta",
+      "problem": "Aizņemtā ikdienā regulāru apmeklējumu viegli aizmirst.",
+      "solution": "Apmeklējumu vēsture, lojalitāte un piemēroti piedāvājumi vienotā klienta pieredzē.",
+      "tools": [
+        "Lojalitāte",
+        "Abonementi",
+        "Apmeklējumu vēsture",
+        "Piedāvājumi neaktīviem klientiem"
+      ],
+      "steps": [
+        "Apmeklēt salonu",
+        "Atvērt klienta lapu",
+        "Izvēlēties programmu",
+        "Apskatīt vēsturi",
+        "Plānot nākamo vizīti"
+      ],
+      "business": "Kaimiņu salons",
+      "cardTitle": "Tava rūpju rutīna",
+      "detail": "Pēdējais apmeklējums",
+      "reward": "Nākamais apmeklējums vienuviet",
+      "kind": "history"
+    },
+    {
+      "name": "Fitness un studijas",
+      "problem": "Dalībnieku noturēšana sākas ar skaidru apmeklējumu uzskaiti.",
+      "solution": "Abonementi un apmeklējumu paketes dod klientiem un darbiniekiem kopīgu atskaites punktu.",
+      "tools": [
+        "Abonementi",
+        "Apmeklējumu paketes",
+        "Darbinieku QR skeneris",
+        "Klienta lapa"
+      ],
+      "steps": [
+        "Izvēlēties apmeklējumu paketi",
+        "Atvērt klienta QR",
+        "Darbinieks skenē pie ieejas",
+        "Apskatīt reģistrēto vizīti",
+        "Pārbaudīt paketi"
+      ],
+      "business": "Vietējā studija",
+      "cardTitle": "Tava studijas karte",
+      "detail": "Apmeklējumu pakete",
+      "reward": "Joga · vieta nākamajai nodarbībai",
+      "kind": "package"
+    },
+    {
+      "name": "Mazumtirdzniecība",
+      "problem": "Pēc pirkuma saikne ar klientu bieži beidzas pie kases.",
+      "solution": "Punkti, kuponi un piemēroti piedāvājumi paliek ar klientu arī pēc pirkuma.",
+      "tools": [
+        "Punkti",
+        "Kuponi",
+        "Kampaņas",
+        "Wallet",
+        "Klientu segmenti"
+      ],
+      "steps": [
+        "Iepirkties",
+        "Pievienoties ar QR",
+        "Atvērt lojalitātes programmu",
+        "Saglabāt digitālo karti",
+        "Apskatīt jaunu piedāvājumu"
+      ],
+      "business": "Kaimiņu veikals",
+      "cardTitle": "Tava veikala karte",
+      "detail": "Tavas atlīdzības",
+      "reward": "Piedāvājums nākamajam apmeklējumam",
+      "kind": "offer"
+    },
+    {
+      "name": "Vietējie pakalpojumi",
+      "problem": "Pastāvīgam klientam vajadzīgs vienkāršs veids, kā tevi atrast atkal.",
+      "solution": "Klientu vēsture un personīgi piedāvājumi līdzās uzņēmuma informācijai.",
+      "tools": [
+        "Klientu datubāze",
+        "Personīgi piedāvājumi",
+        "Mijiedarbības vēsture",
+        "Klienta lapa"
+      ],
+      "steps": [
+        "Apmeklēt uzņēmumu",
+        "Atvērt klienta lapu",
+        "Saglabāt saiti",
+        "Apskatīt vēsturi",
+        "Atrast piemērotu piedāvājumu"
+      ],
+      "business": "Vietējais pakalpojums",
+      "cardTitle": "Tava klienta lapa",
+      "detail": "Apmeklējumu vēsture",
+      "reward": "Uzņēmuma informācija pa rokai",
+      "kind": "history"
+    }
+  ],
+  "comparisonLabels": [
+    "Salīdzini plānus",
+    "Iespējas",
+    "Uzņēmuma apjoms",
+    "Klienta pieredze",
+    "Izaugsmes rīki",
+    "Pārvaldība un atbalsts"
+  ],
+  "comparisonScrollHint": "Ritiniet sāniski, lai salīdzinātu visus plānus"
+}

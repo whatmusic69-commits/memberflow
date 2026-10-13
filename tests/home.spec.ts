@@ -76,6 +76,7 @@ for (const locale of ["en", "lv", "ru"] as const) {
     page,
   }) => {
     const c = content[locale];
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(`/${locale}`);
     await page
       .getByRole("tab", {
@@ -113,7 +114,7 @@ for (const locale of ["en", "lv", "ru"] as const) {
     await expect(page).toHaveURL(new RegExp(`/${locale}/pricing$`));
     await expect(page.locator("h1")).toContainText(c.experience.pricing.title);
     await expect(page.locator(".public-plan")).toHaveCount(3);
-    for (const width of [1440, 768, 390]) {
+    for (const width of [1440, 1024, 768, 430, 390]) {
       await page.setViewportSize({ width, height: 1000 });
       expect(
         await page.evaluate(
