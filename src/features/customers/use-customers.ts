@@ -60,6 +60,15 @@ export function useCustomers(query: CustomerQuery, customerId?: string) {
     archived,
     key,
   ]);
+  useEffect(() => {
+    const refresh = () => setAttempt((n) => n + 1);
+    window.addEventListener("memberflow:workspace-drafts-changed", refresh);
+    return () =>
+      window.removeEventListener(
+        "memberflow:workspace-drafts-changed",
+        refresh,
+      );
+  }, []);
   const current = allowed && result?.key === key ? result : null;
   return {
     directory:

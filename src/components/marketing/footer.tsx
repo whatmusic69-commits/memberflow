@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { HomeLink } from "@/components/ui/home-link";
+import {
+  helpNavigationLabel,
+  type MarketingPage,
+} from "@/content/public-site/navigation";
 import type { HomeContent } from "@/content/types";
 import { locales, type Locale } from "@/content";
 import { Wordmark } from "@/components/ui/brand";
@@ -10,7 +14,7 @@ export function Footer({
 }: {
   c: HomeContent;
   locale: Locale;
-  page?: "terms" | "privacy" | "pricing" | "about";
+  page?: MarketingPage;
 }) {
   return (
     <footer className="site-footer">
@@ -25,14 +29,29 @@ export function Footer({
           <nav aria-label={c.nav[0]}>
             <strong>{c.nav[0]}</strong>
             <a href={page ? `/${locale}#product` : "#product"}>{c.nav[0]}</a>
-            <a href={page ? `/${locale}#solutions` : "#solutions"}>
+            <Link
+              href={`/${locale}/solutions`}
+              aria-current={page === "solutions" ? "page" : undefined}
+            >
               {c.nav[1]}
-            </a>
+            </Link>
             <Link href={`/${locale}/pricing`}>{c.nav[2]}</Link>
-            <a href={page ? `/${locale}#integrations` : "#integrations"}>
+            <Link
+              href={`/${locale}/integrations`}
+              aria-current={page === "integrations" ? "page" : undefined}
+            >
               {c.nav[3]}
-            </a>
-            <a href={page ? `/${locale}#faq` : "#faq"}>{c.nav[4]}</a>
+            </Link>
+            <Link
+              href={`/${locale}/help`}
+              aria-current={
+                page === "help" || page?.startsWith("help/")
+                  ? "page"
+                  : undefined
+              }
+            >
+              {helpNavigationLabel[locale]}
+            </Link>
           </nav>
           <nav aria-label={c.company}>
             <strong>{c.company}</strong>

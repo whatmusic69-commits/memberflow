@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import { saveLocalUserName } from "./user-profile";
+import { customerPageContent } from "@/content/customer-page";
 import { moduleContent } from "@/content/modules";
 import { workspaceContent } from "@/content/workspace";
 import { dashboardContent } from "@/content/dashboard";
@@ -57,10 +59,18 @@ function SettingsForm() {
     accent: business.accent,
     logoUrl: business.logoUrl,
     firstName: data!.user.firstName,
+    address: business.address || "",
+    openingHours: business.openingHours || "",
+    phone: business.phone || "",
+    email: business.email || "",
+    coverUrl: business.coverUrl ?? null,
+    tiktok: business.tiktok || "",
+    facebook: business.facebook || "",
   };
-  const [values, setValues] = useState<BusinessSettingsDraft>(
-    () => readLocalSettings(business.id) || initial,
-  );
+  const [values, setValues] = useState<BusinessSettingsDraft>(() => ({
+    ...(readLocalSettings(business.id) || initial),
+    firstName: data!.user.firstName,
+  }));
   const [otherCategory, setOtherCategory] = useState(
     () =>
       !Object.keys(d.category).includes(values.category) ||
@@ -91,15 +101,17 @@ function SettingsForm() {
     setMessage("");
     setFailed(false);
     try {
-      await saveLocalSettings(
-        business.id,
-        {
-          ...values,
-          name: values.name.trim(),
-          firstName: values.firstName.trim(),
-        },
-        demo,
-      );
+      if (tab === "profile") saveLocalUserName(data!.user.id, values.firstName);
+      else
+        await saveLocalSettings(
+          business.id,
+          {
+            ...values,
+            name: values.name.trim(),
+            firstName: values.firstName.trim(),
+          },
+          demo,
+        );
       setMessage(c.saved);
     } catch {
       setFailed(true);
@@ -111,7 +123,18 @@ function SettingsForm() {
   }
   const field = (
     key:
-      "name" | "city" | "description" | "website" | "instagram" | "firstName",
+      | "name"
+      | "city"
+      | "description"
+      | "website"
+      | "instagram"
+      | "firstName"
+      | "address"
+      | "openingHours"
+      | "phone"
+      | "email"
+      | "tiktok"
+      | "facebook",
     label: string,
     type = "text",
     required = false,
@@ -122,7 +145,7 @@ function SettingsForm() {
         <textarea
           rows={4}
           maxLength={1000}
-          value={values[key]}
+          value={values[key] ?? ""}
           onChange={(e) => update(key, e.target.value)}
         />
       ) : (
@@ -138,7 +161,7 @@ function SettingsForm() {
                 ? "url"
                 : undefined
           }
-          value={values[key]}
+          value={values[key] ?? ""}
           onChange={(e) => update(key, e.target.value)}
         />
       )}
@@ -240,6 +263,15 @@ function SettingsForm() {
                 {field("description", c.description)}
                 {field("website", c.website, "url")}
                 {field("instagram", c.instagram)}
+                {field("address", customerPageContent[locale].address)}
+                {field("openingHours", customerPageContent[locale].hours)}
+                {field("phone", customerPageContent[locale].phone, "tel")}
+                {field("email", customerPageContent[locale].email, "email")}
+                {field("tiktok", "TikTok")}
+                {field("facebook", "Facebook")}
+                <Link className="mf-text-link" href={href("customer-page")}>
+                  {customerPageContent[locale].cover} →
+                </Link>
                 <label className="mf-form-field mf-color-field">
                   <span>{c.accent}</span>
                   <div>

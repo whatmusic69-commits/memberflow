@@ -14,6 +14,7 @@ const en = {
   customerSince: "Customer since",
   loyalty: "Loyalty",
   stamps: "Stamps",
+  points: "Points",
   nextReward: "Next reward",
   membership: "Membership",
   remaining: "{n} visits remaining",
@@ -49,6 +50,7 @@ const en = {
   actions: {
     VISIT_CREATED: "Add visit",
     STAMP_ADDED: "Add stamp",
+    POINTS_ADDED: "Add point",
     SUBSCRIPTION_USED: "Use membership visit",
     REWARD_REDEEMED: "Redeem reward",
     OFFER_REDEEMED: "Redeem offer",
@@ -56,6 +58,7 @@ const en = {
   confirmations: {
     VISIT_CREATED: "Record this customer’s visit?",
     STAMP_ADDED: "Add a loyalty stamp?",
+    POINTS_ADDED: "Add a loyalty point?",
     SUBSCRIPTION_USED: "Use one membership visit?",
     REWARD_REDEEMED: "Redeem this reward?",
     OFFER_REDEEMED: "Redeem this offer?",
@@ -63,6 +66,7 @@ const en = {
   success: {
     VISIT_CREATED: "Visit added",
     STAMP_ADDED: "Stamp added",
+    POINTS_ADDED: "Point added",
     SUBSCRIPTION_USED: "Membership visit used",
     REWARD_REDEEMED: "Reward redeemed",
     OFFER_REDEEMED: "Offer redeemed",
@@ -88,6 +92,7 @@ const ru: StaffContent = {
   customerSince: "Клиент с",
   loyalty: "Лояльность",
   stamps: "Отметки",
+  points: "Баллы",
   nextReward: "Следующая награда",
   membership: "Абонемент",
   remaining: "Осталось посещений: {n}",
@@ -123,6 +128,7 @@ const ru: StaffContent = {
   actions: {
     VISIT_CREATED: "Добавить посещение",
     STAMP_ADDED: "Добавить штамп",
+    POINTS_ADDED: "Добавить балл",
     SUBSCRIPTION_USED: "Использовать посещение",
     REWARD_REDEEMED: "Выдать награду",
     OFFER_REDEEMED: "Погасить предложение",
@@ -130,6 +136,7 @@ const ru: StaffContent = {
   confirmations: {
     VISIT_CREATED: "Записать посещение клиента?",
     STAMP_ADDED: "Добавить штамп лояльности?",
+    POINTS_ADDED: "Добавить балл лояльности?",
     SUBSCRIPTION_USED: "Использовать одно посещение по абонементу?",
     REWARD_REDEEMED: "Выдать эту награду?",
     OFFER_REDEEMED: "Погасить это предложение?",
@@ -137,6 +144,7 @@ const ru: StaffContent = {
   success: {
     VISIT_CREATED: "Посещение добавлено",
     STAMP_ADDED: "Штамп добавлен",
+    POINTS_ADDED: "Балл добавлен",
     SUBSCRIPTION_USED: "Посещение использовано",
     REWARD_REDEEMED: "Награда выдана",
     OFFER_REDEEMED: "Предложение погашено",
@@ -157,6 +165,7 @@ const lv: StaffContent = {
   customerSince: "Klients kopš",
   loyalty: "Lojalitāte",
   stamps: "Zīmogi",
+  points: "Punkti",
   nextReward: "Nākamā atlīdzība",
   membership: "Abonements",
   remaining: "Atlikuši {n} apmeklējumi",
@@ -193,6 +202,7 @@ const lv: StaffContent = {
   actions: {
     VISIT_CREATED: "Pievienot apmeklējumu",
     STAMP_ADDED: "Pievienot zīmogu",
+    POINTS_ADDED: "Pievienot punktu",
     SUBSCRIPTION_USED: "Izmantot apmeklējumu",
     REWARD_REDEEMED: "Izsniegt atlīdzību",
     OFFER_REDEEMED: "Izmantot piedāvājumu",
@@ -200,6 +210,7 @@ const lv: StaffContent = {
   confirmations: {
     VISIT_CREATED: "Reģistrēt klienta apmeklējumu?",
     STAMP_ADDED: "Pievienot lojalitātes zīmogu?",
+    POINTS_ADDED: "Pievienot lojalitātes punktu?",
     SUBSCRIPTION_USED: "Izmantot vienu abonementa apmeklējumu?",
     REWARD_REDEEMED: "Izsniegt šo atlīdzību?",
     OFFER_REDEEMED: "Izmantot šo piedāvājumu?",
@@ -207,6 +218,7 @@ const lv: StaffContent = {
   success: {
     VISIT_CREATED: "Apmeklējums pievienots",
     STAMP_ADDED: "Zīmogs pievienots",
+    POINTS_ADDED: "Punkts pievienots",
     SUBSCRIPTION_USED: "Apmeklējums izmantots",
     REWARD_REDEEMED: "Atlīdzība izsniegta",
     OFFER_REDEEMED: "Piedāvājums izmantots",

@@ -1,7 +1,10 @@
 import { apiRequest } from "@/lib/api/client";
 import type { CustomerDirectory, CustomerDetail, CustomerQuery } from "./types";
 export function customerService(demo: boolean) {
-  const development = demo && process.env.NODE_ENV === "development";
+  const development =
+    demo &&
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_PUBLIC_DASHBOARD_MODE !== "api";
   return {
     async directory(
       businessId: string,
@@ -9,8 +12,15 @@ export function customerService(demo: boolean) {
       signal?: AbortSignal,
     ): Promise<CustomerDirectory> {
       if (development) {
-        const { directoryFixture } = await import("@/mocks/customers/fixtures");
-        return directoryFixture(businessId, query);
+        const { seedWorkspaceFixture } =
+          await import("@/mocks/dashboard/seed-workspace");
+        seedWorkspaceFixture(
+          businessId,
+          new URLSearchParams(window.location.search).get("demo") ?? "new",
+        );
+        const { prototypeDirectory } =
+          await import("@/features/prototype/customer-model");
+        return prototypeDirectory(businessId, query);
       }
       const params = new URLSearchParams({
         period: String(query.period),
@@ -30,8 +40,15 @@ export function customerService(demo: boolean) {
       signal?: AbortSignal,
     ): Promise<CustomerDetail> {
       if (development) {
-        const { detailFixture } = await import("@/mocks/customers/fixtures");
-        return detailFixture(businessId, id);
+        const { seedWorkspaceFixture } =
+          await import("@/mocks/dashboard/seed-workspace");
+        seedWorkspaceFixture(
+          businessId,
+          new URLSearchParams(window.location.search).get("demo") ?? "new",
+        );
+        const { prototypeDetail } =
+          await import("@/features/prototype/customer-model");
+        return prototypeDetail(businessId, id);
       }
       return apiRequest<CustomerDetail>(
         `/api/v1/businesses/${encodeURIComponent(businessId)}/customers/${encodeURIComponent(id)}/activity`,

@@ -1,4 +1,5 @@
 "use client";
+import { rememberQrPreview } from "./preview-state";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -64,7 +65,9 @@ export function ConnectionPage() {
   const writable = can("customer-page.manage");
   useEffect(() => {
     alive.current = true;
-    return () => { alive.current = false; };
+    return () => {
+      alive.current = false;
+    };
   }, []);
   useEffect(() => {
     if (!businessId || !data) return;
@@ -140,6 +143,8 @@ export function ConnectionPage() {
           });
           if (!disposed) {
             setSvg(result);
+            if (demo && businessId && pageConfig?.status === "ACTIVE")
+              rememberQrPreview(businessId, pageConfig.slug);
             setQr(
               `data:image/svg+xml;charset=utf-8,${encodeURIComponent(result)}`,
             );
@@ -151,7 +156,7 @@ export function ConnectionPage() {
     return () => {
       disposed = true;
     };
-  }, [url, retry]);
+  }, [url, retry, businessId, demo, pageConfig?.slug, pageConfig?.status]);
   if (loading) return <OverviewSkeleton />;
   if (!data || error || failed)
     return (
@@ -178,16 +183,28 @@ export function ConnectionPage() {
     }
   }
   function updateInvitation(field: "headline" | "message", value: string) {
-    setPageConfig((previous) => previous ? {
-      ...previous,
-      invitation: { ...previous.invitation, [field]: value },
-    } : null);
+    setPageConfig((previous) =>
+      previous
+        ? {
+            ...previous,
+            invitation: { ...previous.invitation, [field]: value },
+          }
+        : null,
+    );
     setSaveMessage("");
     setSaveFailed(false);
   }
   async function saveInvitation(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!data || !pageConfig || !writable || pending || saveLock.current || pageConfig.businessId !== businessId) return;
+    if (
+      !data ||
+      !pageConfig ||
+      !writable ||
+      pending ||
+      saveLock.current ||
+      pageConfig.businessId !== businessId
+    )
+      return;
     const savedBusinessId = data.business.id;
     saveLock.current = true;
     setSaving(true);
@@ -201,13 +218,15 @@ export function ConnectionPage() {
         social: pageConfig.social,
         invitation: pageConfig.invitation,
       });
-      if (saved.businessId !== savedBusinessId) throw new Error("Business mismatch");
+      if (saved.businessId !== savedBusinessId)
+        throw new Error("Business mismatch");
       if (alive.current && currentBusiness.current === savedBusinessId) {
         setPageConfig(saved);
         setSaveMessage(demo ? pageCopy.previewSaved : pageCopy.saved);
       }
     } catch {
-      if (alive.current && currentBusiness.current === savedBusinessId) setSaveFailed(true);
+      if (alive.current && currentBusiness.current === savedBusinessId)
+        setSaveFailed(true);
     } finally {
       saveLock.current = false;
       if (alive.current) setSaving(false);
@@ -249,7 +268,10 @@ export function ConnectionPage() {
             <strong>{readyUrl ? c.ready : c.pending}</strong>
           </div>
           <h3>{c.settings}</h3>
-          <form className="mf-poster-editor" onSubmit={(event) => void saveInvitation(event)}>
+          <form
+            className="mf-poster-editor"
+            onSubmit={(event) => void saveInvitation(event)}
+          >
             <fieldset disabled={!writable || pending || saving || !pageConfig}>
               <label>
                 <span>{c.headingLabel}</span>
@@ -257,7 +279,9 @@ export function ConnectionPage() {
                   value={pageConfig?.invitation.headline ?? ""}
                   placeholder={c.headline}
                   maxLength={90}
-                  onChange={(event) => updateInvitation("headline", event.target.value)}
+                  onChange={(event) =>
+                    updateInvitation("headline", event.target.value)
+                  }
                 />
               </label>
               <label>
@@ -267,7 +291,9 @@ export function ConnectionPage() {
                   value={pageConfig?.invitation.message ?? ""}
                   placeholder={c.description}
                   maxLength={180}
-                  onChange={(event) => updateInvitation("message", event.target.value)}
+                  onChange={(event) =>
+                    updateInvitation("message", event.target.value)
+                  }
                 />
               </label>
               <button className="button button-primary" type="submit">
@@ -279,21 +305,21 @@ export function ConnectionPage() {
             <p role="status">{saveMessage}</p>
           </form>
           <div className="mf-poster-page-actions">
-          <Link className="button" href={href("customer-page")}>
-            <Pencil size={16} aria-hidden="true" />
-            {pageCopy.title}
-          </Link>
-          {url && (
-            <a
-              className="button"
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {pageCopy.open}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-          )}
+            <Link className="button" href={href("customer-page")}>
+              <Pencil size={16} aria-hidden="true" />
+              {pageCopy.title}
+            </Link>
+            {url && (
+              <a
+                className="button"
+                href={url}
+                target={demo ? undefined : "_blank"}
+                rel={demo ? undefined : "noopener noreferrer"}
+              >
+                {pageCopy.open}
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            )}
           </div>
           {posterLogo && (
             <label className="mf-print-check">
@@ -316,22 +342,22 @@ export function ConnectionPage() {
             </label>
           )}
           <div className="mf-poster-export-actions">
-          <button
-            className="button mf-poster-print-button"
-            disabled={!qr || pending || qrFailed}
-            onClick={() => window.print()}
-          >
-            <Printer size={17} />
-            {c.print}
-          </button>
-          <button
-            className="button"
-            disabled={!svg || pending}
-            onClick={download}
-          >
-            <Download size={17} />
-            {c.download}
-          </button>
+            <button
+              className="button mf-poster-print-button"
+              disabled={!qr || pending || qrFailed}
+              onClick={() => window.print()}
+            >
+              <Printer size={17} />
+              {c.print}
+            </button>
+            <button
+              className="button"
+              disabled={!svg || pending}
+              onClick={download}
+            >
+              <Download size={17} />
+              {c.download}
+            </button>
           </div>
           {url && (
             <div className="mf-print-link">

@@ -3,6 +3,7 @@ import type { StaffAction, StaffCustomerView, StaffActionType } from "./types";
 export const staffActionPermissions: Record<StaffActionType, Permission> = {
   VISIT_CREATED: "visit.record",
   STAMP_ADDED: "loyalty.award",
+  POINTS_ADDED: "loyalty.award",
   SUBSCRIPTION_USED: "membership.redeem",
   REWARD_REDEEMED: "reward.redeem",
   OFFER_REDEEMED: "offer.redeem",
@@ -14,7 +15,8 @@ export function visibleStaffActions(
 ): StaffAction[] {
   return customer.availableActions.filter((action) => {
     if (!can(staffActionPermissions[action.type])) return false;
-    if (action.type === "STAMP_ADDED") return customer.loyalty !== null;
+    if (action.type === "STAMP_ADDED" || action.type === "POINTS_ADDED")
+      return customer.loyalty !== null;
     if (action.type === "SUBSCRIPTION_USED")
       return customer.membership !== null;
     if (action.type === "REWARD_REDEEMED")

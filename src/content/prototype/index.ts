@@ -1,0 +1,133 @@
+export const prototypeContent = {
+  en: {
+    title: "Local frontend prototype",
+    crm: "Return to CRM (local prototype)",
+    notice:
+      "Tab-local simulation only. No real customer authentication, loyalty accrual, publication or Wallet issuance. Use fictional customer details.",
+    join: "Join a programme in this preview",
+    customer: "Preview customer",
+    programme: "Loyalty programme",
+    choose: "Choose a programme",
+    award: "Add one stamp / point",
+    visit: "Record a preview visit",
+    redeem: "Use preview reward",
+    saved: "Local preview updated",
+    error:
+      "Could not save this preview. Check the selected customer and programme.",
+    available: "Available rewards",
+    scanner: "Open existing staff scanner",
+    code: "Preview customer code",
+    setup: "Business setup",
+    steps: [
+      "Complete the business profile",
+      "Prepare the Customer Page",
+      "Create a loyalty programme",
+      "Enable the page preview",
+      "Get the business QR",
+      "Connect the first preview customer",
+    ],
+    activate: "Enable local preview",
+    disable: "Disable local preview",
+    source: "Linked offer",
+    none: "No linked offer",
+    unavailableOffer: "Unavailable offer",
+    missingOffer:
+      "The linked offer is missing or archived. Choose an existing offer or remove the link.",
+    linked:
+      "Content follows the linked offer. Archived offers cannot be used for new drafts.",
+    inactive:
+      "Prototype rule: returning = at least 2 recorded visits; inactive = last recorded visit more than 30 days ago. No visit means unknown.",
+    confirm: "Archive this item? You can restore it later.",
+    locations: "Main location",
+    archived: "Archived",
+    archivalError:
+      "This offer is referenced by a campaign or automation. Archive those drafts first.",
+  },
+  lv: {
+    title: "Lokāls frontend prototips",
+    crm: "Atgriezties CRM (lokāls prototips)",
+    notice:
+      "Tikai pašreizējās cilnes simulācija. Nav īstas klienta autentifikācijas, lojalitātes uzkrāšanas, publicēšanas vai Wallet izdošanas. Izmanto izdomātus klienta datus.",
+    join: "Pievienoties programmai šajā priekšskatījumā",
+    customer: "Priekšskatījuma klients",
+    programme: "Lojalitātes programma",
+    choose: "Izvēlies programmu",
+    award: "Pievienot vienu zīmogu / punktu",
+    visit: "Reģistrēt parauga apmeklējumu",
+    redeem: "Izmantot parauga atlīdzību",
+    saved: "Lokālais priekšskatījums atjaunināts",
+    error:
+      "Neizdevās saglabāt priekšskatījumu. Pārbaudi izvēlēto klientu un programmu.",
+    available: "Pieejamās atlīdzības",
+    scanner: "Atvērt esošo darbinieku skeneri",
+    code: "Priekšskatījuma klienta kods",
+    setup: "Uzņēmuma iestatīšana",
+    steps: [
+      "Aizpildīt uzņēmuma profilu",
+      "Sagatavot klienta lapu",
+      "Izveidot lojalitātes programmu",
+      "Ieslēgt lapas priekšskatījumu",
+      "Iegūt uzņēmuma QR",
+      "Pievienot pirmo parauga klientu",
+    ],
+    activate: "Ieslēgt lokālo priekšskatījumu",
+    disable: "Izslēgt lokālo priekšskatījumu",
+    source: "Saistītais piedāvājums",
+    none: "Bez saistīta piedāvājuma",
+    unavailableOffer: "Piedāvājums nav pieejams",
+    missingOffer:
+      "Saistītais piedāvājums nav atrasts vai ir arhivēts. Izvēlies esošu piedāvājumu vai noņem saiti.",
+    linked:
+      "Saturs seko saistītajam piedāvājumam. Arhivētus piedāvājumus nevar izmantot jaunos melnrakstos.",
+    inactive:
+      "Prototipa noteikums: atkārtots klients = vismaz 2 reģistrēti apmeklējumi; neaktīvs = pēdējais apmeklējums pirms vairāk nekā 30 dienām. Bez apmeklējumiem statuss nav zināms.",
+    confirm: "Arhivēt šo ierakstu? To vēlāk var atjaunot.",
+    locations: "Galvenā atrašanās vieta",
+    archived: "Arhivēts",
+    archivalError:
+      "Uz šo piedāvājumu atsaucas kampaņa vai automatizācija. Vispirms arhivē šos melnrakstus.",
+  },
+  ru: {
+    title: "Локальный frontend-прототип",
+    crm: "Вернуться в CRM (локальный прототип)",
+    notice:
+      "Симуляция только в текущей вкладке. Без реальной авторизации клиента, начислений, публикации или выпуска Wallet. Используйте вымышленные данные клиентов.",
+    join: "Присоединиться к программе в предпросмотре",
+    customer: "Клиент предпросмотра",
+    programme: "Программа лояльности",
+    choose: "Выберите программу",
+    award: "Добавить один штамп / балл",
+    visit: "Записать визит в предпросмотре",
+    redeem: "Использовать награду в предпросмотре",
+    saved: "Локальный предпросмотр обновлён",
+    error: "Не удалось сохранить предпросмотр. Проверьте клиента и программу.",
+    available: "Доступные награды",
+    scanner: "Открыть существующий сканер сотрудников",
+    code: "Код клиента для предпросмотра",
+    setup: "Настройка бизнеса",
+    steps: [
+      "Заполнить профиль бизнеса",
+      "Настроить страницу клиента",
+      "Создать программу лояльности",
+      "Включить предпросмотр страницы",
+      "Получить QR бизнеса",
+      "Подключить первого клиента предпросмотра",
+    ],
+    activate: "Включить локальный предпросмотр",
+    disable: "Выключить локальный предпросмотр",
+    source: "Связанное предложение",
+    none: "Без связанного предложения",
+    unavailableOffer: "Предложение недоступно",
+    missingOffer:
+      "Связанное предложение отсутствует или архивировано. Выберите существующее предложение или уберите связь.",
+    linked:
+      "Содержание берётся из связанного предложения. Архивные предложения нельзя выбирать в новых черновиках.",
+    inactive:
+      "Правило прототипа: возвращающийся клиент — минимум 2 записанных визита; неактивный — последний визит более 30 дней назад. Без визитов статус неизвестен.",
+    confirm: "Архивировать запись? Её можно восстановить позже.",
+    locations: "Основная локация",
+    archived: "Архив",
+    archivalError:
+      "На предложение ссылается кампания или автоматизация. Сначала архивируйте эти черновики.",
+  },
+};

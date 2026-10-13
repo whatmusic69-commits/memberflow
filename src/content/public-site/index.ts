@@ -1,0 +1,11 @@
+import en from "./en.json";
+import lv from "./lv.json";
+import ru from "./ru.json";
+import enHelp from "./en-help.json";
+import lvHelp from "./lv-help.json";
+import ruHelp from "./ru-help.json";
+export const publicSiteContent = { en, lv, ru };
+export const helpArticles = { en: enHelp, lv: lvHelp, ru: ruHelp };
+export type PublicSiteContent = typeof en;
+export type HelpArticle = (typeof enHelp)[number];
+export type { MarketingPage } from "./navigation";

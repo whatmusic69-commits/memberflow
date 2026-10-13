@@ -5,6 +5,10 @@ import type { Locale } from "@/content";
 import type { StaffContent } from "@/content/staff";
 import type { Permission } from "@/features/access/types";
 import type { StaffAction, StaffCustomerView } from "./types";
+import { LocalMembershipCards } from "@/features/prototype/membership-cards";
+import { prototypeEnabled } from "@/features/prototype/repository";
+import { membershipContent } from "@/content/memberships";
+import { readPrototypeLedger } from "@/features/prototype/repository";
 import { visibleStaffActions } from "./actions";
 export function StaffCustomer({
   customer,
@@ -63,7 +67,9 @@ export function StaffCustomer({
           </div>
           <strong>
             {customer.loyalty.stamps} / {customer.loyalty.target}{" "}
-            <small>{c.stamps}</small>
+            <small>
+              {customer.loyalty.kind === "points" ? c.points : c.stamps}
+            </small>
           </strong>
           <div className="mf-staff-stamps" aria-hidden="true">
             {Array.from(
@@ -82,22 +88,30 @@ export function StaffCustomer({
           </p>
         </section>
       )}
-      {customer.membership && (
-        <section className="mf-staff-tool">
-          <div className="mf-panel-heading">
-            <h2>{c.membership}</h2>
-            <Ticket size={19} />
-          </div>
-          <strong>{customer.membership.name}</strong>
-          {customer.membership.visitsRemaining !== null && (
-            <p>
-              {c.remaining.replace(
-                "{n}",
-                String(customer.membership.visitsRemaining),
-              )}
-            </p>
-          )}
-        </section>
+      {prototypeEnabled() ? (
+        <LocalMembershipCards
+          businessId={customer.businessId}
+          customerId={customer.id}
+          locale={locale}
+        />
+      ) : (
+        customer.membership && (
+          <section className="mf-staff-tool">
+            <div className="mf-panel-heading">
+              <h2>{c.membership}</h2>
+              <Ticket size={19} />
+            </div>
+            <strong>{customer.membership.name}</strong>
+            {customer.membership.visitsRemaining !== null && (
+              <p>
+                {c.remaining.replace(
+                  "{n}",
+                  String(customer.membership.visitsRemaining),
+                )}
+              </p>
+            )}
+          </section>
+        )
       )}
       <section className="mf-staff-actions">
         <h2>{c.available}</h2>
@@ -110,7 +124,14 @@ export function StaffCustomer({
               onClick={() => onAction(action)}
             >
               <Plus size={18} />
-              {c.actions[action.type]}
+              {prototypeEnabled() && action.type === "SUBSCRIPTION_USED"
+                ? readPrototypeLedger(customer.businessId).memberships?.find(
+                    (m) => m.id === action.resourceId,
+                  )?.remainingVisits === null
+                  ? membershipContent[locale].verify
+                  : membershipContent[locale].use
+                : c.actions[action.type]}
+              {action.label ? ` · ${action.label}` : ""}
               <ArrowRight size={17} />
             </button>
           ))

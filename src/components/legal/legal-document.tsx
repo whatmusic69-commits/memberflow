@@ -1,3 +1,6 @@
+import "@/features/home/home.css";
+import { publicSiteContent } from "@/content/public-site";
+import { publicMetadata } from "@/features/public-site/shell";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { content, isLocale } from "@/content";
@@ -11,7 +14,12 @@ export function legalMetadata(
 ): Metadata {
   if (!isLocale(locale)) notFound();
   return {
-    title: `${legalContent[locale][document]} — MemberFlow`,
+    ...publicMetadata(
+      locale,
+      document,
+      legalContent[locale][document],
+      publicSiteContent[locale].legalPending,
+    ),
     robots: { index: false, follow: true },
   };
 }
@@ -30,6 +38,7 @@ export function LegalDocument({
       <Header c={c} locale={locale} page={document} />
       <main id="main" className="legal-document container">
         <h1>{legalContent[locale][document]}</h1>
+        <p>{publicSiteContent[locale].legalPending}</p>
       </main>
       <Footer c={c} locale={locale} page={document} />
     </>

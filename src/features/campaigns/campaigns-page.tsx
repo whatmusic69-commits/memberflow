@@ -8,7 +8,9 @@ import { useWorkspace } from "@/features/dashboard/workspace";
 import { OverviewSkeleton } from "@/features/dashboard/overview";
 import { dashboardContent } from "@/content/dashboard";
 import { workspaceContent } from "@/content/workspace";
-import { getCampaignService } from "./service";
+import { prototypeContent } from "@/content/prototype";
+import { moduleContent } from "@/content/modules";
+import { getCampaignService, archiveDemoCampaign } from "./service";
 import { campaignChannels } from "./types";
 import type { CampaignDraft } from "./types";
 import { CampaignDetails } from "./details";
@@ -32,7 +34,7 @@ export function CampaignsPage() {
   const [editor, setEditor] = useState<CampaignDraft | "new" | null>(null);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<
-    "all" | "active" | "drafts" | "completed"
+    "all" | "active" | "drafts" | "completed" | "archived"
   >("all");
   const [saved, setSaved] = useState(false);
   useEffect(() => {
@@ -119,7 +121,9 @@ export function CampaignsPage() {
     ).length;
   const list = all.filter(
     (item) =>
-      (filter === "all" ||
+      (item.archived ?? false) === (filter === "archived") &&
+      (filter === "archived" ||
+        filter === "all" ||
         (filter === "drafts" && item.status === "DRAFT") ||
         (filter === "completed" && item.status === "COMPLETED") ||
         (filter === "active" &&
@@ -156,21 +160,23 @@ export function CampaignsPage() {
       {all.length > 0 && !pending && (
         <div className="mf-campaign-toolbar">
           <div className="mf-filter-tabs">
-            {(["all", "active", "drafts", "completed"] as const).map(
-              (value) => (
-                <button
-                  key={value}
-                  aria-pressed={filter === value}
-                  onClick={() => setFilter(value)}
-                >
-                  {value === "active"
-                    ? c.activeFilter
-                    : value === "completed"
-                      ? c.completedFilter
+            {(
+              ["all", "active", "drafts", "completed", "archived"] as const
+            ).map((value) => (
+              <button
+                key={value}
+                aria-pressed={filter === value}
+                onClick={() => setFilter(value)}
+              >
+                {value === "active"
+                  ? c.activeFilter
+                  : value === "completed"
+                    ? c.completedFilter
+                    : value === "archived"
+                      ? prototypeContent[locale].archived
                       : c[value]}
-                </button>
-              ),
-            )}
+              </button>
+            ))}
           </div>
           <label className="mf-search-field">
             <Search size={16} />
@@ -241,7 +247,11 @@ export function CampaignsPage() {
               <div>
                 <div className="mf-campaign-title">
                   <h2>{item.name}</h2>
-                  <span className="mf-status">{d.statuses[item.status]}</span>
+                  <span className="mf-status">
+                    {item.archived
+                      ? prototypeContent[locale].archived
+                      : d.statuses[item.status]}
+                  </span>
                 </div>
                 <p>
                   {c.kinds[item.kind]} ·{" "}
@@ -273,6 +283,35 @@ export function CampaignsPage() {
                   ))}
                 </div>
               </div>
+              {data.source === "demo" &&
+                item.status === "DRAFT" &&
+                drafts.some((d) => d.id === item.id) &&
+                can("campaign.create") && (
+                  <button
+                    className="mf-text-link"
+                    onClick={() => {
+                      if (
+                        !item.archived &&
+                        !window.confirm(prototypeContent[locale].confirm)
+                      )
+                        return;
+                      try {
+                        archiveDemoCampaign(
+                          data.business.id,
+                          item.id,
+                          !item.archived,
+                        );
+                        setRetry((n) => n + 1);
+                      } catch {
+                        setFailed(true);
+                      }
+                    }}
+                  >
+                    {item.archived
+                      ? moduleContent[locale].restore
+                      : moduleContent[locale].archive}
+                  </button>
+                )}
               {item.status === "DRAFT" && can("campaign.create") ? (
                 <button
                   className="mf-text-link"

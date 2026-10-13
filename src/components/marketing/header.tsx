@@ -5,6 +5,10 @@ import { useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { StartLink } from "./start-link";
 import { Wordmark } from "@/components/ui/brand";
+import {
+  helpNavigationLabel,
+  type MarketingPage,
+} from "@/content/public-site/navigation";
 import type { HomeContent } from "@/content/types";
 import { locales, type Locale } from "@/content";
 export function Header({
@@ -14,7 +18,7 @@ export function Header({
 }: {
   c: HomeContent;
   locale: Locale;
-  page?: "terms" | "privacy" | "pricing" | "about";
+  page?: MarketingPage;
 }) {
   const [open, setOpen] = useState(false);
   const language = useRef<HTMLDetailsElement>(null);
@@ -29,24 +33,32 @@ export function Header({
       >
         {c.nav[0]}
       </a>
-      <a
-        href={page ? `/${locale}#solutions` : "#solutions"}
+      <Link
+        href={`/${locale}/solutions`}
+        aria-current={page === "solutions" ? "page" : undefined}
         onClick={() => setOpen(false)}
       >
         {c.nav[1]}
-      </a>
+      </Link>
       <Link href={`/${locale}/pricing`} onClick={() => setOpen(false)}>
         {c.nav[2]}
       </Link>
-      <a
-        href={page ? `/${locale}#integrations` : "#integrations"}
+      <Link
+        href={`/${locale}/integrations`}
+        aria-current={page === "integrations" ? "page" : undefined}
         onClick={() => setOpen(false)}
       >
         {c.nav[3]}
-      </a>
-      <a href={page ? `/${locale}#faq` : "#faq"} onClick={() => setOpen(false)}>
-        {c.nav[4]}
-      </a>
+      </Link>
+      <Link
+        href={`/${locale}/help`}
+        aria-current={
+          page === "help" || page?.startsWith("help/") ? "page" : undefined
+        }
+        onClick={() => setOpen(false)}
+      >
+        {helpNavigationLabel[locale]}
+      </Link>
       <Link
         href={`/${locale}/about`}
         aria-current={page === "about" ? "page" : undefined}

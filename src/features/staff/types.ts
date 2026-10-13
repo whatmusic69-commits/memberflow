@@ -3,10 +3,12 @@ import type { CustomerEventType } from "@/features/dashboard/types";
 export type StaffActionType =
   | "VISIT_CREATED"
   | "STAMP_ADDED"
+  | "POINTS_ADDED"
   | "SUBSCRIPTION_USED"
   | "REWARD_REDEEMED"
   | "OFFER_REDEEMED";
 export interface StaffAction {
+  label?: string;
   id: string;
   type: StaffActionType;
   resourceId?: string;
@@ -18,6 +20,7 @@ export interface StaffCustomerView {
   name: string;
   customerSince: string | null;
   loyalty: {
+    kind?: "stamps" | "points";
     stamps: number;
     target: number;
     nextReward: string;

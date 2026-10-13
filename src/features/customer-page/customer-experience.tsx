@@ -1,7 +1,15 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/content";
 import { customerPageContent } from "@/content/customer-page";
+import { LocalMembershipCards } from "@/features/prototype/membership-cards";
+import { PrototypeJoin } from "@/features/prototype/public-join";
+import {
+  prototypePersonal,
+  prototypeCode,
+} from "@/features/prototype/customer-model";
+import { prototypeContent } from "@/content/prototype";
 import { Modal } from "@/components/ui/modal";
 import { animateDialogClose } from "@/lib/motion/dialog";
 import { CustomerPageView } from "./page-view";
@@ -38,6 +46,10 @@ export function CustomerExperience({
     alive = useRef(true);
   const slug = page?.slug;
   useEffect(() => {
+    document.documentElement.lang = locale;
+    document.cookie = `memberflow_locale=${locale}; Path=/; SameSite=Lax; Max-Age=31536000`;
+  }, [locale]);
+  useEffect(() => {
     alive.current = true;
     return () => {
       alive.current = false;
@@ -57,14 +69,41 @@ export function CustomerExperience({
       });
     void load();
     window.addEventListener("storage", load);
+    window.addEventListener("memberflow:workspace-drafts-changed", load);
+    window.addEventListener("memberflow:customer-page-draft-changed", load);
+    window.addEventListener("memberflow:business-profile-changed", load);
     return () => {
       disposed = true;
       window.removeEventListener("storage", load);
+      window.removeEventListener("memberflow:workspace-drafts-changed", load);
+      window.removeEventListener(
+        "memberflow:customer-page-draft-changed",
+        load,
+      );
+      window.removeEventListener("memberflow:business-profile-changed", load);
     };
   }, [demo, previewId, retry]);
   useEffect(() => {
     if (!slug) return;
     const controller = new AbortController();
+    if (demo && previewId) {
+      const selected = new URLSearchParams(window.location.search).get(
+        "prototypeCustomer",
+      );
+      void import("@/features/prototype/customer-model").then(
+        ({ prototypePersonal }) => {
+          if (controller.signal.aborted) return;
+          try {
+            setPersonal(
+              selected ? prototypePersonal(previewId, selected) : null,
+            );
+          } catch {
+            setPersonal(null);
+          }
+        },
+      );
+      return () => controller.abort();
+    }
     if (demo && connectedFixture) {
       import("@/mocks/customer-page/fixtures").then(
         ({ connectedCustomerPage }) => {
@@ -84,7 +123,24 @@ export function CustomerExperience({
           if (!controller.signal.aborted) setPersonalError(true);
         });
     return () => controller.abort();
-  }, [slug, demo, retry, connectedFixture]);
+  }, [slug, demo, retry, connectedFixture, previewId]);
+  const localCustomerId = demo && previewId ? personal?.customer.id : undefined;
+  useEffect(() => {
+    if (!previewId || !localCustomerId) return;
+    const refresh = () => {
+      try {
+        setPersonal(prototypePersonal(previewId, localCustomerId));
+      } catch {
+        setPersonal(null);
+      }
+    };
+    window.addEventListener("memberflow:workspace-drafts-changed", refresh);
+    return () =>
+      window.removeEventListener(
+        "memberflow:workspace-drafts-changed",
+        refresh,
+      );
+  }, [previewId, localCustomerId]);
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (lock.current || !page) return;
@@ -165,9 +221,40 @@ export function CustomerExperience({
   };
   return (
     <>
+      {demo && previewId && (
+        <aside className="cp-session-error">
+          <p>{prototypeContent[locale].notice}</p>
+          <Link
+            className="mf-text-link"
+            href={`/dashboard/customers?lang=${locale}&business=${encodeURIComponent(previewId)}`}
+          >
+            {prototypeContent[locale].crm} →
+          </Link>
+          {personal && (
+            <label className="mf-form-field">
+              <span>{prototypeContent[locale].code}</span>
+              <input
+                readOnly
+                value={prototypeCode(previewId, personal.customer.id)}
+                onFocus={(e) => e.target.select()}
+              />
+            </label>
+          )}
+        </aside>
+      )}
       <CustomerPageView
         page={page}
         personal={personal}
+        localMemberships={
+          demo && previewId && personal ? (
+            <LocalMembershipCards
+              businessId={previewId}
+              customerId={personal.customer.id}
+              locale={locale}
+              history
+            />
+          ) : undefined
+        }
         locale={locale}
         onJoin={() => {
           setAuthError("");
@@ -195,7 +282,19 @@ export function CustomerExperience({
           closeDisabled={busy}
           className="cp-auth-dialog"
         >
-          {demo || !page.connection.joinEnabled ? (
+          {demo && previewId && page.status === "ACTIVE" ? (
+            <PrototypeJoin
+              businessId={previewId}
+              locale={locale}
+              onJoined={(value) => {
+                setPersonal(value);
+                const url = new URL(window.location.href);
+                url.searchParams.set("prototypeCustomer", value.customer.id);
+                window.history.replaceState(window.history.state, "", url);
+                animateDialogClose(modal.current, closeJoin);
+              }}
+            />
+          ) : demo || !page.connection.joinEnabled ? (
             <>
               <p>{c.authUnavailable}</p>
               <button

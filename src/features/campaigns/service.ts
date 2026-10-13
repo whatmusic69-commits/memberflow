@@ -1,3 +1,4 @@
+import { readLocalRecords } from "@/features/workspace/repository";
 import { apiRequest } from "@/lib/api/client";
 import { campaignKinds, type CampaignDraft, type CampaignInput } from "./types";
 const storageKey = (businessId: string) =>
@@ -11,7 +12,7 @@ export function readDemoDrafts(businessId: string): CampaignDraft[] {
       sessionStorage.getItem(storageKey(businessId)) || "[]",
     );
     if (!Array.isArray(value)) return [];
-    return value.filter(
+    const rows = value.filter(
       (item): item is CampaignDraft =>
         item &&
         typeof item.id === "string" &&
@@ -32,6 +33,7 @@ export function readDemoDrafts(businessId: string): CampaignDraft[] {
             /^data:image\/(png|jpeg|webp);base64,/.test(item.image))) &&
         item.status === "DRAFT",
     );
+    return rows.map((d) => resolveOfferSource(d));
   } catch {
     return [];
   }
@@ -51,11 +53,20 @@ export function getCampaignService(demo: boolean): CampaignService {
         return readDemoDrafts(businessId);
       },
       async save(businessId, input, id) {
+        if (
+          input.source?.kind === "offer" &&
+          !readLocalRecords(businessId, "offers").some(
+            (o) => o.id === input.source!.id && !o.archived,
+          )
+        )
+          throw new Error("reference");
         const drafts = readDemoDrafts(businessId);
         const draft: CampaignDraft = {
           ...input,
           id: id || crypto.randomUUID(),
           businessId,
+          description: input.source?.kind === "offer" ? "" : input.description,
+          archived: drafts.find((d) => d.id === id)?.archived ?? false,
           status: "DRAFT",
           updatedAt: new Date().toISOString(),
           createdAt:
@@ -70,7 +81,7 @@ export function getCampaignService(demo: boolean): CampaignService {
           ]),
         );
         window.dispatchEvent(new Event(campaignDraftEvent));
-        return draft;
+        return resolveOfferSource(draft);
       },
     };
   return {
@@ -84,4 +95,47 @@ export function getCampaignService(demo: boolean): CampaignService {
       throw new Error("unavailable");
     },
   };
+}
+
+export function resolveOfferSource(draft: CampaignDraft): CampaignDraft {
+  if (draft.source?.kind !== "offer") return draft;
+  const offer = readLocalRecords(draft.businessId, "offers").find(
+    (o) => o.id === draft.source!.id,
+  );
+  return { ...draft, description: offer?.description ?? "" };
+}
+export function archiveDemoCampaign(
+  businessId: string,
+  id: string,
+  archived: boolean,
+) {
+  if (
+    process.env.NODE_ENV !== "development" ||
+    process.env.NEXT_PUBLIC_DASHBOARD_MODE === "api"
+  )
+    throw new Error("unavailable");
+  const rows = readDemoDrafts(businessId);
+  if (!rows.some((d) => d.id === id)) throw new Error("not found");
+  const campaign = rows.find((d) => d.id === id)!;
+  if (
+    !archived &&
+    campaign.source?.kind === "offer" &&
+    !readLocalRecords(businessId, "offers").some(
+      (o) => o.id === campaign.source!.id && !o.archived,
+    )
+  )
+    throw new Error("reference");
+  sessionStorage.setItem(
+    storageKey(businessId),
+    JSON.stringify(
+      rows.map((d) => ({
+        ...d,
+        description: d.source?.kind === "offer" ? "" : d.description,
+        ...(d.id === id
+          ? { archived, updatedAt: new Date().toISOString() }
+          : {}),
+      })),
+    ),
+  );
+  window.dispatchEvent(new Event(campaignDraftEvent));
 }

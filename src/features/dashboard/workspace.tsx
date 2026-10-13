@@ -1,4 +1,5 @@
 "use client";
+import { selectLocalBusiness } from "@/features/workspace/business-catalog";
 import { animateDialogClose } from "@/lib/motion/dialog";
 import Link from "next/link";
 import { HomeLink } from "@/components/ui/home-link";
@@ -112,7 +113,7 @@ export function Workspace({
   const [error, setError] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const requestedContext = useRef<string | null>(null);
-  const [businessId, setBusinessId] = useState<string>();
+  const businessId = query.get("business") || undefined;
   const [compact, setCompact] = useState(false);
   const [logoutError, setLogoutError] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
@@ -169,9 +170,28 @@ export function Workspace({
   }, [fixture, attempt, businessId, previewRole]);
   useEffect(() => {
     const refresh = () => setAttempt((value) => value + 1);
+    const storageRefresh = (event: StorageEvent) => {
+      if (
+        event.key?.startsWith("memberflow:business-profile:") ||
+        event.key?.startsWith("memberflow:customer-page-preview:")
+      )
+        refresh();
+    };
+    window.addEventListener("storage", storageRefresh);
+    window.addEventListener("memberflow:business-profile-changed", refresh);
+    window.addEventListener("memberflow:customer-page-draft-changed", refresh);
     window.addEventListener("memberflow:campaign-drafts-changed", refresh);
     window.addEventListener("memberflow:workspace-drafts-changed", refresh);
     return () => {
+      window.removeEventListener("storage", storageRefresh);
+      window.removeEventListener(
+        "memberflow:business-profile-changed",
+        refresh,
+      );
+      window.removeEventListener(
+        "memberflow:customer-page-draft-changed",
+        refresh,
+      );
       window.removeEventListener("memberflow:campaign-drafts-changed", refresh);
       window.removeEventListener(
         "memberflow:workspace-drafts-changed",
@@ -186,10 +206,10 @@ export function Workspace({
       !workspaceAccess(data).can("overview.read")
     ) {
       router.replace(
-        `/staff?lang=${locale}${data.source === "demo" ? "&demo=active" : ""}`,
+        `/staff?lang=${locale}&business=${encodeURIComponent(data.business.id)}${data.source === "demo" ? "&previewRole=STAFF&workspaceDemo=" + fixture : ""}`,
       );
     }
-  }, [data, locale, router]);
+  }, [data, locale, router, fixture]);
   function changeLocale(value: Locale) {
     setLanguageChoice({ source: initialLang, value });
     document.cookie = `memberflow_locale=${value}; Path=/; SameSite=Lax; Max-Age=31536000`;
@@ -202,6 +222,8 @@ export function Workspace({
     if (process.env.NODE_ENV === "development" && demo)
       params.set("demo", demo);
     if (previewRole) params.set("previewRole", previewRole);
+    if (businessId) params.set("business", businessId);
+    else if (data?.source === "demo") params.set("business", data.business.id);
     return `/dashboard${section === "overview" ? "" : "/" + section}?${params}`;
   }
   function closeDrawer() {
@@ -295,10 +317,16 @@ export function Workspace({
                 key={b.id}
                 aria-pressed={b.id === data.business.id}
                 onClick={(event) => {
-                  setBusinessId(b.id);
                   event.currentTarget
                     .closest("details")
                     ?.removeAttribute("open");
+                  if (data.source === "demo") selectLocalBusiness(b.id);
+                  if (query.get("business") === b.id) return;
+                  setData(null);
+                  setLoading(true);
+                  const params = new URLSearchParams(query.toString());
+                  params.set("business", b.id);
+                  router.replace(`${pathname}?${params}`);
                 }}
               >
                 <strong>{b.name}</strong>
