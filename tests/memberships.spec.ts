@@ -161,6 +161,7 @@ test("membership lifecycle connects CRM, Customer Page, existing Scanner, journa
   }
   const guest = new URL(publicUrl!, "http://localhost:3000");
   guest.searchParams.delete("prototypeCustomer");
+  guest.searchParams.set("guest", "1");
   await page.goto(guest.pathname + guest.search);
   await expect(page.locator(".mf-membership-card")).toHaveCount(0);
   await page.goto(profileUrl);

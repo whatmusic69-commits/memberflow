@@ -121,20 +121,27 @@ async function connectCustomer(page: Page) {
   await page
     .getByRole("button", { name: "Join / Continue", exact: true })
     .click();
-  const dialog = page.getByRole("dialog");
-  await dialog
-    .getByRole("textbox", { name: "Preview customer", exact: true })
-    .fill(customer);
-  await dialog
-    .getByRole("combobox", { name: "Loyalty programme", exact: true })
-    .selectOption({ label: programme });
-  await dialog
+  await expect(page).toHaveURL(/\/join\?/);
+  await page
+    .getByRole("textbox", { name: "Email", exact: true })
+    .fill("guest@example.test");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page
     .getByRole("button", {
-      name: "Join a programme in this preview",
+      name: "Continue with a fictional preview identity",
       exact: true,
     })
     .click();
-  await expect(dialog).toHaveCount(0);
+  await page.getByRole("textbox", { name: "Name", exact: true }).fill(customer);
+  await page
+    .getByRole("checkbox", { name: /Share the requested details/ })
+    .check();
+  await page
+    .getByRole("combobox", { name: "Loyalty programme", exact: true })
+    .selectOption({ label: programme });
+  await page
+    .getByRole("button", { name: "Join in local preview", exact: true })
+    .click();
   await expect(
     page.getByText(`Hello, ${customer}.`, { exact: true }),
   ).toBeVisible();
@@ -731,7 +738,7 @@ test("dashboard, builder, client page, scanner and dialogs fit 390/430/768/1024/
       page.getByRole("button", { name: "Save changes", exact: true }),
     ).toBeVisible();
     await noOverflow(page);
-    await page.goto(publicUrl!);
+    await page.goto(publicUrl! + "&guest=1");
     await publicPageReady(page);
     await expect(
       page.getByRole("button", { name: "Join / Continue", exact: true }),

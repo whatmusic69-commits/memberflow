@@ -4,14 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/content";
 import { customerPageContent } from "@/content/customer-page";
 import { LocalMembershipCards } from "@/features/prototype/membership-cards";
-import { PrototypeJoin } from "@/features/prototype/public-join";
+import { useRouter } from "next/navigation";
+import {
+  currentParticipation,
+  endCustomerPreview,
+} from "@/features/customer-registration/repository";
+import { PersonalPreviewCard } from "@/features/customer-registration/personal-card";
+import { registrationContent } from "@/content/customer-registration";
 import {
   prototypePersonal,
   prototypeCode,
 } from "@/features/prototype/customer-model";
 import { prototypeContent } from "@/content/prototype";
-import { Modal } from "@/components/ui/modal";
-import { animateDialogClose } from "@/lib/motion/dialog";
 import { CustomerPageView } from "./page-view";
 import { publicProjection } from "./public-model";
 import { customerSessionService } from "./session-service";
@@ -30,19 +34,13 @@ export function CustomerExperience({
   connectedFixture?: boolean;
 }) {
   const c = customerPageContent[locale];
+  const router = useRouter();
   const [page, setPage] = useState(initialPage),
     [personal, setPersonal] = useState<CustomerPagePersonal | null>(null);
   const [failed, setFailed] = useState(false),
     [personalError, setPersonalError] = useState(false),
     [retry, setRetry] = useState(0);
-  const [join, setJoin] = useState(false),
-    [phone, setPhone] = useState(""),
-    [code, setCode] = useState(""),
-    [challenge, setChallenge] = useState<string | null>(null);
-  const [authError, setAuthError] = useState(""),
-    [busy, setBusy] = useState(false);
   const lock = useRef(false),
-    modal = useRef<HTMLDialogElement>(null),
     alive = useRef(true);
   const slug = page?.slug;
   useEffect(() => {
@@ -87,9 +85,13 @@ export function CustomerExperience({
     if (!slug) return;
     const controller = new AbortController();
     if (demo && previewId) {
-      const selected = new URLSearchParams(window.location.search).get(
-        "prototypeCustomer",
-      );
+      const query = new URLSearchParams(window.location.search);
+      const selected =
+        query.get("guest") === "1"
+          ? null
+          : (query.get("prototypeCustomer") ??
+            currentParticipation(previewId)?.customerId ??
+            null);
       void import("@/features/prototype/customer-model").then(
         ({ prototypePersonal }) => {
           if (controller.signal.aborted) return;
@@ -141,45 +143,16 @@ export function CustomerExperience({
         refresh,
       );
   }, [previewId, localCustomerId]);
-  async function submit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (lock.current || !page) return;
-    lock.current = true;
-    setBusy(true);
-    setAuthError("");
-    const service = customerSessionService(page.slug, demo);
-    try {
-      if (!challenge) {
-        const result = await service.startJoin(phone);
-        if (alive.current) setChallenge(result.challengeId);
-      } else {
-        const result = await service.verifyOtp(challenge, code);
-        if (alive.current) {
-          setPersonal(result);
-          animateDialogClose(modal.current, () => {
-            if (alive.current) {
-              setJoin(false);
-              setPhone("");
-              setCode("");
-              setChallenge(null);
-            }
-          });
-        }
-      }
-    } catch (error) {
-      if (alive.current)
-        setAuthError(
-          error instanceof Error && error.message === "unavailable"
-            ? c.authUnavailable
-            : c.authError,
-        );
-    } finally {
-      lock.current = false;
-      if (alive.current) setBusy(false);
-    }
-  }
   async function logout() {
     if (lock.current || !page) return;
+    if (demo && previewId) {
+      endCustomerPreview();
+      setPersonal(null);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("prototypeCustomer");
+      window.history.replaceState(window.history.state, "", url);
+      return;
+    }
     lock.current = true;
     try {
       await customerSessionService(page.slug, demo).logout();
@@ -212,18 +185,19 @@ export function CustomerExperience({
         <h1>{c.unavailable}</h1>
       </div>
     );
-  const closeJoin = () => {
-    setJoin(false);
-    setAuthError("");
-    setCode("");
-    setPhone("");
-    setChallenge(null);
-  };
   return (
     <>
       {demo && previewId && (
         <aside className="cp-session-error">
           <p>{prototypeContent[locale].notice}</p>
+          {page.status !== "ACTIVE" && (
+            <>
+              <p>{registrationContent[locale].draftHelp}</p>
+              <Link href={`/dashboard/customer-page?lang=${locale}&business=${encodeURIComponent(previewId)}`}>
+                {registrationContent[locale].builder} →
+              </Link>
+            </>
+          )}
           <Link
             className="mf-text-link"
             href={`/dashboard/customers?lang=${locale}&business=${encodeURIComponent(previewId)}`}
@@ -257,11 +231,28 @@ export function CustomerExperience({
         }
         locale={locale}
         onJoin={() => {
-          setAuthError("");
-          setJoin(true);
+          const query = new URLSearchParams({
+            lang: locale,
+            ...(demo && previewId ? { preview: previewId } : {}),
+          });
+          router.push(`/b/${encodeURIComponent(page.slug)}/join?${query}`);
         }}
-        onLogout={personal && !demo ? () => void logout() : undefined}
+        onLogout={personal ? () => void logout() : undefined}
+        personalCard={
+          demo && previewId && personal ? (
+            <PersonalPreviewCard
+              businessId={previewId}
+              customerId={personal.customer.id}
+              locale={locale}
+            />
+          ) : undefined
+        }
       />
+      {demo && personal && (
+        <p className="cr-session-note">
+          {registrationContent[locale].previewNotice}
+        </p>
+      )}
       {personalError && (
         <div className="cp-session-error" role="status">
           <p>{c.personalError}</p>
@@ -272,75 +263,6 @@ export function CustomerExperience({
             {c.retry}
           </button>
         </div>
-      )}
-      {join && (
-        <Modal
-          dialogRef={modal}
-          title={c.authTitle}
-          closeLabel={c.cancel}
-          onClose={closeJoin}
-          closeDisabled={busy}
-          className="cp-auth-dialog"
-        >
-          {demo && previewId && page.status === "ACTIVE" ? (
-            <PrototypeJoin
-              businessId={previewId}
-              locale={locale}
-              onJoined={(value) => {
-                setPersonal(value);
-                const url = new URL(window.location.href);
-                url.searchParams.set("prototypeCustomer", value.customer.id);
-                window.history.replaceState(window.history.state, "", url);
-                animateDialogClose(modal.current, closeJoin);
-              }}
-            />
-          ) : demo || !page.connection.joinEnabled ? (
-            <>
-              <p>{c.authUnavailable}</p>
-              <button
-                className="button"
-                onClick={() => animateDialogClose(modal.current, closeJoin)}
-              >
-                {c.cancel}
-              </button>
-            </>
-          ) : (
-            <form onSubmit={(event) => void submit(event)}>
-              <p>{challenge ? c.codeSent : c.authText}</p>
-              <label className="mf-form-field">
-                <span>{challenge ? c.code : c.phone}</span>
-                {challenge ? (
-                  <input
-                    autoComplete="one-time-code"
-                    inputMode="numeric"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    required
-                    maxLength={12}
-                  />
-                ) : (
-                  <input
-                    type="tel"
-                    autoComplete="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder={c.phonePlaceholder}
-                    required
-                    maxLength={32}
-                  />
-                )}
-              </label>
-              {authError && (
-                <p role="alert" className="mf-form-error">
-                  {authError}
-                </p>
-              )}
-              <button className="cp-button" disabled={busy}>
-                {busy ? c.working : challenge ? c.verify : c.sendCode}
-              </button>
-            </form>
-          )}
-        </Modal>
       )}
     </>
   );

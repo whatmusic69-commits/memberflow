@@ -154,7 +154,7 @@ export function Onboarding({
         </p>
         <ol
           className="onboarding-progress"
-          style={{ "--onboarding-step": step } as CSSProperties}
+          style={{ "--onboarding-progress": (step + 1) / c.steps.length } as CSSProperties}
           aria-label={c.previewLabel}
         >
           {c.steps.map((label, i) => (
@@ -173,14 +173,16 @@ export function Onboarding({
                 title={i === 4 && !canChoosePlan ? c.planLocked : undefined}
               >
                 <span className="onboarding-step-number">
-                  {completed[i] ? <Check size={13} aria-hidden="true" /> : String(i + 1).padStart(2, "0")}
+                  {i !== step && completed[i] ? <Check size={13} aria-hidden="true" /> : String(i + 1).padStart(2, "0")}
                 </span>
                 <strong>{label}</strong>
-                {i < 4 && !completed[i] && <span className="onboarding-step-warning" aria-hidden="true">!</span>}
               </button>
             </li>
           ))}
         </ol>
+        <p className="onboarding-progress-percent" aria-live="polite">
+          {Math.round(((step + 1) / c.steps.length) * 100)}%
+        </p>
         {!canChoosePlan && <p className="onboarding-plan-lock-note">{c.planLocked}</p>}
         <div className={`onboarding-layout ${step === 4 ? "plan-layout" : ""}`}>
           <div className="onboarding-form-area">

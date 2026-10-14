@@ -1,4 +1,6 @@
-import { Fragment } from "react";
+"use client";
+import { useState } from "react";
+import { FAQItem } from "@/components/ui/faq-item";
 import {
   Check,
   Users,
@@ -22,6 +24,8 @@ export function PlanComparison({
   localCatalog: boolean;
 }) {
   const c = publicSiteContent[locale];
+  const [selectedId, setSelectedId] = useState(plans[0]?.id ?? "");
+  const selectedPlan = plans.find(plan => plan.id === selectedId) ?? plans[0];
   function value(plan: Plan, row: number) {
     if (row < 2) {
       const limit = plan.limits?.[row === 0 ? "activeCustomers" : "locations"];
@@ -35,6 +39,40 @@ export function PlanComparison({
     return index === undefined
       ? c.unknown
       : (plan.features[index] ?? c.unknown);
+  }
+  function renderValue(plan: Plan, row: number) {
+    const display = value(plan, row), unknown = display === c.unknown;
+    return (unknown ? (
+                            <span
+                              className="comparison-unknown"
+                              title={display}
+                            >
+                              <span aria-hidden="true">—</span>
+                              <span className="sr-only">{display}</span>
+                            </span>
+                          ) : row < 2 ? (
+                            <strong className="comparison-limit">
+                              {display}
+                            </strong>
+                          ) : (
+                            <span
+                              className="comparison-included"
+                              title={display}
+                            >
+                              <span className="comparison-check">
+                                <Check size={13} aria-hidden="true" />
+                              </span>
+                              <span
+                                className={
+                                  row === 7
+                                    ? "comparison-feature-detail"
+                                    : "sr-only"
+                                }
+                              >
+                                {display}
+                              </span>
+                            </span>
+                          ));
   }
   const groups = [
     { label: c.comparisonLabels[2], Icon: Users, rows: [0, 1] },
@@ -61,6 +99,16 @@ export function PlanComparison({
             {c.comparisonNote}
           </p>
         </header>
+        {selectedPlan && <div className="comparison-mobile" data-plan={selectedPlan.id}>
+          <div className="comparison-mobile-switch" role="group" aria-label={c.comparisonLabels[0]}>
+            {plans.map(plan => <button type="button" key={plan.id} aria-pressed={plan.id === selectedPlan.id} onClick={() => setSelectedId(plan.id)}>{plan.name}</button>)}
+          </div>
+          <div className="comparison-mobile-panel" aria-label={selectedPlan.name}>
+            <header><span>{c.comparisonLabels[1]}</span><strong>{selectedPlan.name}</strong></header>
+            {groups.map(({label, rows}) => <section key={label}><h3>{label}</h3><dl>{rows.map(row => <div key={row}><dt>{c.comparisonRows[row]}</dt><dd>{renderValue(selectedPlan,row)}</dd></div>)}</dl></section>)}
+            <details className="comparison-mobile-catalog" key={selectedPlan.id}><summary>{c.planFeatures}</summary><ul>{selectedPlan.features.map(feature => <li key={feature}>{feature}</li>)}</ul></details>
+          </div>
+        </div>}
         <p className="comparison-scroll-hint">
           <ArrowLeftRight size={14} aria-hidden="true" />
           {c.comparisonScrollHint}
@@ -127,37 +175,7 @@ export function PlanComparison({
                             unknown ? "unknown" : row < 2 ? "limit" : "included"
                           }
                         >
-                          {unknown ? (
-                            <span
-                              className="comparison-unknown"
-                              title={display}
-                            >
-                              <span aria-hidden="true">—</span>
-                              <span className="sr-only">{display}</span>
-                            </span>
-                          ) : row < 2 ? (
-                            <strong className="comparison-limit">
-                              {display}
-                            </strong>
-                          ) : (
-                            <span
-                              className="comparison-included"
-                              title={display}
-                            >
-                              <span className="comparison-check">
-                                <Check size={13} aria-hidden="true" />
-                              </span>
-                              <span
-                                className={
-                                  row === 7
-                                    ? "comparison-feature-detail"
-                                    : "sr-only"
-                                }
-                              >
-                                {display}
-                              </span>
-                            </span>
-                          )}
+                          {renderValue(plan, row)}
                         </td>
                       );
                     })}
@@ -188,12 +206,7 @@ export function PlanComparison({
       <section className="public-faq">
         <h2>{c.pricingFaqTitle}</h2>
         {c.pricingFaq.map(([q, a]) => (
-          <Fragment key={q}>
-            <details>
-              <summary>{q}</summary>
-              <p>{a}</p>
-            </details>
-          </Fragment>
+          <FAQItem key={q} question={q} answer={a} />
         ))}
       </section>
     </>

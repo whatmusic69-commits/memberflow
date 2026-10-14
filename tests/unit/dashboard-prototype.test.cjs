@@ -898,3 +898,191 @@ test("Selected local business remains current on routes without a business query
   selectLocalBusiness("missing");
   assert.equal(readSelectedBusiness(), first.business.id);
 });
+
+const customerRegistration = require("../../src/features/customer-registration/repository.ts");
+const {
+  defaultPolicy,
+  missingFields,
+} = require("../../src/features/customer-registration/model.ts");
+async function registrationBusiness(
+  id,
+  fields = { name: true, email: true, phone: false },
+) {
+  const page = customerPageService(business(id), true);
+  await page.get();
+  await page.setStatus("ACTIVE");
+  customerRegistration.saveRegistrationPolicy(id, { ...defaultPolicy, fields });
+  return moduleRepository("loyalty", true).save(id, loyalty);
+}
+test("Customer registration uses one fictional identity and scoped participations/QR/progress", async () => {
+  const a = await registrationBusiness("a"),
+    b = await registrationBusiness("b", {
+      name: true,
+      email: true,
+      phone: true,
+    });
+  const session =
+    customerRegistration.beginCustomerPreview("alex@example.test");
+  const first = await customerRegistration.joinCustomerPreview(
+    "a",
+    { name: "Alex Preview", email: "alex@example.test", phone: "" },
+    a.id,
+    true,
+    { email: false, sms: false },
+  );
+  assert.deepEqual(
+    missingFields(
+      customerRegistration.readCustomerPreview().account,
+      customerRegistration.readRegistrationPolicy("b"),
+    ),
+    ["phone"],
+  );
+  const second = await customerRegistration.joinCustomerPreview(
+    "b",
+    { name: "Alex Preview", email: "alex@example.test", phone: "+00000000000" },
+    b.id,
+    true,
+    { email: false, sms: false },
+  );
+  assert.equal(
+    customerRegistration.readCustomerPreview().account.id,
+    session.account.id,
+  );
+  assert.equal(
+    customerRegistration.readCustomerPreview().participations.length,
+    2,
+  );
+  assert.notEqual(first.customerId, second.customerId);
+  assert.notEqual(
+    prototypeCode("a", first.customerId),
+    prototypeCode("b", second.customerId),
+  );
+  assert.equal(readPrototypeLedger("a").progress[0].programmeId, a.id);
+  assert.equal(readPrototypeLedger("b").progress[0].programmeId, b.id);
+  assert.equal(
+    customerRegistration.currentParticipation("a").customerId,
+    first.customerId,
+  );
+  assert.equal(
+    (
+      await customerRegistration.joinCustomerPreview(
+        "a",
+        { name: "Alex Preview", email: "alex@example.test", phone: "" },
+        a.id,
+        true,
+        { email: false, sms: false },
+      )
+    ).customerId,
+    first.customerId,
+  );
+  assert.equal(
+    readPrototypeLedger("a").events.filter((e) => e.type === "CUSTOMER_JOINED")
+      .length,
+    1,
+  );
+});
+test("Registration does not transfer unrequested contacts or preselect marketing consent", async () => {
+  const p = await registrationBusiness("a", {
+    name: true,
+    email: false,
+    phone: false,
+  });
+  customerRegistration.beginCustomerPreview("alex@example.test");
+  await assert.rejects(
+    customerRegistration.joinCustomerPreview(
+      "a",
+      { name: "Alex", email: "alex@example.test", phone: "+00000000000" },
+      p.id,
+      false,
+      { email: true, sms: true },
+    ),
+    /invalid/,
+  );
+  const link = await customerRegistration.joinCustomerPreview(
+    "a",
+    { name: "Alex", email: "alex@example.test", phone: "+00000000000" },
+    p.id,
+    true,
+    { email: true, sms: true },
+  );
+  const detail = prototypeDetail("a", link.customerId);
+  assert.equal(detail.customer.email, "");
+  assert.equal(detail.customer.phone, "");
+  assert.deepEqual(link.marketing, { email: false, sms: false });
+  assert.equal(
+    JSON.stringify([...localStorage.values.values()]).includes(
+      "alex@example.test",
+    ),
+    false,
+  );
+});
+test("Registration validates requested fields, archived programmes and inactive businesses", async () => {
+  const p = await registrationBusiness("a", {
+    name: true,
+    email: true,
+    phone: true,
+  });
+  customerRegistration.beginCustomerPreview("alex@example.test");
+  for (const values of [
+    { name: "", email: "alex@example.test", phone: "+00000000000" },
+    { name: "Alex", email: "invalid", phone: "+00000000000" },
+    { name: "Alex", email: "alex@example.test", phone: "bad" },
+  ])
+    await assert.rejects(
+      customerRegistration.joinCustomerPreview("a", values, p.id, true, {
+        email: false,
+        sms: false,
+      }),
+    );
+  await moduleRepository("loyalty", true).archive("a", p.id, true);
+  await assert.rejects(
+    customerRegistration.joinCustomerPreview(
+      "a",
+      { name: "Alex", email: "alex@example.test", phone: "+00000000000" },
+      p.id,
+      true,
+      { email: false, sms: false },
+    ),
+    /programme/,
+  );
+  assert.equal(
+    customerRegistration.readCustomerPreview().participations.length,
+    0,
+  );
+  await customerPageService(business("a"), true).setStatus("DISABLED");
+  await assert.rejects(
+    customerRegistration.joinCustomerPreview(
+      "a",
+      { name: "Alex", email: "alex@example.test", phone: "+00000000000" },
+      null,
+      true,
+      { email: false, sms: false },
+    ),
+    /invalid/,
+  );
+});
+test("Customer session/policy safely reject corrupt data and API mode cannot use local identity", () => {
+  sessionStorage.setItem("memberflow:customer-account-preview:v1", "{bad");
+  assert.equal(customerRegistration.readCustomerPreview(), null);
+  localStorage.setItem(
+    "memberflow:customer-registration:v1:a",
+    JSON.stringify({ version: 1, fields: { name: "yes" } }),
+  );
+  assert.deepEqual(
+    customerRegistration.readRegistrationPolicy("a"),
+    defaultPolicy,
+  );
+  assert.throws(
+    () => customerRegistration.beginCustomerPreview("real@example.com"),
+    /fictional/,
+  );
+  customerRegistration.beginCustomerPreview("alex@example.test");
+  customerRegistration.endCustomerPreview();
+  assert.equal(customerRegistration.readCustomerPreview(), null);
+  process.env.NEXT_PUBLIC_DASHBOARD_MODE = "api";
+  assert.throws(
+    () => customerRegistration.beginCustomerPreview("alex@example.test"),
+    /fictional/,
+  );
+  assert.equal(customerRegistration.readCustomerPreview(), null);
+});

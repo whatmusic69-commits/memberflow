@@ -1,3 +1,6 @@
+import Link from "next/link";
+import type { Locale } from "@/content";
+import { faqContent } from "@/content/faq";
 import { FAQItem } from "./faq-item";
 import type { HomeContent } from "@/content/types";
 import { Wallet } from "lucide-react";
@@ -64,7 +67,7 @@ export function Benefits({ c }: { c: HomeContent }) {
     </section>
   );
 }
-export function FAQ({ c }: { c: HomeContent }) {
+export function FAQ({ c, locale }: { c: HomeContent; locale: Locale }) {
   return (
     <section
       id="faq"
@@ -77,6 +80,7 @@ export function FAQ({ c }: { c: HomeContent }) {
           <FAQItem key={item.question} question={item.question} answer={item.answer} />
         ))}
       </div>
+      <Link className="secondary-link faq-all-link" href={`/${locale}/faq`}>{faqContent[locale].all} →</Link>
     </section>
   );
 }

@@ -265,7 +265,23 @@ export function prototypePersonal(
       validUntil: m.validUntil,
       statusLabel: m.status,
     })),
-    offers: [],
+    offers: readLocalRecords(businessId, "offers")
+      .filter(
+        (o) =>
+          !o.archived &&
+          o.audience === "all" &&
+          (!o.expiresAt ||
+            o.expiresAt >= new Date().toISOString().slice(0, 10)),
+      )
+      .map((o) => ({
+        id: o.id,
+        title: o.name,
+        description: o.description,
+        priceLabel: null,
+        bonusLabel: null,
+        validUntil: o.expiresAt || null,
+        imageUrl: null,
+      })),
     wallet: {
       apple: { status: "UNAVAILABLE", actionUrl: null },
       google: { status: "UNAVAILABLE", actionUrl: null },

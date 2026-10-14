@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { contactContent } from "@/content/contact";
+import { faqContent } from "@/content/faq";
 import { HomeLink } from "@/components/ui/home-link";
 import {
   helpNavigationLabel,
@@ -52,6 +54,7 @@ export function Footer({
             >
               {helpNavigationLabel[locale]}
             </Link>
+            <Link href={`/${locale}/faq`} aria-current={page === "faq" ? "page" : undefined}>{faqContent[locale].nav}</Link>
           </nav>
           <nav aria-label={c.company}>
             <strong>{c.company}</strong>
@@ -61,6 +64,7 @@ export function Footer({
             >
               {c.about}
             </Link>
+            <Link href={`/${locale}/contact`} aria-current={page === "contact" ? "page" : undefined}>{contactContent[locale].nav}</Link>
           </nav>
           <nav aria-label={c.legal}>
             <strong>{c.legal}</strong>

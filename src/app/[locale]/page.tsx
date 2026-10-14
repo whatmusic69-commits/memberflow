@@ -53,7 +53,7 @@ export default async function HomePage({
         <Benefits c={c} />
         <Story c={c} locale={locale} />
         <Solutions c={c} />
-        <FAQ c={c} />
+        <FAQ c={c} locale={locale} />
         <FinalCTA c={c} />
       </main>
       <Footer c={c} locale={locale} />
