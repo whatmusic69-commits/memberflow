@@ -21,6 +21,7 @@ export function Header({
   page?: MarketingPage;
 }) {
   const [open, setOpen] = useState(false);
+  const menuToggle = useRef<HTMLButtonElement>(null);
   const language = useRef<HTMLDetailsElement>(null);
   const loginAvailable =
     process.env.NEXT_PUBLIC_AUTH_MODE === "symfony" &&
@@ -138,23 +139,28 @@ export function Header({
             <StartLink label={c.start} />
           </div>
           <button
+            ref={menuToggle}
             className="icon-button mobile-toggle"
             aria-label={open ? c.close : c.menu}
             aria-expanded={open}
             aria-controls="mobile-navigation"
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen((value) => !value)}
           >
             {open ? <X size={23} /> : <Menu size={23} />}
           </button>
         </div>
       </div>
-      {open && (
+      <div className="mobile-nav-panel" data-open={open} inert={!open} aria-hidden={!open}>
+        <div className="mobile-nav-shell">
         <nav
           id="mobile-navigation"
           className="mobile-nav container"
           aria-label={c.menu}
           onKeyDown={(e) => {
-            if (e.key === "Escape") setOpen(false);
+            if (e.key === "Escape") {
+              setOpen(false);
+              menuToggle.current?.focus();
+            }
           }}
         >
           {navigation}
@@ -171,7 +177,8 @@ export function Header({
           )}
           <StartLink label={c.start} />
         </nav>
-      )}
+        </div>
+      </div>
     </header>
   );
 }

@@ -1,3 +1,4 @@
+import { registrationContent } from "@/content/customer-registration";
 import { LoyaltyProgress } from "@/components/customer/loyalty-progress";
 import type { CSSProperties } from "react";
 import {
@@ -80,6 +81,7 @@ export function CustomerPageView({
   preview = false,
   onLogout,
   localMemberships,
+  personalCard,
 }: {
   page: CustomerPagePublic;
   personal?: CustomerPagePersonal | null;
@@ -88,6 +90,7 @@ export function CustomerPageView({
   preview?: boolean;
   onLogout?: () => void;
   localMemberships?: React.ReactNode;
+  personalCard?: React.ReactNode;
 }) {
   const c = customerPageContent[locale];
   const initials = page.business.name
@@ -171,13 +174,14 @@ export function CustomerPageView({
           <section className="cp-join">
             <h2>{c.joinTitle.replace("{business}", page.business.name)}</h2>
             <p>{c.joinText}</p>
-            <button className="cp-button" onClick={onJoin} disabled={preview}>
+            <button className="cp-button" onClick={onJoin} disabled={preview || !page.connection.joinEnabled}>
               {c.join}
               <ArrowUpRight size={17} />
             </button>
             <small>{c.noApp}</small>
           </section>
         )}
+        {personalCard}
         {page.modules.loyalty && (page.loyalty || personal?.loyalty) && (
           <section className="cp-section cp-loyalty">
             <p className="cp-label">
@@ -202,7 +206,7 @@ export function CustomerPageView({
                 <button
                   className="cp-text-action"
                   onClick={onJoin}
-                  disabled={preview}
+                  disabled={preview || !page.connection.joinEnabled}
                 >
                   {c.joinRewards}
                   <ArrowUpRight size={15} />
@@ -272,34 +276,36 @@ export function CustomerPageView({
               ))}
             </section>
           )}
-        {personal &&
-          Object.values(personal.wallet).some(
-            (state) => state.status !== "UNAVAILABLE",
-          ) && (
-            <section className="cp-section cp-wallet">
-              <p className="cp-label">
-                <Wallet size={15} />
-                {c.wallet}
-              </p>
-              <h3>{c.walletTitle.replace("{business}", page.business.name)}</h3>
-              <p>{c.walletText}</p>
-              {(["apple", "google"] as const).map((provider) => {
-                const state = personal.wallet[provider],
-                  url = safeLink(state.actionUrl);
-                return state.status === "ADDED" ? (
-                  <span className="cp-wallet-added" key={provider}>
-                    ✓ {provider === "apple" ? "Apple Wallet" : "Google Wallet"}{" "}
-                    · {c.walletAdded}
-                  </span>
-                ) : state.status === "AVAILABLE" && url ? (
-                  <a className="cp-wallet-button" key={provider} href={url}>
-                    {c[provider]}
-                    <ArrowUpRight size={15} />
-                  </a>
-                ) : null;
-              })}
-            </section>
-          )}
+        {personal && (
+          <section className="cp-section cp-wallet">
+            <p className="cp-label">
+              <Wallet size={15} />
+              {c.wallet}
+            </p>
+            <h3>{c.walletTitle.replace("{business}", page.business.name)}</h3>
+            <p>{c.walletText}</p>
+            {(["apple", "google"] as const).map((provider) => {
+              const state = personal.wallet[provider],
+                url = safeLink(state.actionUrl);
+              return state.status === "ADDED" ? (
+                <span className="cp-wallet-added" key={provider}>
+                  ✓ {provider === "apple" ? "Apple Wallet" : "Google Wallet"} ·{" "}
+                  {c.walletAdded}
+                </span>
+              ) : state.status === "AVAILABLE" && url ? (
+                <a className="cp-wallet-button" key={provider} href={url}>
+                  {c[provider]}
+                  <ArrowUpRight size={15} />
+                </a>
+              ) : (
+                <span className="cp-wallet-unavailable" key={provider}>
+                  {c[provider]} ·{" "}
+                  {registrationContent[locale].walletUnavailable}
+                </span>
+              );
+            })}
+          </section>
+        )}
         {(page.business.address ||
           page.business.openingHours ||
           page.business.phone ||

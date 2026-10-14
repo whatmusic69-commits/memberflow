@@ -70,7 +70,7 @@ export interface PrototypeCommand {
   programmeId?: string;
   membershipId?: string;
   type:
-    "join" | "visit" | "award" | "redeem" | "membership" | "membership-manage";
+    "join" | "register" | "visit" | "award" | "redeem" | "membership" | "membership-manage";
   membershipOperation?: MembershipOperation;
   target?: number;
   reward?: string;
@@ -155,7 +155,9 @@ export function applyPrototypeCommand(
     applyMembershipOperation(next, c, signature);
     return next;
   }
-  if (c.type === "join") {
+  if (c.type === "register") {
+    event("CUSTOMER_JOINED");
+  } else if (c.type === "join") {
     if (
       !c.programmeId ||
       !Number.isSafeInteger(c.target) ||

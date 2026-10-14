@@ -1238,3 +1238,4 @@
   .pricing-actions { gap:16px; }
 }
 @media (prefers-reduced-motion:reduce) { .pricing-billing-toggle label > span { transition:none; } }
+.faq-all-link {display:inline-flex;margin-top:24px;}

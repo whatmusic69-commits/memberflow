@@ -5,6 +5,8 @@ export type MarketingPage =
   | "about"
   | "solutions"
   | "integrations"
+  | "contact"
+  | "faq"
   | "help"
   | `help/${string}`;
 export const helpNavigationLabel = {

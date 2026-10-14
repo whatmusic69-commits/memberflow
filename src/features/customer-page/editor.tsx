@@ -9,6 +9,7 @@ import { OverviewSkeleton } from "@/features/dashboard/overview";
 import { CustomerPageView } from "./page-view";
 import { CustomerImage } from "./customer-image";
 import { publicProjection, safeLink } from "./public-model";
+import { RegistrationSettings } from "@/features/customer-registration/settings";
 import { prototypeContent } from "@/content/prototype";
 import { customerPageService, previewUrl } from "./service";
 import type {
@@ -592,6 +593,12 @@ export function CustomerPageEditor() {
                   ),
                 )}
               </section>
+              <RegistrationSettings
+                key={business.id}
+                businessId={business.id}
+                locale={locale}
+                enabled={demo && writable}
+              />
               <section className="cp-editor-section">
                 <h2>{c.social}</h2>
                 {(["instagram", "tiktok", "facebook", "website"] as const).map(

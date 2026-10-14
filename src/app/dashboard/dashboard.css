@@ -417,10 +417,10 @@
   line-height: 1.5;
 }
 .mf-text-link svg {
-  transition: transform 0.15s;
+  transition: none;
 }
 .mf-text-link:hover svg {
-  transform: translateX(2px);
+  transform: none;
 }
 .mf-setup-flow ol,
 .mf-flow-summary ol {
@@ -3777,3 +3777,9 @@
     grid-template-columns: 1fr;
   }
 }
+.cr-settings > p {font-size:12px;line-height:1.8;color:var(--muted);}
+.cr-registration-preview {display:grid;gap:12px;padding:18px;margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#f8f7ef;}
+.cr-registration-preview h3 {font-size:13px;margin:0;}
+.cr-registration-preview label {display:grid;gap:6px;font-size:11px;}
+.cr-registration-preview input {min-width:0;width:100%;padding:11px;border:1px solid var(--line);border-radius:6px;background:#fffef9;}
+.cr-registration-preview p {font-size:11px;line-height:1.7;margin:0;}

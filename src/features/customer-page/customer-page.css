@@ -136,10 +136,9 @@
 }
 .cp-button svg {
   color: var(--cp-accent, var(--accent));
-  transition: transform 180ms;
 }
 .cp-button:hover svg {
-  transform: translate(2px, -2px);
+  transform: none;
 }
 .cp-button:disabled {
   cursor: default;
@@ -936,3 +935,38 @@
 @media (prefers-reduced-motion: reduce) {
   .cp-editor .button { transition: none; }
 }
+
+/* Shared customer registration, separate from the business workspace. */
+.cr-shell {max-width:520px;margin:0 auto;padding:26px 20px 48px;min-height:100svh;}
+.cr-back {display:inline-flex;align-items:center;gap:8px;font-size:12px;margin-bottom:24px;color:var(--muted);}
+.cr-card {border:1px solid var(--line);border-radius:18px;background:#fffef9;overflow:hidden;}
+.cr-business {padding:28px 24px;text-align:center;border-bottom:1px solid var(--line);}
+.cr-business .cp-logo {margin:0 auto 16px;}
+.cr-business h1 {font-size:clamp(23px,5.5vw,30px);font-weight:550;letter-spacing:-.04em;line-height:1.25;margin:0 0 12px;}
+.cr-business > p {font-size:13px;color:var(--muted);line-height:1.75;margin:0;}
+.cr-benefit {display:flex;justify-content:center;align-items:center;gap:9px;margin-top:16px;padding:12px;border-radius:8px;background:#eaf0e1;font-size:12px;line-height:1.65;color:#405b37;}
+.cr-benefit svg {flex-shrink:0;}
+.cr-notice {margin:0;padding:14px 24px;font-size:11px;line-height:1.65;background:#f3f1e8;color:var(--muted);}
+.cr-step {padding:24px;display:grid;gap:18px;}
+.cr-step h2 {font-size:20px;font-weight:550;margin:0;line-height:1.35;}
+.cr-step > p {font-size:12px;line-height:1.8;color:var(--muted);margin:0;}
+.cr-step label {display:grid;gap:7px;min-width:0;font-size:12px;line-height:1.6;}
+.cr-step input:not([type=checkbox]),.cr-step select,.cr-registration-preview input {width:100%;min-width:0;border:1px solid var(--line-strong);border-radius:7px;background:#fbfaf5;color:var(--ink);padding:12px;font:inherit;line-height:1.6;}
+.cr-step :is(input,select):focus-visible {outline:2px solid var(--accent);outline-offset:2px;}
+.cr-step .cp-button {width:100%;}
+.cr-step .cr-check {display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.8;}
+.cr-check input {margin-top:5px;flex-shrink:0;accent-color:var(--accent);}
+.cr-share {border:1px solid var(--line);border-radius:8px;padding:14px;}
+.cr-share dl {margin:0 0 14px;display:grid;gap:8px;}
+.cr-share dl > div {display:flex;justify-content:space-between;gap:12px;font-size:11px;}
+.cr-share dd {margin:0;text-align:right;overflow-wrap:anywhere;}
+.cr-preview-button {border:1px solid #b7c8a5;background:#edf1e6;color:#405b37;font-size:12px;line-height:1.6;}
+.cr-error {margin:0;padding:0 24px 24px;font-size:12px;line-height:1.8;color:#9b3b25;}
+.cr-session-note {max-width:520px;margin:0 auto;padding:20px;font-size:11px;line-height:1.8;color:var(--muted);}
+.cr-personal-card {text-align:center;margin:24px 0;padding:22px 16px;border:1px solid var(--line);border-radius:14px;background:#fffef9;position:relative;}
+.cr-personal-card h2 {font-size:17px;font-weight:550;margin:0 0 14px;}
+.cr-personal-card img {max-width:100%;height:auto;margin:0 auto;}
+.cr-personal-card p {font-size:12px;line-height:1.8;color:var(--muted);}
+.cr-personal-card input {width:100%;min-width:0;border:1px solid var(--line);border-radius:6px;background:#fbfaf5;padding:10px;font-size:10px;}
+.cp-wallet-unavailable {display:block;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.7;color:var(--muted);}
+@media(max-width:600px) {.cr-shell {padding:20px 14px 40px;}.cr-step,.cr-business {padding:22px 18px;}.cr-step input:not([type=checkbox]),.cr-step select {font-size:16px;}.cr-notice {padding:14px 18px;}}
