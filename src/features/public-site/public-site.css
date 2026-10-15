@@ -146,14 +146,15 @@
   margin-bottom: 22px;
   text-align: center;
 }
-.preview-page {
+.solution-preview .preview-page {
   max-width: 330px;
   margin: auto;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 12px 30px #24272008;
+  width:100%;
+  min-width:0;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
 }
 .preview-business {
   display: flex;
@@ -525,7 +526,11 @@
 .article-contents {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  padding:18px;
+  border:1px solid #d6ddcc;
+  border-radius:12px;
+  background:#f0f2e9;
   font-size: 12px;
   align-self: start;
   position: sticky;
@@ -535,6 +540,16 @@
   color: var(--muted);
   line-height: 1.7;
 }
+.article-contents > strong {font-size:11px;letter-spacing:.04em;color:#526047;}
+.article-contents ol {display:grid;gap:5px;margin:0;padding:0;list-style:none;}
+.article-contents ol a {display:flex;align-items:baseline;gap:9px;padding:10px;border:1px solid transparent;border-radius:7px;transition:background-color 180ms ease,color 180ms ease,border-color 180ms ease;}
+.article-contents-number {flex-shrink:0;font-size:9px;color:#7c886e;}
+.article-contents ol a:hover {background:#e9eddf;color:#30452a;}
+.article-contents ol a[aria-current="location"] {background:#dfe7d3;border-color:#b5c6a4;color:#30452a;font-weight:600;box-shadow:inset 3px 0 #647b54;}
+.article-contents ol a[aria-current="location"] .article-contents-number {color:#30452a;font-weight:700;}
+.article-contents a:focus-visible {outline:2px solid #718269;outline-offset:2px;}
+.article-contents .article-contents-home {padding-top:13px;border-top:1px solid #d6ddcc;font-size:11px;}
+@media(prefers-reduced-motion:reduce) {.article-contents ol a {transition:none;}}
 .help-article section {
   margin-bottom: 35px;
   scroll-margin-top: 110px;
@@ -739,10 +754,8 @@
   }
   .article-contents {
     position: static;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line);
   }
-  .article-contents a {
+  .article-contents > a {
     display: block;
   }
   .comparison-scroll th,

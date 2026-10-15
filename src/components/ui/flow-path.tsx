@@ -7,12 +7,14 @@ export function FlowPath({
   duration = 1600,
   className = "",
   signal = true,
+  line = true,
 }: {
   d: string;
   delay?: number;
   duration?: number;
   className?: string;
   signal?: boolean;
+  line?: boolean;
 }) {
   const timing = {
     "--flow-delay": `${delay}ms`,
@@ -20,7 +22,7 @@ export function FlowPath({
   } as CSSProperties;
   return (
     <g className={`flow-path ${className}`} style={timing}>
-      <path className="flow-line" d={d} pathLength={1} />
+      {line && <path className="flow-line" d={d} pathLength={1} />}
       {signal && (
         <circle
           className="flow-signal"

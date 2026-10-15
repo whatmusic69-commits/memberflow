@@ -83,6 +83,7 @@ export function CampaignFlow({ c }: { c: HomeContent }) {
           )}
         </div>
       </div>
+      <p className="hero-planned-note">{c.experience.stories[0].takeaway}</p>
       <div className="diagram-bottom">
         <span className="tiny-cross">+</span>
         {c.experience.why.example}

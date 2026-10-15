@@ -41,7 +41,7 @@ export default async function Page({
         title={c.solutionsTitle}
         intro={c.solutionsIntro}
       />
-      <SolutionsExplorer c={c} />
+      <SolutionsExplorer c={c} locale={locale} />
       <PublicCTA locale={locale} />
     </PublicShell>
   );

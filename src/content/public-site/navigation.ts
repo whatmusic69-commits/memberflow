@@ -1,6 +1,7 @@
 export type MarketingPage =
   | "terms"
   | "privacy"
+  | "product"
   | "pricing"
   | "about"
   | "solutions"

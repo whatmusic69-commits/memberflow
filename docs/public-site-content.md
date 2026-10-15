@@ -13,7 +13,7 @@ Wallet pass updates are separate from notification delivery. No guaranteed push 
 
 ## Pricing
 
-Prices and limits continue to use the existing `src/config/plans.ts` catalog or the existing public Symfony adapter. Local comparison cells point to exact entries in the same translated feature lists, through `developmentComparisonFeatures`; they do not infer inherited features, programme counts or absence of unlisted features. Full feature lists remain visible for backend catalogs, whose opaque strings cannot safely define a complete entitlement matrix.
+Prices and limits continue to use the existing `src/config/plans.ts` catalog or the existing public Symfony adapter. Local comparison cells derive from the same feature definitions as plan cards, through `developmentComparisonFeatures`. The owner confirmed that Growth inherits Starter and Business has all Growth tools, differing through custom customer/location capacity. No programme counts or numeric Business limits are invented. Full feature lists remain visible for backend catalogs, whose opaque strings cannot safely define a complete entitlement matrix.
 
 For complete production comparison, the Symfony developer needs to extend the existing public plan DTO with agreed stable feature keys and values (e.g. `customerPage`, `wallet`, `campaigns`, `crm`, `analytics`, `staff`, `automations`, `loyaltyPrograms`) plus explicit quantities where relevant. Unknown/omitted values remain unspecified, never unlimited or excluded. This work does not change the current API contract or implement endpoints.
 

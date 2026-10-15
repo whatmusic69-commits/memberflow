@@ -5,6 +5,7 @@ export interface HomeContent {
   login: string;
   dashboard: string;
   start: string;
+  heroStart: string;
   how: string;
   menu: string;
   close: string;

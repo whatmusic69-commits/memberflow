@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isLocale, locales } from "@/content";
 import { helpArticles, publicSiteContent } from "@/content/public-site";
 import { PublicShell, publicMetadata } from "@/features/public-site/shell";
+import { ArticleContents } from "@/features/public-site/article-contents";
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
     helpArticles[locale].map((a) => ({ locale, slug: a.slug })),
@@ -48,15 +49,7 @@ export default async function Page({
         <p>{article.summary}</p>
       </header>
       <div className="help-article-layout">
-        <nav className="article-contents" aria-label={c.contents}>
-          <strong>{c.contents}</strong>
-          {article.sections.map((s, i) => (
-            <a key={s.title} href={`#section-${i}`}>
-              {s.title}
-            </a>
-          ))}
-          <Link href={`/${locale}/help`}>{c.helpHome} ↗</Link>
-        </nav>
+        <ArticleContents key={article.slug} label={c.contents} sections={article.sections.map(s => ({ title: s.title }))} helpHref={`/${locale}/help`} helpLabel={c.helpHome} />
         <article className="help-article">
           {article.sections.map((s, i) => (
             <section id={`section-${i}`} key={s.title}>

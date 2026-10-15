@@ -1,11 +1,11 @@
 import type { HomeRefinement } from "./types";
 export const en: HomeRefinement = {
-  channelHeading: "CHANNEL PREPARATION",
+  channelHeading: "SOCIAL PUBLISHING · PLANNED",
   why: {
     label: "WHY MEMBERFLOW",
     title: "A first visit is good.\nA second one is better.",
     intro:
-      "Getting someone through your door is only half the job. MemberFlow gives them a reason to come back — and gives you a way to reach them again.",
+      "A paper stamp card shows a customer their progress. MemberFlow also gives you a record of visits, so you can see who returns, who has been away and which group to prepare an offer for.",
     pairs: [
       {
         problem:
@@ -54,10 +54,10 @@ export const en: HomeRefinement = {
   },
   stories: [
     {
-      label: "CREATE & DISTRIBUTE",
-      title: "One offer.\nMore ways to be found.",
-      text: "Start with a photo and a few details. Prepare your offer, product or event for social channels from one campaign, with a clear destination for interested customers.",
-      takeaway: "Create once. Prepare for each channel.",
+      label: "SOCIAL PUBLISHING · PLANNED",
+      title: "One post.\nSupported channels.",
+      text: "Planned: create a post with text and an image, select connected social channels, review the adapted formats and approve publishing through official APIs. Each platform has its own formats, permissions and approval requirements.",
+      takeaway: "Social publishing is planned; this preview does not publish posts.",
     },
     {
       label: "ACQUIRE & CONNECT",
@@ -78,25 +78,8 @@ export const en: HomeRefinement = {
       takeaway: "One view of the relationship. A clearer next step.",
     },
   ],
-  benefitsTitle: "Why should I use MemberFlow?",
-  benefits: [
-    {
-      title: "Less manual work.",
-      text: "Create an offer once and prepare it for multiple channels.",
-    },
-    {
-      title: "More reasons to return.",
-      text: "Loyalty, rewards and memberships give the next visit a purpose.",
-    },
-    {
-      title: "Stay connected.",
-      text: "Keep your business accessible through a customer page and digital wallet.",
-    },
-    {
-      title: "Know your customers.",
-      text: "Understand visits, rewards and customer activity in one place.",
-    },
-  ],
+  benefitsTitle: "More than a paper stamp card.",
+  benefits: [{"title": "A card for every customer.", "text": "Customers join through your business QR and get their own digital QR card. No app to install."}, {"title": "Progress they can see.", "text": "Show stamps, points and the next reward on the personal customer page."}, {"title": "A record you can use.", "text": "See recorded visits and identify customers who have not visited recently. Prepare offers for the right group."}, {"title": "One place to manage it.", "text": "Set up programmes, review customer history and manage memberships in your dashboard."}],
   customerPage: {
     entry: "Social link or business QR",
     public: "Public business page",
@@ -125,8 +108,8 @@ export const en: HomeRefinement = {
     owner: "The owner manages the team and permissions.",
   },
   wallet: {
-    title: "Stay close, beyond the inbox.",
-    text: "A digital card in Apple Wallet or Google Wallet holds the customer’s loyalty experience. Email does not have to be your only connection.",
+    title: "Their loyalty card, always within reach.",
+    text: "Apple Wallet or Google Wallet can hold a customer’s personal loyalty card, so it is easy to find at the counter. Card issuance requires the Wallet integration; the personal QR also stays available on the Customer Page.",
     updates: "Pass updates keep card information current.",
     notifications:
       "Notifications may accompany eligible updates where supported.",
@@ -167,9 +150,9 @@ export const en: HomeRefinement = {
     },
   ],
   pricing: {
-    title: "A plan for your next stage.",
+    title: "Choose a plan for your repeat customers.",
     intro:
-      "Starter, Growth and Business — choose the scope that fits your customer relationships.",
+      "Compare Starter, Growth and Business by active customer capacity, locations and listed tools. Choose the scope your loyalty programme needs.",
     scope: "Plan overview",
     details: "Compare your needs",
     customers: "Active customers",
@@ -183,9 +166,9 @@ export const en: HomeRefinement = {
       "Compare active customer capacity, locations and included features before choosing or upgrading. Plan availability and subscription terms are shown when selecting a plan.",
     billing: "Billing period",
     customScope: "Around your business needs",
-    ctaTitle: "Start with your first customer.",
-    ctaText: "Create your account and set up MemberFlow for your business.",
-    tryFree: "Try for free",
+    ctaTitle: "Start with a reason to return.",
+    ctaText: "Create your account and set up a loyalty programme for your business.",
+    tryFree: "Create your loyalty programme",
     back: "Explore the product",
     unavailable:
       "Choose by customer capacity, locations and the features your team needs.",

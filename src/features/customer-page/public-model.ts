@@ -29,6 +29,20 @@ export function safeLink(value: string | null | undefined) {
     return null;
   }
 }
+/** Accept a bare domain in an editor, while retaining explicit safe HTTP(S) links. */
+export function normalizeWebAddress(value: string) {
+  const raw = value.trim();
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) return safeLink(raw) ?? raw;
+  if (/^[a-z][a-z\d+.-]*:/i.test(raw) || /\s/.test(raw)) return raw;
+  try {
+    const candidate = raw.startsWith("//") ? `https:${raw}` : `https://${raw}`;
+    const url = new URL(candidate);
+    return url.hostname.includes(".") ? safeLink(candidate) ?? raw : raw;
+  } catch {
+    return raw;
+  }
+}
 export function accentStyle(value: string) {
   return /^#[0-9a-f]{6}$/i.test(value) ? value : "#c84a27";
 }

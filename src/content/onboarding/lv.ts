@@ -4,7 +4,7 @@ export const lv = {
   perMonth: "/ mēnesī",
   perYear: "/ gadā",
   customPrice: "Individuāli",
-  planCopy: {"starter": {"description": "Pamata rīki saiknes veidošanai ar klientiem.", "features": ["Zīmolam pielāgots klientu portāls", "Lojalitāte un atlīdzības", "Pievienošanās ar QR", "Līdz 300 aktīviem klientiem", "Pamata analītika"]}, "growth": {"description": "Vairāk iespēju veidot attiecības ar pastāvīgajiem klientiem.", "features": ["Personīgi piedāvājumi", "Gatavas automatizācijas", "Apmeklējumu paketes", "Klientu eksports", "Līdz 1 500 aktīviem klientiem"]}, "business": {"description": "Elastīgs plāns uzņēmumiem ar plašākām vajadzībām.", "features": ["Vairākas atrašanās vietas", "Paplašināta analītika", "Lomas un piekļuves tiesības", "Abonementi un atjaunošana", "Prioritārs atbalsts"]}},
+  planCopy: {"starter": {"description": "Pamata rīki saiknes veidošanai ar klientiem.", "features": ["Zīmolam pielāgots klientu portāls", "Lojalitāte un atlīdzības", "Pievienošanās ar QR", "Līdz 300 aktīviem klientiem", "Pamata analītika"]}, "growth": {"description": "Vairāk iespēju veidot attiecības ar pastāvīgajiem klientiem.", "features": ["Personīgi piedāvājumi", "Gatavas automatizācijas", "Apmeklējumu paketes", "Klientu eksports", "Līdz 1 500 aktīviem klientiem"]}, "business": {"description": "Visas Growth iespējas ar individuālu apjomu vairākām atrašanās vietām un aktīvajiem klientiem.", "features": ["Vairākas atrašanās vietas", "Paplašināta analītika", "Lomas un piekļuves tiesības", "Abonementi un atjaunošana", "Prioritārs atbalsts"]}},
   placeholders: {
     description: "Mājīga kafejnīca Rīgā ar īpaši atlasītu kafiju un svaigiem konditorejas izstrādājumiem.",
     website: "https://yourcoffee.example",

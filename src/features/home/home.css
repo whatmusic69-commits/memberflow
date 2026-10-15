@@ -1,10 +1,19 @@
 /* Refinement of the existing MemberFlow palette, rhythm and editorial layouts. */
+.page-example-loyalty-card {margin-top:10px;}
+.story-wallet-pass.story-wallet-unified {padding:0;border:0;border-radius:0;background:transparent;}
+.story-wallet-unified .story-wallet-progress {display:block;margin:0;padding:0;border:0;}
+.story-wallet-unified > small {display:flex;align-items:center;justify-content:center;gap:5px;margin-top:10px;line-height:1.6;text-align:center;}
+.hero-ctas {flex-wrap:wrap;}
+.hero-ctas .button {max-width:100%;text-align:center;}
+.hero-ctas .button > svg {flex-shrink:0;}
+.hero-planned-note {font-size:10px;line-height:1.7;color:var(--muted);margin:16px 0 0;}
+.hero-flow .diagram-topline {gap:16px;line-height:1.7;}
+.hero-flow .diagram-topline > span {min-width:0;}
 .is-scroll-reveal {
-  filter: blur(7px);
+  filter: none;
   opacity: 0.55;
   transform: translateY(12px);
   transition:
-    filter 650ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 650ms ease,
     transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -1239,3 +1248,5 @@
 }
 @media (prefers-reduced-motion:reduce) { .pricing-billing-toggle label > span { transition:none; } }
 .faq-all-link {display:inline-flex;margin-top:24px;}
+/* The homepage keeps the value statement; detailed relationship stories live on Product. */
+.why-section:has(.why-heading):not(:has(.why-content)) {padding-bottom:36px;}

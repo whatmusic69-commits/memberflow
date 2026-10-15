@@ -1,4 +1,8 @@
 "use client";
+import { normalizeWebAddress, safeLink } from "@/features/customer-page/public-model";
+import { businessFieldsContent } from "@/content/business-fields";
+import { OpeningHoursField } from "./opening-hours-field";
+import { AddressField } from "./address-field";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -108,6 +112,7 @@ function SettingsForm() {
           {
             ...values,
             name: values.name.trim(),
+            website: normalizeWebAddress(values.website),
             firstName: values.firstName.trim(),
           },
           demo,
@@ -146,12 +151,17 @@ function SettingsForm() {
           rows={4}
           maxLength={1000}
           value={values[key] ?? ""}
-          onChange={(e) => update(key, e.target.value)}
+          onChange={(e) => {
+            if (type === "url") e.target.setCustomValidity(e.target.value.trim() && !safeLink(normalizeWebAddress(e.target.value)) ? businessFieldsContent[locale].urlError : "");
+            update(key, e.target.value);
+          }}
+          onBlur={(e) => {if(type === "url") update(key, normalizeWebAddress(e.target.value));}}
         />
       ) : (
         <input
           name={key}
-          type={type}
+          type={type === "url" ? "text" : type}
+          inputMode={type === "url" ? "url" : undefined}
           required={required}
           maxLength={240}
           autoComplete={
@@ -162,7 +172,11 @@ function SettingsForm() {
                 : undefined
           }
           value={values[key] ?? ""}
-          onChange={(e) => update(key, e.target.value)}
+          onChange={(e) => {
+            if (type === "url") e.target.setCustomValidity(e.target.value.trim() && !safeLink(normalizeWebAddress(e.target.value)) ? businessFieldsContent[locale].urlError : "");
+            update(key, e.target.value);
+          }}
+          onBlur={(e) => {if(type === "url") update(key, normalizeWebAddress(e.target.value));}}
         />
       )}
     </label>
@@ -258,13 +272,13 @@ function SettingsForm() {
                       ))}
                     </select>
                   </label>
-                  {field("city", c.city)}
+                  <AddressField kind="city" value={values.city} locale={locale} country={values.country} onChange={v => update("city",v)} />
                 </div>
                 {field("description", c.description)}
                 {field("website", c.website, "url")}
                 {field("instagram", c.instagram)}
-                {field("address", customerPageContent[locale].address)}
-                {field("openingHours", customerPageContent[locale].hours)}
+                <AddressField kind="address" value={values.address || ""} locale={locale} city={values.city} country={values.country} onChange={v => update("address",v)} onSelect={item => {if(item.city) update("city",item.city);}} />
+                <OpeningHoursField value={values.openingHours || ""} locale={locale} onChange={v => update("openingHours",v)} />
                 {field("phone", customerPageContent[locale].phone, "tel")}
                 {field("email", customerPageContent[locale].email, "email")}
                 {field("tiktok", "TikTok")}

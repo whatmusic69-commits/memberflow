@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Coffee, MapPin, Clock, Gift, Ticket, Wallet } from "lucide-react";
 import type { HomeContent } from "@/content/types";
 import type { Locale } from "@/content";
 import { customerPageContent } from "@/content/customer-page";
+import { ProgrammeCard } from "@/components/customer/programme-card";
 import { LoyaltyProgress } from "@/components/customer/loyalty-progress";
 import { campaign, marketingLoyalty } from "@/data/demo/home";
 export function CustomerPagePreview({
@@ -15,6 +16,7 @@ export function CustomerPagePreview({
   locale: Locale;
 }) {
   const [personal, setPersonal] = useState(false);
+  const instanceId = useId();
   const labels = c.experience.customerPage;
   const tabs = [labels.public, labels.personal];
   return (
@@ -27,10 +29,10 @@ export function CustomerPagePreview({
         {tabs.map((label, i) => (
           <button
             key={label}
-            id={`cp-example-tab-${i}`}
+            id={`${instanceId}-cp-example-tab-${i}`}
             role="tab"
             aria-selected={personal === Boolean(i)}
-            aria-controls="cp-example-content"
+            aria-controls={`${instanceId}-cp-example-content`}
             tabIndex={personal === Boolean(i) ? 0 : -1}
             onClick={() => setPersonal(Boolean(i))}
             onKeyDown={(event) => {
@@ -47,7 +49,7 @@ export function CustomerPagePreview({
                         ? 0
                         : 1;
                 setPersonal(Boolean(next));
-                document.getElementById(`cp-example-tab-${next}`)?.focus();
+                document.getElementById(`${instanceId}-cp-example-tab-${next}`)?.focus();
               }
             }}
           >
@@ -57,9 +59,9 @@ export function CustomerPagePreview({
       </div>
       <div
         className="product-phone"
-        id="cp-example-content"
+        id={`${instanceId}-cp-example-content`}
         role="tabpanel"
-        aria-labelledby={`cp-example-tab-${personal ? 1 : 0}`}
+        aria-labelledby={`${instanceId}-cp-example-tab-${personal ? 1 : 0}`}
         tabIndex={0}
       >
         <div className="phone-chrome">
@@ -77,27 +79,18 @@ export function CustomerPagePreview({
             <h3>Your Coffee</h3>
           </div>
           <p>{labels.businessDescription}</p>
-          {personal ? (
-            <>
+          <div className="page-example-views">
+            <div className="page-example-view" data-active={personal} aria-hidden={!personal} inert={!personal}>
               <div className="page-example-greeting">
                 {customerPageContent[locale].greeting.replace(
                   "{name}",
                   locale === "ru" ? "Анна" : "Anna",
                 )}
               </div>
-              <div className="page-example-loyalty">
-                <span className="product-label">
-                  <Gift size={14} />
-                  {c.retention[0]}
-                </span>
-                <LoyaltyProgress
-                  loyalty={marketingLoyalty}
-                  progressLabel={customerPageContent[locale].progress}
-                />
-                <div className="page-example-reward">
-                  <small>{c.connect[5]}</small>
-                  <strong>{c.connect[6]}</strong>
-                </div>
+              <div className="page-example-loyalty-card">
+                <ProgrammeCard business="Your Coffee" label={c.retention[0]} title={c.connect[6]}>
+                  <LoyaltyProgress loyalty={marketingLoyalty} progressLabel={customerPageContent[locale].progress} />
+                </ProgrammeCard>
               </div>
               <div className="page-example-line">
                 <Ticket size={15} />
@@ -113,9 +106,8 @@ export function CustomerPagePreview({
                   <small>{labels.noApp}</small>
                 </span>
               </div>
-            </>
-          ) : (
-            <>
+            </div>
+            <div className="page-example-view" data-active={!personal} aria-hidden={personal} inert={personal}>
               <div className="page-example-info">
                 <span>
                   <MapPin size={13} />
@@ -145,8 +137,8 @@ export function CustomerPagePreview({
                   <strong>Coffee Club</strong>
                 </span>
               </div>
-            </>
-          )}
+            </div>
+          </div>
           <div className="page-example-offer">
             <small>{personal ? c.retention[9] : labels.offer}</small>
             <strong>{campaign.name}</strong>

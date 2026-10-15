@@ -6,17 +6,18 @@ export const lv: HomeContent = {
   dashboard: "Darba telpa",
   login: "Ieiet",
   start: "Sākt bez maksas",
-  how: "Kāpēc MemberFlow",
+  heroStart: "Izveidot lojalitātes programmu",
+  how: "Kā tas darbojas",
   menu: "Atvērt navigāciju",
   close: "Aizvērt",
   language: "Valoda",
   skip: "Uz galveno saturu",
-  label: "TAVS BIZNESS. VISUR.",
-  hero: ["Radi vienreiz.", "Audz visur."],
+  label: "DIGITĀLĀ LOJALITĀTE MAZAJIEM UZŅĒMUMIEM",
+  hero: ["Pārvērtiet vienreizējus apmeklētājus", "par pastāvīgiem klientiem."],
   intro:
-    "Piesaisti jaunus klientus. Pārvērt pirmās vizītes ilgstošās attiecībās ar klienta lapu, lojalitāti, abonementiem un digitālo Wallet karti.",
-  heroNote: "Pārvērt pirmās vizītes ilgstošās attiecībās.",
-  demo: "PIESAISTI · SAVIENO · DOD IEMESLU ATGRIEZTIES",
+    "Izveidojiet digitālu lojalitātes programmu, piešķiriet katram klientam personīgu QR karti, sekojiet apmeklējumiem un dodiet iemeslu atgriezties ar atlīdzībām un personalizētiem piedāvājumiem. Bez lietotnes instalēšanas.",
+  heroNote: "Uzņēmuma lapa, personīgās QR kartes un apmeklējumu vēsture — vienā vadības panelī.",
+  demo: "PIEVIENOTIES AR QR · SAŅEMT ATLĪDZĪBAS · ATGRIEZTIES",
   newOffer: "JAUNS PIEDĀVĀJUMS",
   stamps: "zīmogi",
   channelFormats: [
@@ -113,9 +114,9 @@ export const lv: HomeContent = {
   loopDescription:
     "No vienas idejas līdz klientam, kurš atgriežas. Katra saikne rada nākamo soli.",
   loop: ["Radīt", "Izplatīt", "Piesaistīt", "Savienot", "Noturēt", "Atgriezt"],
-  solutionsTitle: "Vietējais bizness.\nIlgstošas saiknes.",
+  solutionsTitle: "Iemesls atgriezties.\nJūsu uzņēmumam.",
   solutionsDescription:
-    "Biznesiem, kuru centrā ir cilvēki, vietas un nākamais apmeklējums.",
+    "Zīmogi par kafiju, atlīdzības salonā vai nodarbību paketes — izvēlieties programmu atbilstoši klientu apmeklējumiem.",
   solutions: [
     "Kafejnīcas un restorāni",
     "Skaistums un labsajūta",
@@ -123,11 +124,8 @@ export const lv: HomeContent = {
     "Mazumtirdzniecība",
     "Pakalpojumi",
   ],
-  final: [
-    "Nākamais klients var kļūt\npar pastāvīgo klientu.",
-    "Sāc ar vienu ideju. Veido attiecības, kas turpinās.",
-  ],
-  footerLine: "Viens ievads. Vairāk saikņu.",
+  final: ["Dodiet klientiem iemeslu\nizvēlēties jūs atkal.", "Izveidojiet kontu, iestatiet programmu un aiciniet klientus pievienoties ar uzņēmuma QR."],
+  footerLine: "Dodiet klientiem iemeslu atgriezties.",
   company: "Uzņēmums",
   legal: "Juridiskā informācija",
   about: "Par mums",
@@ -135,5 +133,5 @@ export const lv: HomeContent = {
   terms: "Noteikumi",
   previewNote: "Attiecības ar klientiem — no pirmās vizītes.",
   imageAlt: "Krēmīga latte kafija keramikas tasē uz silta kafejnīcas galda",
-  seo: "MemberFlow — Radi vienreiz. Audz visur.",
+  seo: "MemberFlow — Lojalitātes programmas atkārtotiem apmeklējumiem",
 };
