@@ -1,0 +1,64 @@
+/* Scoped to public marketing surfaces. Dashboard and customer operations are untouched. */
+:root {
+  --mf-motion-fast: 180ms;
+  --mf-motion-ui: 320ms;
+  --mf-motion-reveal: 560ms;
+  --mf-motion-ease: cubic-bezier(.22,1,.36,1);
+}
+body:has(.site-header) :is(.button, .secondary-link) {
+  transition: background-color var(--mf-motion-fast) ease, color var(--mf-motion-fast) ease,
+    border-color var(--mf-motion-fast) ease, transform var(--mf-motion-fast) var(--mf-motion-ease);
+}
+body:has(.site-header) :is(.button, .secondary-link) > svg {
+  transition: transform var(--mf-motion-fast) var(--mf-motion-ease);
+}
+@media (hover:hover) and (pointer:fine) {
+  body:has(.site-header) :is(.button, .secondary-link):not([aria-disabled="true"]):hover > svg {transform:translateX(3px);}
+}
+:root body:has(.site-header) :is(.button, .secondary-link):not(:disabled):not([aria-disabled="true"]):active {transform:translateY(1px);}
+body:has(.site-header) :is(.button, .secondary-link):focus-visible {outline:2px solid #718269;outline-offset:4px;}
+.desktop-nav > a {position:relative;}
+.desktop-nav > a::after {
+  content:"";position:absolute;bottom:-5px;left:0;width:100%;height:1px;
+  background:currentColor;transform:scaleX(0);transform-origin:left;
+  transition:transform var(--mf-motion-fast) var(--mf-motion-ease);
+}
+.desktop-nav > a:is(:hover,:focus-visible,[aria-current="page"])::after {transform:scaleX(1);}
+.mobile-nav > a:not(.button) {border-radius:7px;text-decoration:none;}
+.mobile-nav > a[aria-current="page"]:not(.button) {padding-inline:12px;background:#e7edde;color:#405438;font-weight:600;}
+.mobile-nav > a:not(.button):focus-visible {outline:2px solid #718269;outline-offset:-2px;}
+.language-switcher summary > svg {transition:transform var(--mf-motion-fast) var(--mf-motion-ease);}
+.language-switcher[open] summary > svg {transform:rotate(180deg);}
+.site-footer a {text-decoration-color:transparent;text-underline-offset:4px;transition:color var(--mf-motion-fast) ease,text-decoration-color var(--mf-motion-fast) ease;}
+.site-footer a:is(:hover,:focus-visible) {text-decoration:underline;text-decoration-color:currentColor;}
+.page-example-views {display:grid;}
+.page-example-view {grid-area:1/1;min-width:0;opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:opacity var(--mf-motion-ui) var(--mf-motion-ease),transform var(--mf-motion-ui) var(--mf-motion-ease),visibility 0s var(--mf-motion-ui);}
+.page-example-view[data-active="true"] {opacity:1;visibility:visible;transform:none;transition-delay:0s;}
+.page-example-view[data-active="true"] .cp-stamps > .filled {animation:mf-demo-stamp 400ms var(--mf-motion-ease) backwards;}
+.page-example-view .cp-stamps > .filled:nth-child(2) {animation-delay:55ms;}
+.page-example-view .cp-stamps > .filled:nth-child(3) {animation-delay:110ms;}
+.page-example-view .cp-stamps > .filled:nth-child(4) {animation-delay:165ms;}
+.staff-demo-controls {display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:20px;}
+.staff-demo-controls > p {flex-basis:100%;margin:0;font-size:11px;line-height:1.7;color:var(--muted);}
+.staff-demo-controls > small {font-size:11px;line-height:1.7;}
+.staff-demo-controls .button {font-size:12px;min-height:44px;max-width:100%;padding:12px 18px;gap:10px;border:1px solid #849575;border-radius:8px;background:#dce6cf;color:#30452a;cursor:pointer;white-space:normal;text-align:center;}
+.staff-demo-controls .button > svg {flex-shrink:0;}
+.staff-demo-controls .button:hover {background:#cdddbb;border-color:#647b54;color:#263b21;}
+.staff-demo-controls .button:focus-visible {outline:2px solid #647b54;outline-offset:4px;}
+.staff-story[data-demo-phase="confirm"] .scan-corner {animation:mf-demo-scan 550ms var(--mf-motion-ease);}
+.staff-story[data-demo-phase="confirm"] .staff-example-customer {animation:mf-demo-confirm 400ms var(--mf-motion-ease);}
+.staff-story[data-demo-phase="done"] .staff-example-progress .cp-stamps > :nth-child(4) {animation:mf-demo-stamp 400ms var(--mf-motion-ease);}
+.staff-story[data-demo-phase="done"] .story-wallet-progress {animation:mf-demo-confirm 400ms 80ms var(--mf-motion-ease) backwards;}
+@keyframes mf-demo-stamp {from {opacity:.2;transform:translateY(8px) scale(.85);}to {opacity:1;transform:none;}}
+@keyframes mf-demo-scan {0%,100% {outline:1px solid transparent;outline-offset:6px;}45% {outline:1px solid #718269;outline-offset:0;}}
+@keyframes mf-demo-confirm {from {opacity:.4;transform:translateY(12px);}to {opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce) {
+  body:has(.site-header) :is(.button,.secondary-link),body:has(.site-header) :is(.button,.secondary-link) > svg,
+  .desktop-nav > a::after,.mobile-nav > a::after,.language-switcher summary > svg,.site-footer a,.page-example-view {transition:none;}
+  :root body:has(.site-header) :is(.button,.secondary-link):not(:disabled):not([aria-disabled="true"]):is(:hover,:active) {transform:none;}
+  body:has(.site-header) :is(.button,.secondary-link):hover > svg {transform:none;}
+  .page-example-view .cp-stamps > .filled,.staff-story[data-demo-phase] :is(.scan-corner,.staff-example-customer,.story-wallet-progress),
+  .staff-story[data-demo-phase="done"] .staff-example-progress .cp-stamps > :nth-child(4) {animation:none;}
+  .page-example-view {transform:none;}
+}

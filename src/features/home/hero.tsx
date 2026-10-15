@@ -19,7 +19,7 @@ export function Hero({ c }: { c: HomeContent }) {
         </h1>
         <p className="hero-description">{c.intro}</p>
         <div className="hero-ctas">
-          <StartLink label={c.start} />
+          <StartLink label={c.heroStart} />
           <a className="secondary-link" href="#why">
             {c.how}
             <ArrowDownRight size={17} />

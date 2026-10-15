@@ -6,7 +6,7 @@ import type { HomeContent } from "@/content/types";
 import { Wallet } from "lucide-react";
 import { StartLink } from "@/components/marketing/start-link";
 import { ReturnJourney } from "./product-stories";
-export function WhyMemberFlow({ c }: { c: HomeContent }) {
+export function WhyMemberFlow({ c, compact = false }: { c: HomeContent; compact?: boolean }) {
   const w = c.experience.why;
   return (
     <section
@@ -22,7 +22,7 @@ export function WhyMemberFlow({ c }: { c: HomeContent }) {
         <h2 id="why-title">{w.title}</h2>
         <p>{w.intro}</p>
       </div>
-      <div className="why-content">
+      {!compact && <><div className="why-content">
         <div className="why-reasons">
           {w.pairs.map((pair, i) => (
             <div key={pair.problem}>
@@ -43,7 +43,7 @@ export function WhyMemberFlow({ c }: { c: HomeContent }) {
           <p>{w.walletRelationship}</p>
           <small>{w.walletNote}</small>
         </div>
-      </div>
+      </div></>}
     </section>
   );
 }
@@ -63,7 +63,7 @@ export function Benefits({ c }: { c: HomeContent }) {
           </div>
         ))}
       </div>
-      <StartLink label={c.start} />
+      <StartLink label={c.heroStart} />
     </section>
   );
 }

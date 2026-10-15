@@ -4,7 +4,6 @@ import { content, isLocale, locales } from "@/content";
 import { aboutContent } from "@/content/about";
 import { Header } from "@/components/marketing/header";
 import { Footer } from "@/components/marketing/footer";
-import { MotionController } from "@/components/marketing/motion-controller";
 import { AboutStory } from "@/features/about/about-page";
 import "@/features/home/home.css";
 import "@/features/about/about.css";
@@ -47,7 +46,6 @@ export default async function AboutPage({
   return (
     <>
       <div id="top" aria-hidden="true" />
-      <MotionController />
       <Header c={content[locale]} locale={locale} page="about" />
       <AboutStory c={aboutContent[locale]} />
       <Footer c={content[locale]} locale={locale} page="about" />

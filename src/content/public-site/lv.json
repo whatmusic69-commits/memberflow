@@ -4,15 +4,15 @@
     "Integrācijas",
     "Palīdzība"
   ],
-  "solutionsTitle": "Radīts tādiem uzņēmumiem kā tavējais.",
-  "solutionsIntro": "No kaimiņu kafejnīcas līdz iecienītajai fitnesa studijai — MemberFlow palīdz ikdienas apmeklējumus pārvērst ilgstošās attiecībās ar klientiem.",
+  "solutionsTitle": "Dodiet saviem klientiem iemeslu atgriezties.",
+  "solutionsIntro": "Zīmogi par kafiju, atlīdzības salonā vai nodarbību pakete studijā: izvēlieties savu uzņēmuma veidu un uzziniet, kā QR reģistrācija, personīgās kartes un apmeklējumu vēsture palīdz ikdienā.",
   "problem": "Ikdienas izaicinājums",
   "tools": "Iemesls atgriezties",
   "scenario": "Klienta ceļš",
   "demo": "Ilustratīvs saskarnes piemērs",
-  "ctaTitle": "Dažādi uzņēmumi. Viens vienkāršāks izaugsmes ceļš.",
-  "ctaText": "Sāc ar savu uzņēmumu. Veido klientu pieredzi cilvēkiem, kuri tevi apmeklē.",
-  "start": "Iestatīt uzņēmumu",
+  "ctaTitle": "Dažādi uzņēmumi. Viens mērķis — atkārtoti apmeklējumi.",
+  "ctaText": "Iestatiet programmu atbilstoši klientu apmeklējumiem. Piešķiriet personīgās kartes un pārvaldiet progresu, atlīdzības un piedāvājumus vadības panelī.",
+  "start": "Izveidot lojalitātes programmu",
   "integrationTitle": "Tavi rīki strādā kopā.",
   "integrationIntro": "Saprotams ceļš no iepazīšanās ar uzņēmumu līdz dalībai programmā un digitālajai kartei pa rokai.",
   "walletCategory": "Digitālie maki",
@@ -81,16 +81,16 @@
       "Nē. Plāna izvēle ir iestatīšanas solis. Piekļuve tiek aktivizēta pēc maksājuma vai izmēģinājuma apstiprināšanas."
     ],
     [
-      "Vai “Nav norādīts” nozīmē, ka iespēja nav iekļauta?",
-      "Nē. Pašreizējais katalogs nenosaka visas piekļuves tiesības. Pirms izvēles pārbaudi apstiprinātos plāna nosacījumus."
+      "Vai Business ietver visas Growth iespējas?",
+      "Jā. Growth ietver Starter iespējas, un Business ietver visas Growth iespējas. Business paredzēts vairāk aktīvajiem klientiem un atrašanās vietām; apjomu vienojas individuāli. Plānotās integrācijas vēl ir jāaktivizē."
     ]
   ],
   "legalPending": "Apstiprinātais dokuments šeit būs pieejams pēc juridiskās saskaņošanas. Galīgais teksts vēl nav pieejams.",
   "industries": [
     {
       "name": "Kafejnīcas un restorāni",
-      "problem": "Pirmais apmeklējums ir noticis. Kā dot viesim iemeslu atgriezties?",
-      "solution": "Digitālie zīmogi, atlīdzības un vienkārša pievienošanās ar QR palīdz veidot ieradumu atgriezties.",
+      "problem": "Viesim patika pirmā kafija. Kā dot iemeslu atnākt vēlreiz?",
+      "solution": "Piedāvājiet zīmogus ceļā uz bezmaksas kafiju. Viesis pievienojas ar QR un redz progresu savā personīgajā kartē.",
       "tools": [
         "Digitālie zīmogi",
         "Atlīdzības",
@@ -105,16 +105,16 @@
         "Saglabāt karti Wallet",
         "Atgriezties pēc atlīdzības"
       ],
-      "business": "Kaimiņu kafejnīca",
-      "cardTitle": "Tava kafijas karte",
-      "detail": "Zīmogi",
+      "business": "Your Coffee",
+      "cardTitle": "Bezmaksas kafija",
+      "detail": "Lojalitāte",
       "reward": "Kafija par nākamo aizpildīto karti",
       "kind": "stamps"
     },
     {
       "name": "Skaistums un labsajūta",
-      "problem": "Aizņemtā ikdienā regulāru apmeklējumu viegli aizmirst.",
-      "solution": "Apmeklējumu vēsture, lojalitāte un piemēroti piedāvājumi vienotā klienta pieredzē.",
+      "problem": "Klients aiziet apmierināts, bet nākamais pieraksts nav veikts.",
+      "solution": "Saglabājiet apmeklējumu vēsturi un gatavojiet piedāvājumu tiem, kuri sen nav bijuši. Lojalitātes programma dod skaidru atlīdzību par regulāriem apmeklējumiem.",
       "tools": [
         "Lojalitāte",
         "Abonementi",
@@ -136,8 +136,8 @@
     },
     {
       "name": "Fitness un studijas",
-      "problem": "Dalībnieku noturēšana sākas ar skaidru apmeklējumu uzskaiti.",
-      "solution": "Abonementi un apmeklējumu paketes dod klientiem un darbiniekiem kopīgu atskaites punktu.",
+      "problem": "Jums jāredz, kuri dalībnieki nāk uz nodarbībām un cik apmeklējumu atlicis.",
+      "solution": "Piešķiriet abonementu vai nodarbību paketi. Darbinieks skenē personīgo QR, un klients savā lapā redz atlikušos apmeklējumus vai piekļuves termiņu.",
       "tools": [
         "Abonementi",
         "Apmeklējumu paketes",
@@ -159,8 +159,8 @@
     },
     {
       "name": "Mazumtirdzniecība",
-      "problem": "Pēc pirkuma saikne ar klientu bieži beidzas pie kases.",
-      "solution": "Punkti, kuponi un piemēroti piedāvājumi paliek ar klientu arī pēc pirkuma.",
+      "problem": "Kad klients aiziet no kases, čeks maz ko pasaka par viņa nākamo apmeklējumu.",
+      "solution": "Ļaujiet pievienoties ar QR, krāt punktus un skatīt atbilstošus piedāvājumus personīgajā lapā. Izvēlieties auditoriju pēc reģistrētās aktivitātes.",
       "tools": [
         "Punkti",
         "Kuponi",
@@ -183,8 +183,8 @@
     },
     {
       "name": "Vietējie pakalpojumi",
-      "problem": "Pastāvīgam klientam vajadzīgs vienkāršs veids, kā tevi atrast atkal.",
-      "solution": "Klientu vēsture un personīgi piedāvājumi līdzās uzņēmuma informācijai.",
+      "problem": "Arī apmierināts klients var aizmirst pierakstīties vēlreiz.",
+      "solution": "Saglabājiet klienta profilu un apmeklējumu vēsturi, lai sagatavotu piedāvājumu grupai, kas sen nav izmantojusi jūsu pakalpojumu.",
       "tools": [
         "Klientu datubāze",
         "Personīgi piedāvājumi",
@@ -213,5 +213,7 @@
     "Izaugsmes rīki",
     "Pārvaldība un atbalsts"
   ],
-  "comparisonScrollHint": "Ritiniet sāniski, lai salīdzinātu visus plānus"
+  "comparisonScrollHint": "Ritiniet sāniski, lai salīdzinātu visus plānus",
+  "comparisonInheritanceNote": "Growth ietver Starter iespējas. Business ietver visas Growth iespējas ar individuālu apjomu vairāk klientiem un atrašanās vietām. Iekļauta iespēja nenozīmē, ka plānotā integrācija jau darbojas.",
+  "customCapacity": "Individuāls apjoms"
 }

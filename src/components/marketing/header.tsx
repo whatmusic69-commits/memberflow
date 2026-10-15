@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { MotionController } from "./motion-controller";
+import "./motion.css";
 import { HomeLink } from "@/components/ui/home-link";
 import { useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
@@ -28,12 +30,9 @@ export function Header({
     Boolean(process.env.NEXT_PUBLIC_API_URL);
   const navigation = (
     <>
-      <a
-        href={page ? `/${locale}#product` : "#product"}
-        onClick={() => setOpen(false)}
-      >
+      <Link href={`/${locale}/product`} aria-current={page === "product" ? "page" : undefined} onClick={() => setOpen(false)}>
         {c.nav[0]}
-      </a>
+      </Link>
       <Link
         href={`/${locale}/solutions`}
         aria-current={page === "solutions" ? "page" : undefined}
@@ -41,7 +40,7 @@ export function Header({
       >
         {c.nav[1]}
       </Link>
-      <Link href={`/${locale}/pricing`} onClick={() => setOpen(false)}>
+      <Link href={`/${locale}/pricing`} aria-current={page === "pricing" ? "page" : undefined} onClick={() => setOpen(false)}>
         {c.nav[2]}
       </Link>
       <Link
@@ -70,6 +69,8 @@ export function Header({
     </>
   );
   return (
+    <>
+    <MotionController />
     <header className="site-header">
       <div className="container header-inner">
         <HomeLink locale={locale} aria-label="MemberFlow">
@@ -180,5 +181,6 @@ export function Header({
         </div>
       </div>
     </header>
+    </>
   );
 }

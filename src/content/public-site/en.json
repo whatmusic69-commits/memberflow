@@ -4,15 +4,15 @@
     "Integrations",
     "Help"
   ],
-  "solutionsTitle": "Made for businesses like yours.",
-  "solutionsIntro": "From your neighbourhood coffee shop to your favourite fitness studio, MemberFlow helps turn everyday visits into lasting customer relationships.",
+  "solutionsTitle": "Give your customers a reason to return.",
+  "solutionsIntro": "A coffee stamp card, salon rewards or a studio visit package: choose your business type to see how QR registration, personal cards and visit history fit your day.",
   "problem": "The everyday challenge",
   "tools": "A reason to come back",
   "scenario": "The customer journey",
   "demo": "Illustrative product preview",
-  "ctaTitle": "Different businesses. One simpler way to grow.",
-  "ctaText": "Start with your business. Shape the customer experience around the people who visit it.",
-  "start": "Set up your business",
+  "ctaTitle": "Different businesses. The same goal: repeat visits.",
+  "ctaText": "Set up a programme for the way your customers visit. Give them a personal card and manage progress, rewards and offers from your dashboard.",
+  "start": "Create your loyalty programme",
   "integrationTitle": "Your tools, working together.",
   "integrationIntro": "A clear path from discovering your business to joining your programme and keeping a digital card close.",
   "walletCategory": "Digital Wallets",
@@ -81,16 +81,16 @@
       "No. Plan selection is a step in setup. Payment or trial activation must be confirmed before access is activated."
     ],
     [
-      "Does “not specified” mean a feature is excluded?",
-      "No. The current catalog does not define every entitlement. Check the confirmed plan details before choosing."
+      "Does Business include all Growth features?",
+      "Yes. Growth includes Starter features, and Business includes all Growth features. Business is intended for more active customers and locations, with capacity agreed individually. Planned integrations still require activation."
     ]
   ],
   "legalPending": "The approved document will appear here after legal review. The final text is not yet available.",
   "industries": [
     {
       "name": "Cafés & Restaurants",
-      "problem": "A first visit is easy. Giving guests a reason to return takes care.",
-      "solution": "Digital stamps, rewards and a simple QR entry point keep the next visit in sight.",
+      "problem": "Guests enjoy their first coffee. How do you give them a reason to come back?",
+      "solution": "Offer a stamp towards a free coffee, let guests join by QR and see their progress on a personal card.",
       "tools": [
         "Digital stamps",
         "Rewards",
@@ -105,16 +105,16 @@
         "Save a Wallet card",
         "Return for a reward"
       ],
-      "business": "Neighbourhood café",
-      "cardTitle": "Your coffee card",
-      "detail": "Stamps",
+      "business": "Your Coffee",
+      "cardTitle": "Free coffee",
+      "detail": "Loyalty",
       "reward": "A coffee on your next completed card",
       "kind": "stamps"
     },
     {
       "name": "Beauty & Wellness",
-      "problem": "Busy schedules make regular appointments easy to miss.",
-      "solution": "Bring visit history, loyalty programmes and relevant offers into one customer experience.",
+      "problem": "A client leaves happy, but the next appointment is not booked.",
+      "solution": "Keep visit history and prepare an offer for clients who have not returned. A loyalty programme gives regular visits a clear reward.",
       "tools": [
         "Loyalty",
         "Memberships",
@@ -136,8 +136,8 @@
     },
     {
       "name": "Fitness & Studios",
-      "problem": "Keeping members engaged starts with a clear view of their visits.",
-      "solution": "Memberships and visit packages give customers and staff a shared reference.",
+      "problem": "You need to see which members visit and how many sessions they have left.",
+      "solution": "Assign a membership or visit package. Staff scan the personal QR and customers see remaining visits or access dates on their page.",
       "tools": [
         "Memberships",
         "Visit packages",
@@ -159,8 +159,8 @@
     },
     {
       "name": "Retail",
-      "problem": "After a purchase, the connection can end at the checkout.",
-      "solution": "Give customers a place for points, coupons and relevant offers beyond the receipt.",
+      "problem": "Once the customer leaves the checkout, a receipt tells you little about their next visit.",
+      "solution": "Let customers join by QR, collect points and find relevant offers on their personal page. Use recorded activity to choose offer audiences.",
       "tools": [
         "Points",
         "Coupons",
@@ -183,8 +183,8 @@
     },
     {
       "name": "Local Services",
-      "problem": "Repeat customers need an easy way to find you again.",
-      "solution": "Keep customer history and relevant offers close to your business details.",
+      "problem": "A satisfied customer may still forget to book again.",
+      "solution": "Keep a customer record and visit history, then prepare an offer for the group that has not visited recently.",
       "tools": [
         "Customer database",
         "Personal offers",
@@ -213,5 +213,7 @@
     "Growth tools",
     "Operations & support"
   ],
-  "comparisonScrollHint": "Scroll sideways to compare all plans"
+  "comparisonScrollHint": "Scroll sideways to compare all plans",
+  "comparisonInheritanceNote": "Growth includes Starter features. Business includes all Growth features, with custom capacity for more customers and locations. Feature inclusion does not mean a planned integration is already live.",
+  "customCapacity": "Custom capacity"
 }

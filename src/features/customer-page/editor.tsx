@@ -8,7 +8,10 @@ import { useWorkspace } from "@/features/dashboard/workspace";
 import { OverviewSkeleton } from "@/features/dashboard/overview";
 import { CustomerPageView } from "./page-view";
 import { CustomerImage } from "./customer-image";
-import { publicProjection, safeLink } from "./public-model";
+import { publicProjection, safeLink, normalizeWebAddress } from "./public-model";
+import { businessFieldsContent } from "@/content/business-fields";
+import { OpeningHoursField } from "@/features/workspace/opening-hours-field";
+import { AddressField } from "@/features/workspace/address-field";
 import { RegistrationSettings } from "@/features/customer-registration/settings";
 import { prototypeContent } from "@/content/prototype";
 import { customerPageService, previewUrl } from "./service";
@@ -27,6 +30,7 @@ function TextField({
   multiline = false,
   required = false,
   maxLength,
+  urlError = "",
 }: {
   label: string;
   value: string;
@@ -36,6 +40,7 @@ function TextField({
   multiline?: boolean;
   required?: boolean;
   maxLength?: number;
+  urlError?: string;
 }) {
   return (
     <label className="mf-form-field">
@@ -50,9 +55,14 @@ function TextField({
         />
       ) : (
         <input
-          type={type}
+          type={type === "url" ? "text" : type}
+          inputMode={type === "url" ? "url" : undefined}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            if (type === "url") e.target.setCustomValidity(e.target.value.trim() && !safeLink(normalizeWebAddress(e.target.value)) ? urlError : "");
+            onChange(e.target.value);
+          }}
+          onBlur={(e) => {if(type === "url") onChange(normalizeWebAddress(e.target.value));}}
           placeholder={placeholder}
           maxLength={maxLength ?? (type === "url" ? 2048 : 180)}
           required={required}
@@ -234,7 +244,12 @@ export function CustomerPageEditor() {
         branding: state.branding,
         business: state.business,
         modules: state.modules,
-        social: state.social,
+        social: {
+          website: normalizeWebAddress(state.social.website),
+          instagram: normalizeWebAddress(state.social.instagram),
+          facebook: normalizeWebAddress(state.social.facebook),
+          tiktok: normalizeWebAddress(state.social.tiktok),
+        },
         invitation: state.invitation,
       });
       if (alive.current) {
@@ -521,26 +536,10 @@ export function CustomerPageEditor() {
                     value={state.business.category}
                     onChange={(v) => info("category", v)}
                   />
-                  <TextField
-                    label={c.city}
-                    value={state.business.city}
-                    placeholder="Riga"
-                    onChange={(v) => info("city", v)}
-                  />
+                  <AddressField kind="city" value={state.business.city} locale={locale} country={business.country || ""} onChange={(v) => info("city",v)} />
                 </div>
-                <TextField
-                  label={c.address}
-                  value={state.business.address}
-                  placeholder={c.addressPlaceholder}
-                  onChange={(v) => info("address", v)}
-                />
-                <TextField
-                  label={c.hours}
-                  value={state.business.openingHours}
-                  multiline
-                  placeholder={c.hoursPlaceholder}
-                  onChange={(v) => info("openingHours", v)}
-                />
+                <AddressField kind="address" value={state.business.address} city={state.business.city} country={business.country || ""} locale={locale} onChange={(v) => info("address",v)} onSelect={(item) => {if(item.city) info("city",item.city);}} />
+                <OpeningHoursField value={state.business.openingHours} locale={locale} onChange={(v) => info("openingHours",v)} />
                 <div className="cp-editor-pair">
                   <TextField
                     label={c.phone}
@@ -616,6 +615,7 @@ export function CustomerPageEditor() {
                       }
                       value={state.social[network]}
                       type="url"
+                      urlError={businessFieldsContent[locale].urlError}
                       placeholder={
                         network === "website"
                           ? "https://example.com"

@@ -1,11 +1,11 @@
 import type { HomeRefinement } from "./types";
 export const lv: HomeRefinement = {
-  channelHeading: "SAGATAVOŠANA KANĀLIEM",
+  channelHeading: "PUBLICĒŠANA SOCIĀLAJOS TĪKLOS · PLĀNOTA",
   why: {
     label: "KĀPĒC MEMBERFLOW",
     title: "Pirmā vizīte ir laba.\nOtrā ir vēl labāka.",
     intro:
-      "Atvest cilvēku līdz tavām durvīm ir tikai puse darba. MemberFlow dod viņam iemeslu atgriezties un tev — veidu, kā atkal viņu sasniegt.",
+      "Papīra zīmogu karte parāda klientam progresu. MemberFlow arī sniedz jums apmeklējumu vēsturi, lai redzētu, kuri klienti atgriežas, kuri sen nav bijuši un kurai grupai sagatavot piedāvājumu.",
     pairs: [
       {
         problem:
@@ -54,10 +54,10 @@ export const lv: HomeRefinement = {
   },
   stories: [
     {
-      label: "RADĪT UN IZPLATĪT",
-      title: "Viens piedāvājums.\nVairāk veidu tevi atrast.",
-      text: "Sāc ar foto un dažām detaļām. Sagatavo piedāvājumu, produktu vai pasākumu sociālajiem kanāliem no vienas kampaņas un dod ieinteresētam klientam skaidru nākamo soli.",
-      takeaway: "Radi vienreiz. Sagatavo katram kanālam.",
+      label: "PUBLICĒŠANA SOCIĀLAJOS TĪKLOS · PLĀNOTA",
+      title: "Viens ieraksts.\nAtbalstītie kanāli.",
+      text: "Plānots: izveidojiet ierakstu ar tekstu un attēlu, izvēlieties pieslēgtos sociālos tīklus, pārskatiet pielāgotos formātus un apstipriniet publicēšanu ar oficiālajiem API. Katrai platformai ir savi formāti, atļaujas un apstiprināšanas prasības.",
+      takeaway: "Publicēšana sociālajos tīklos ir plānota; šis piemērs ierakstus nepublicē.",
     },
     {
       label: "PIESAISTĪT UN SAVIENOT",
@@ -78,25 +78,8 @@ export const lv: HomeRefinement = {
       takeaway: "Vienots attiecību skats. Skaidrāks nākamais solis.",
     },
   ],
-  benefitsTitle: "Ko MemberFlow dod tavam biznesam?",
-  benefits: [
-    {
-      title: "Mazāk manuāla darba.",
-      text: "Radi piedāvājumu vienreiz un sagatavo to vairākiem kanāliem.",
-    },
-    {
-      title: "Vairāk iemeslu atgriezties.",
-      text: "Lojalitāte, atlīdzības un abonementi piešķir nākamajai vizītei jēgu.",
-    },
-    {
-      title: "Saglabā saikni.",
-      text: "Tavs bizness ir pieejams klienta lapā un digitālajā makā.",
-    },
-    {
-      title: "Pazīsti klientus.",
-      text: "Vizītes, atlīdzības un klientu aktivitāte vienuviet.",
-    },
-  ],
+  benefitsTitle: "Vairāk nekā papīra zīmogu karte.",
+  benefits: [{"title": "Karte katram klientam.", "text": "Klients pievienojas ar uzņēmuma QR un saņem personīgu digitālo QR karti. Bez lietotnes instalēšanas."}, {"title": "Redzams progress.", "text": "Zīmogi, punkti un nākamā atlīdzība ir redzami klienta personīgajā lapā."}, {"title": "Noderīga apmeklējumu vēsture.", "text": "Skatiet reģistrētos apmeklējumus, atrodiet klientus, kuri sen nav bijuši, un gatavojiet piedāvājumus vajadzīgajai grupai."}, {"title": "Pārvaldība vienuviet.", "text": "Iestatiet programmas, skatiet klientu vēsturi un pārvaldiet abonementus vadības panelī."}],
   customerPage: {
     entry: "Sociālo tīklu saite vai biznesa QR",
     public: "Publiska biznesa lapa",
@@ -126,8 +109,8 @@ export const lv: HomeRefinement = {
     owner: "Īpašnieks pārvalda komandu un atļaujas.",
   },
   wallet: {
-    title: "Saikne ārpus e-pasta.",
-    text: "Digitālā karte Apple Wallet vai Google Wallet glabā klienta lojalitātes pieredzi. E-pastam nav jābūt vienīgajam saziņas veidam.",
+    title: "Personīgā lojalitātes karte — pa rokai.",
+    text: "Klients var glabāt personīgo lojalitātes karti Apple Wallet vai Google Wallet, lai to ātri atrastu pie kases. Kartes izsniegšanai jāpieslēdz Wallet integrācija; personīgais QR paliek pieejams arī klienta lapā.",
     updates: "Kartes atjauninājumi uztur informāciju aktuālu.",
     notifications:
       "Paziņojumi var papildināt atbilstošus atjauninājumus, kur tie tiek atbalstīti.",
@@ -168,9 +151,9 @@ export const lv: HomeRefinement = {
     },
   ],
   pricing: {
-    title: "Plāns nākamajam posmam.",
+    title: "Izvēlieties plānu atkārtotiem apmeklējumiem.",
     intro:
-      "Starter, Growth un Business — izvēlies mērogu, kas atbilst tavām attiecībām ar klientiem.",
+      "Salīdziniet Starter, Growth un Business pēc aktīvo klientu skaita, atrašanās vietām un norādītajiem rīkiem. Izvēlieties savai lojalitātes programmai vajadzīgo apjomu.",
     scope: "Plānu pārskats",
     details: "Salīdzini vajadzības",
     customers: "Aktīvie klienti",
@@ -184,9 +167,9 @@ export const lv: HomeRefinement = {
       "Pirms plāna izvēles vai maiņas salīdzini aktīvo klientu skaitu, atrašanās vietas un iekļautās iespējas. Plānu pieejamība un abonēšanas nosacījumi tiek parādīti, izvēloties plānu.",
     billing: "Apmaksas periods",
     customScope: "Atbilstoši tava biznesa vajadzībām",
-    ctaTitle: "Sāc ar pirmo klientu.",
-    ctaText: "Izveido kontu un pielāgo MemberFlow savam biznesam.",
-    tryFree: "Izmēģināt bez maksas",
+    ctaTitle: "Sāciet ar iemeslu atgriezties.",
+    ctaText: "Izveidojiet kontu un iestatiet sava uzņēmuma lojalitātes programmu.",
+    tryFree: "Izveidot lojalitātes programmu",
     back: "Iepazīt produktu",
     unavailable:
       "Izvēlies pēc klientu skaita, atrašanās vietām un komandai vajadzīgajām iespējām.",

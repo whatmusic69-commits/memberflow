@@ -1,5 +1,7 @@
 import type { Plan } from "@/features/onboarding/types";
 import type { OnboardingContent } from "@/content/onboarding/types";
+import type { Locale } from "@/content";
+import { planFeatureContent } from "@/content/plan-features";
 /** Owner-provided provisional catalog. Production pricing and entitlement come from Symfony. */
 export const annualDiscountPercent = 30;
 export const developmentPlanCatalog = [
@@ -28,10 +30,41 @@ export const developmentPlanCatalog = [
     limits: null,
   },
 ] as const;
-export function getDevelopmentPlans(c: OnboardingContent): Plan[] {
+type CatalogPlanId = (typeof developmentPlanCatalog)[number]["id"];
+type FeatureDefinition = { row: number; source: CatalogPlanId; index: number } | { row: number; extra: "wallet" | "campaigns" | "crm" };
+const starterFeatures: FeatureDefinition[] = [
+  { row: 3, source: "starter", index: 0 },
+  { row: 2, source: "starter", index: 1 },
+  { row: -1, source: "starter", index: 2 },
+  { row: 7, source: "starter", index: 4 },
+];
+/** Owner confirmed: Growth inherits Starter; Business has Growth's tools with larger custom capacity. */
+const growthFeatures: FeatureDefinition[] = [
+  ...starterFeatures.filter(feature => feature.row !== 7),
+  { row: 7, source: "business", index: 1 },
+  { row: 4, extra: "wallet" },
+  { row: 5, extra: "campaigns" },
+  { row: 6, extra: "crm" },
+  { row: 14, source: "growth", index: 0 },
+  { row: 9, source: "growth", index: 1 },
+  { row: 10, source: "growth", index: 2 },
+  { row: 11, source: "growth", index: 3 },
+  { row: 8, source: "business", index: 2 },
+  { row: 12, source: "business", index: 3 },
+  { row: 13, source: "business", index: 4 },
+];
+const featuresByPlan: Record<CatalogPlanId, FeatureDefinition[]> = {
+  starter: starterFeatures,
+  growth: growthFeatures,
+  business: growthFeatures,
+};
+export function getDevelopmentPlans(c: OnboardingContent, locale: Locale): Plan[] {
   return developmentPlanCatalog.map((plan) => ({
     ...plan,
     ...c.planCopy[plan.id],
+    features: featuresByPlan[plan.id].map(feature => "extra" in feature
+      ? planFeatureContent[locale][feature.extra]
+      : c.planCopy[feature.source].features[feature.index]),
     currency: "EUR",
     recommended: false,
     trialDays: null,
@@ -41,12 +74,8 @@ export function getDevelopmentPlans(c: OnboardingContent): Plan[] {
 }
 export const onboardingMode = "preview" as const;
 
-/** Exact positions in the owner-approved translated feature lists; no inherited entitlements. */
-export const developmentComparisonFeatures: Record<
-  string,
-  Partial<Record<number, number>>
-> = {
-  starter: { 2: 1, 3: 0, 7: 4 },
-  growth: { 14: 0, 9: 1, 10: 2, 11: 3 },
-  business: { 7: 1, 8: 2, 12: 3, 13: 4 },
-};
+/** Comparison indices are derived from the same feature definitions as plan cards. */
+export const developmentComparisonFeatures: Record<string, Partial<Record<number, number>>> =
+  Object.fromEntries(Object.entries(featuresByPlan).map(([id, features]) => [id,
+    Object.fromEntries(features.flatMap((feature, index) => feature.row < 0 ? [] : [[feature.row, index]])),
+  ]));

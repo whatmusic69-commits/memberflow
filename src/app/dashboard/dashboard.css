@@ -3783,3 +3783,37 @@
 .cr-registration-preview label {display:grid;gap:6px;font-size:11px;}
 .cr-registration-preview input {min-width:0;width:100%;padding:11px;border:1px solid var(--line);border-radius:6px;background:#fffef9;}
 .cr-registration-preview p {font-size:11px;line-height:1.7;margin:0;}
+
+/* Public business fields, shared by Settings and Customer Page Builder. */
+.mf-opening-hours {display:grid;gap:0;padding:0;border:0;min-width:0;margin:8px 0 20px;}
+.mf-opening-hours legend {font-size:12px;font-weight:600;margin-bottom:12px;}
+.mf-hours-day {display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);min-height:58px;}
+.mf-hours-toggle {display:flex;align-items:center;gap:9px;font-size:12px;cursor:pointer;}
+.mf-hours-toggle input {accent-color:#718268;width:15px;height:15px;}
+.mf-hours-times {display:flex;align-items:center;gap:9px;flex-wrap:wrap;min-width:0;}
+.mf-hours-times label {display:flex;align-items:center;gap:6px;min-width:0;font-size:10px;color:var(--muted);}
+.mf-hours-times input {width:106px;min-width:0;min-height:36px;padding:7px 8px;border:1px solid var(--line-strong);border-radius:6px;background:#fffef9;color:var(--ink);font:inherit;font-size:12px;}
+.mf-hours-times input:focus-visible {outline:2px solid var(--accent);outline-offset:2px;}
+.mf-hours-times small {flex-basis:100%;font-size:10px;color:var(--muted);}
+.mf-hours-separator,.mf-hours-closed {font-size:11px;color:var(--muted);}
+.mf-opening-hours > button {margin-top:14px;justify-self:start;}
+.mf-hours-legacy {white-space:pre-line;font-size:12px;line-height:1.8;padding:12px;border:1px solid var(--line);border-radius:7px;background:#f7f6ee;}
+.mf-field-help {display:block;margin:6px 0 0;font-size:10px;font-weight:400;color:var(--muted);line-height:1.7;}
+.mf-address-field {position:relative;min-width:0;margin-bottom:18px;}
+.mf-address-control {position:relative;}
+.mf-address-results {position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:15;border:1px solid #c4ceb9;border-radius:8px;background:#fffef9;overflow:hidden;}
+.mf-address-results ul {list-style:none;margin:0;padding:5px;max-height:240px;overflow:auto;overscroll-behavior:contain;}
+.mf-address-results li {padding:10px;border-radius:5px;font-size:12px;line-height:1.6;color:var(--ink);cursor:pointer;overflow-wrap:break-word;}
+.mf-address-results li:hover,.mf-address-results li[aria-selected=true] {background:#eaf0e1;}
+.mf-address-results p {padding:12px;margin:0;font-size:11px;line-height:1.8;color:var(--muted);}
+.mf-address-results > a {display:block;border-top:1px solid var(--line);padding:8px 12px;font-size:9px;line-height:1.6;color:var(--muted);}
+@media(max-width:600px) {
+ .mf-hours-day {grid-template-columns:58px minmax(0,1fr);gap:8px;}
+ .mf-hours-times {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;}
+ .mf-hours-times label {display:grid;gap:3px;}
+ .mf-hours-times input {width:100%;font-size:16px;padding:7px 4px;}
+ .mf-hours-separator {display:none;}
+ .mf-hours-times small {grid-column:1/-1;}
+ .mf-address-field input {font-size:16px;}
+ .mf-address-results li {font-size:13px;}
+}

@@ -65,16 +65,12 @@ export function IntegrationsOverview({ locale }: { locale: Locale }) {
           {platforms.map((name, i) => (
             <article key={name}>
               <span className="integration-icon">
-                {[0, 2, 3].includes(i) ? (
                   <Image
-                    src={`/icons/${name.toLowerCase()}-color.svg`}
+                    src={name === "Google Business Profile" ? "/icons/google-business-profile.png" : `/icons/${name.toLowerCase()}-color.svg`}
                     alt=""
                     width={27}
                     height={27}
                   />
-                ) : (
-                  <Waypoints size={27} aria-hidden="true" />
-                )}
               </span>
               <div>
                 <h3>{name}</h3>

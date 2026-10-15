@@ -7,6 +7,8 @@ import {
   ShoppingBag,
   Wrench,
 } from "lucide-react";
+import Link from "next/link";
+import type { Locale } from "@/content";
 import { ReplayFlow } from "./replay-flow";
 import type { HomeContent } from "@/content/types";
 import { StartLink } from "@/components/marketing/start-link";
@@ -66,7 +68,7 @@ export function GrowthLoop({ c }: { c: HomeContent }) {
     </section>
   );
 }
-export function Solutions({ c }: { c: HomeContent }) {
+export function Solutions({ c, locale }: { c: HomeContent; locale: Locale }) {
   const icons = [Coffee, Scissors, Dumbbell, ShoppingBag, Wrench];
   return (
     <section id="solutions" className="solutions-section container">
@@ -78,7 +80,7 @@ export function Solutions({ c }: { c: HomeContent }) {
         {c.solutions.map((solution, i) => {
           const Icon = icons[i];
           return (
-            <a href="#product" key={solution}>
+            <Link href={`/${locale}/solutions`} key={solution}>
               <Icon size={23} strokeWidth={1.5} />
               <span>{solution}</span>
               <span className="solution-number">0{i + 1}</span>
@@ -87,7 +89,7 @@ export function Solutions({ c }: { c: HomeContent }) {
                 size={15}
                 aria-hidden="true"
               />
-            </a>
+            </Link>
           );
         })}
       </div>
@@ -105,7 +107,7 @@ export function FinalCTA({ c }: { c: HomeContent }) {
       </div>
       <h2>{c.final[0]}</h2>
       <p>{c.final[1]}</p>
-      <StartLink label={c.start} />
+      <StartLink label={c.heroStart} />
       <div className="final-flow" aria-hidden="true">
         <span />
         <ArrowRight size={15} />

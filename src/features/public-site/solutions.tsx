@@ -11,9 +11,14 @@ import {
   CalendarDays,
   QrCode,
 } from "lucide-react";
+import type { Locale } from "@/content";
+import { customerPageContent } from "@/content/customer-page";
+import { marketingLoyalty } from "@/data/demo/home";
+import { LoyaltyProgress } from "@/components/customer/loyalty-progress";
+import { ProgrammeCard } from "@/components/customer/programme-card";
 import type { PublicSiteContent } from "@/content/public-site";
 const icons = [Coffee, Sparkles, Dumbbell, ShoppingBag, Wrench];
-export function SolutionsExplorer({ c }: { c: PublicSiteContent }) {
+export function SolutionsExplorer({ c, locale }: { c: PublicSiteContent; locale: Locale }) {
   const [selected, setSelected] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const tabList = useRef<HTMLDivElement>(null);
@@ -136,24 +141,9 @@ export function SolutionsExplorer({ c }: { c: PublicSiteContent }) {
         >
           <figcaption>{c.demo}</figcaption>
           <div className="preview-page">
-            <div className="preview-business">
-              <span>
-                <Icon size={24} aria-hidden="true" />
-              </span>
-              <strong>{industry.business}</strong>
-              <span className="preview-wordmark">MemberFlow</span>
-            </div>
-            <h3>{industry.cardTitle}</h3>
-            <div className="preview-pass">
-              <span>{industry.detail}</span>
+            <ProgrammeCard business={industry.business} icon={<Icon size={17} aria-hidden="true" />} label={industry.detail} title={industry.cardTitle} footer={industry.reward}>
               {industry.kind === "stamps" ? (
-                <div className="preview-stamps">
-                  {Array.from({ length: 6 }, (_, i) => (
-                    <span key={i} className={i < 3 ? "filled" : ""}>
-                      {i < 3 ? <Coffee size={20} aria-hidden="true" /> : "·"}
-                    </span>
-                  ))}
-                </div>
+                <LoyaltyProgress loyalty={marketingLoyalty} progressLabel={customerPageContent[locale].progress} />
               ) : industry.kind === "package" ? (
                 <div className="preview-package">
                   <Dumbbell size={32} aria-hidden="true" />
@@ -178,8 +168,7 @@ export function SolutionsExplorer({ c }: { c: PublicSiteContent }) {
                   <Check size={18} aria-hidden="true" />
                 </div>
               )}
-              <p>{industry.reward}</p>
-            </div>
+            </ProgrammeCard>
             <div className="preview-bottom">
               <QrCode size={38} aria-hidden="true" />
               <span>{industry.steps[1]}</span>

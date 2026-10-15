@@ -12,6 +12,11 @@ Wallet logos accompany the respective product names in an illustrative product p
 No functional Add to Wallet badges or live integration are presented.
 Assets are served locally. General interface icons remain Lucide.
 
+- Facebook: local SVG rendition of the blue circle and white Facebook “f”.
+- Google Business Profile: Google-hosted product icon, downloaded from
+  https://www.gstatic.com/images/branding/product/2x/google_my_business_48dp.png
+  and served locally as `google-business-profile.png`.
+
 Colour variants:
 - Instagram: unchanged Simple Icons glyph, with a local Instagram palette gradient.
 - Pinterest: unchanged Simple Icons glyph, with brand red (#E60023).

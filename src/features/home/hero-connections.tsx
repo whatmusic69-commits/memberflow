@@ -56,6 +56,7 @@ export function HeroConnections() {
       {geometry && (
         <>
           <FlowPath
+            className="hero-source"
             d={`M${geometry.sourceX} ${geometry.sourceY}H${geometry.busX}`}
             delay={350}
             duration={650}
@@ -76,6 +77,13 @@ export function HeroConnections() {
             />
           ))}
           <circle
+            className="distribution-hub-pulse"
+            cx={geometry.busX}
+            cy={geometry.sourceY}
+            r={10}
+          />
+          <g className="distribution-node">
+          <circle
             className="distribution-hub-ring"
             cx={geometry.busX}
             cy={geometry.sourceY}
@@ -87,6 +95,7 @@ export function HeroConnections() {
             cy={geometry.sourceY}
             r={4.5}
           />
+          </g>
         </>
       )}
     </svg>

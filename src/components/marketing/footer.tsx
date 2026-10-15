@@ -30,7 +30,7 @@ export function Footer({
           </div>
           <nav aria-label={c.nav[0]}>
             <strong>{c.nav[0]}</strong>
-            <a href={page ? `/${locale}#product` : "#product"}>{c.nav[0]}</a>
+            <Link href={`/${locale}/product`} aria-current={page === "product" ? "page" : undefined}>{c.nav[0]}</Link>
             <Link
               href={`/${locale}/solutions`}
               aria-current={page === "solutions" ? "page" : undefined}

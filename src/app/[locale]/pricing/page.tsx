@@ -35,7 +35,7 @@ export default async function PricingPage({
   const backendPlans = await getPublicPlans(locale);
   const plans = backendPlans.length
     ? backendPlans
-    : getDevelopmentPlans(onboardingContent[locale]);
+    : getDevelopmentPlans(onboardingContent[locale], locale);
   return (
     <>
       <Header c={c} locale={locale} page="pricing" />
@@ -78,7 +78,7 @@ export default async function PricingPage({
             <p>{p.ctaText}</p>
             <div className="pricing-actions">
               <StartLink label={p.tryFree} />
-              <Link className="secondary-link" href={`/${locale}#product`}>
+              <Link className="secondary-link" href={`/${locale}/product`}>
                 {p.back}
                 <ArrowRight size={15} aria-hidden="true" />
               </Link>

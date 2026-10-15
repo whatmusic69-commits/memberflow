@@ -4,7 +4,7 @@ export const en = {
   perMonth: "/ month",
   perYear: "/ year",
   customPrice: "Custom",
-  planCopy: {"starter": {"description": "Core tools for connecting with your customers.", "features": ["Branded customer portal", "Loyalty and rewards", "QR onboarding", "Up to 300 active customers", "Basic analytics"]}, "growth": {"description": "More ways to build repeat customer relationships.", "features": ["Personal offers", "Ready automations", "Visit packages", "Customer export", "Up to 1,500 active customers"]}, "business": {"description": "A flexible plan for businesses with broader needs.", "features": ["Multiple locations", "Advanced analytics", "Roles and permissions", "Subscriptions and renewals", "Priority support"]}},
+  planCopy: {"starter": {"description": "Core tools for connecting with your customers.", "features": ["Branded customer portal", "Loyalty and rewards", "QR onboarding", "Up to 300 active customers", "Basic analytics"]}, "growth": {"description": "More ways to build repeat customer relationships.", "features": ["Personal offers", "Ready automations", "Visit packages", "Customer export", "Up to 1,500 active customers"]}, "business": {"description": "All Growth features, with custom capacity for more locations and active customers.", "features": ["Multiple locations", "Advanced analytics", "Roles and permissions", "Subscriptions and renewals", "Priority support"]}},
   placeholders: {
     description: "A neighbourhood café in Riga serving specialty coffee and fresh pastries.",
     website: "https://yourcoffee.example",

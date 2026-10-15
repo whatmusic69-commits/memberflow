@@ -28,6 +28,7 @@ export function PlanComparison({
   const selectedPlan = plans.find(plan => plan.id === selectedId) ?? plans[0];
   function value(plan: Plan, row: number) {
     if (row < 2) {
+      if (localCatalog && plan.id === "business" && plan.limits === null) return c.customCapacity;
       const limit = plan.limits?.[row === 0 ? "activeCustomers" : "locations"];
       return limit === undefined
         ? c.unknown
@@ -96,7 +97,7 @@ export function PlanComparison({
             <h2>{c.comparisonTitle}</h2>
           </div>
           <p className="public-note" id="comparison-note">
-            {c.comparisonNote}
+            {localCatalog ? c.comparisonInheritanceNote : c.comparisonNote}
           </p>
         </header>
         {selectedPlan && <div className="comparison-mobile" data-plan={selectedPlan.id}>

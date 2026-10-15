@@ -48,7 +48,7 @@ export function Onboarding({
 }) {
   const [locale, setLocale] = useState(initialLocale);
   const c = onboardingContent[locale];
-  const developmentPlans = getDevelopmentPlans(c);
+  const developmentPlans = getDevelopmentPlans(c, locale);
   function changeLanguage(value: Locale) {
     setLocale(value);
     // Translate the current form in place: keep drafts, step and reading position.
@@ -111,7 +111,6 @@ export function Onboarding({
     setStep(next);
     requestAnimationFrame(() => {
       heading.current?.focus({ preventScroll: true });
-      heading.current?.scrollIntoView({ block: "start", behavior: "instant" });
     });
   }
   const input = (
