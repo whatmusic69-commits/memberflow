@@ -23,9 +23,10 @@ export async function generateMetadata({
     description: content[locale].intro,
     alternates: {
       canonical: `/${locale}`,
-      languages: { en: "/en", lv: "/lv", ru: "/ru" },
+      languages: { en: "/en", lv: "/lv", ru: "/ru", "x-default": "/en" },
     },
     openGraph: {
+      url: `/${locale}`,
       title: content[locale].seo,
       description: content[locale].intro,
       type: "website",

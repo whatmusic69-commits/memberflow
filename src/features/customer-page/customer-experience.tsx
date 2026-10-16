@@ -9,11 +9,12 @@ import {
   currentParticipation,
   endCustomerPreview,
 } from "@/features/customer-registration/repository";
+import { customerAccountContent } from "@/content/customer-account";
+import { LocalCustomerLoyalty, LocalCustomerHistory } from "./local-customer-sections";
 import { PersonalPreviewCard } from "@/features/customer-registration/personal-card";
 import { registrationContent } from "@/content/customer-registration";
 import {
   prototypePersonal,
-  prototypeCode,
 } from "@/features/prototype/customer-model";
 import { prototypeContent } from "@/content/prototype";
 import { CustomerPageView } from "./page-view";
@@ -188,7 +189,8 @@ export function CustomerExperience({
   return (
     <>
       {demo && previewId && (
-        <aside className="cp-session-error">
+        <details className="cp-preview-details">
+          <summary>{customerAccountContent[locale].preview}</summary>
           <p>{prototypeContent[locale].notice}</p>
           {page.status !== "ACTIVE" && (
             <>
@@ -204,28 +206,19 @@ export function CustomerExperience({
           >
             {prototypeContent[locale].crm} →
           </Link>
-          {personal && (
-            <label className="mf-form-field">
-              <span>{prototypeContent[locale].code}</span>
-              <input
-                readOnly
-                value={prototypeCode(previewId, personal.customer.id)}
-                onFocus={(e) => e.target.select()}
-              />
-            </label>
-          )}
-        </aside>
+        </details>
       )}
       <CustomerPageView
         page={page}
         personal={personal}
+        localLoyalty={demo && previewId && personal ? <LocalCustomerLoyalty businessId={previewId} customerId={personal.customer.id} locale={locale}/> : undefined}
+        personalHistory={demo && previewId && personal ? <LocalCustomerHistory businessId={previewId} customerId={personal.customer.id} locale={locale}/> : undefined}
         localMemberships={
           demo && previewId && personal ? (
             <LocalMembershipCards
               businessId={previewId}
               customerId={personal.customer.id}
               locale={locale}
-              history
             />
           ) : undefined
         }

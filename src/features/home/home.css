@@ -541,6 +541,11 @@
   height: 70px;
   padding: 0;
 }
+.staff-example-scan .business-demo-qr {display:grid;place-items:center;width:104px;height:104px;border-radius:5px;background:#fff;overflow:hidden;}
+.staff-example-scan .business-demo-qr img {display:block;width:100%;height:100%;object-fit:contain;}
+.staff-example-scan .business-demo-qr > span {padding:8px;font-size:10px;line-height:1.6;}
+.staff-example-scan .business-demo-qr:focus-visible {outline:2px solid #718269;outline-offset:3px;}
+.staff-story#staff-scanner-demo {scroll-margin-top:110px;}
 .staff-example-scan small {
   display: block;
   margin-top: 10px;

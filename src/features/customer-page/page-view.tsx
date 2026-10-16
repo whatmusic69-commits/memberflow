@@ -1,3 +1,7 @@
+import Link from "next/link";
+import { legalContent } from "@/content/legal";
+import { customerAccountContent } from "@/content/customer-account";
+import { CustomerHeader } from "./customer-header";
 import { registrationContent } from "@/content/customer-registration";
 import { LoyaltyProgress } from "@/components/customer/loyalty-progress";
 import type { CSSProperties } from "react";
@@ -82,6 +86,8 @@ export function CustomerPageView({
   onLogout,
   localMemberships,
   personalCard,
+  localLoyalty,
+  personalHistory,
 }: {
   page: CustomerPagePublic;
   personal?: CustomerPagePersonal | null;
@@ -91,8 +97,10 @@ export function CustomerPageView({
   onLogout?: () => void;
   localMemberships?: React.ReactNode;
   personalCard?: React.ReactNode;
+  localLoyalty?: React.ReactNode;
+  personalHistory?: React.ReactNode;
 }) {
-  const c = customerPageContent[locale];
+  const c = customerPageContent[locale], account = customerAccountContent[locale];
   const initials = page.business.name
     .split(/\s+/)
     .slice(0, 2)
@@ -114,13 +122,14 @@ export function CustomerPageView({
     .filter((item) => item.url);
   return (
     <div
-      className={`cp-page ${preview ? "cp-preview" : ""}`}
+      className={`cp-page ${preview ? "cp-preview" : ""} ${personal ? "cp-personal-page" : ""}`}
       lang={locale}
       style={
         { "--cp-accent": accentStyle(page.branding.accent) } as CSSProperties
       }
     >
-      <div className="cp-cover">
+      {personal && <CustomerHeader business={page.business.name} logo={page.branding.logoUrl} initials={initials} name={personal.customer.firstName} locale={locale} rewards={page.modules.loyalty && Boolean(personal.loyalty)} offers={page.modules.offers && offers.length>0} onLogout={onLogout}/> }
+      {!personal && <div className="cp-cover">
         <CustomerImage
           src={page.branding.coverUrl}
           alt=""
@@ -133,9 +142,9 @@ export function CustomerPageView({
             </div>
           }
         />
-      </div>
-      <div className="cp-body">
-        <header className="cp-business">
+      </div>}
+      <div className="cp-body" id={personal ? "cp-home" : undefined}>
+        {!personal && <header className="cp-business">
           <CustomerImage
             src={page.branding.logoUrl}
             alt=""
@@ -159,16 +168,12 @@ export function CustomerPageView({
           {page.business.description && (
             <p className="cp-description">{page.business.description}</p>
           )}
-        </header>
+        </header>}
         {personal ? (
-          <div className="cp-greeting">
-            <span className="cp-dot" />
+          <div className="cp-greeting cp-account-greeting">
+            <p className="cp-label">{account.home}</p>
             <h2>{c.greeting.replace("{name}", personal.customer.firstName)}</h2>
-            {onLogout && (
-              <button className="cp-text-action" onClick={onLogout}>
-                {c.logout}
-              </button>
-            )}
+            <p>{account.intro}</p>
           </div>
         ) : (
           <section className="cp-join">
@@ -181,9 +186,9 @@ export function CustomerPageView({
             <small>{c.noApp}</small>
           </section>
         )}
-        {personalCard}
-        {page.modules.loyalty && (page.loyalty || personal?.loyalty) && (
-          <section className="cp-section cp-loyalty">
+        {personal && page.modules.loyalty && localLoyalty}
+        {!(personal && localLoyalty) && page.modules.loyalty && (personal ? personal.loyalty : page.loyalty) && (
+          <section id="cp-rewards" className="cp-section cp-loyalty">
             <p className="cp-label">
               <Gift size={15} />
               {c.loyalty}
@@ -215,9 +220,16 @@ export function CustomerPageView({
             )}
           </section>
         )}
+        {personalCard}
+        {personal && <div className="cp-wallet-compact">
+          {(["apple", "google"] as const).some(provider => personal.wallet[provider].status === "ADDED" || (personal.wallet[provider].status === "AVAILABLE" && safeLink(personal.wallet[provider].actionUrl))) ? (["apple", "google"] as const).map(provider => {
+            const state=personal.wallet[provider],url=safeLink(state.actionUrl);
+            return state.status === "ADDED" ? <span className="cp-wallet-added" key={provider}><Wallet size={15} aria-hidden="true"/>{provider === "apple" ? "Apple Wallet" : "Google Wallet"} · {c.walletAdded}</span> : state.status === "AVAILABLE" && url ? <a className="cp-wallet-button" key={provider} href={url}>{c[provider]}<ArrowUpRight size={15} aria-hidden="true"/></a> : null;
+          }) : <p><Wallet size={16} aria-hidden="true"/><span>{registrationContent[locale].walletUnavailable}</span></p>}
+        </div>}
         {page.modules.offers && offers.length > 0 && (
-          <section className="cp-section">
-            <p className="cp-label">{personal ? c.forYou : c.offers}</p>
+          <section id="cp-offers" className="cp-section">
+            <h2 className="cp-label">{personal ? c.forYou : c.offers}</h2>
             <div className="cp-offers">
               {offers.map((offer) => (
                 <OfferCard key={offer.id} offer={offer} locale={locale} />
@@ -276,42 +288,15 @@ export function CustomerPageView({
               ))}
             </section>
           )}
-        {personal && (
-          <section className="cp-section cp-wallet">
-            <p className="cp-label">
-              <Wallet size={15} />
-              {c.wallet}
-            </p>
-            <h3>{c.walletTitle.replace("{business}", page.business.name)}</h3>
-            <p>{c.walletText}</p>
-            {(["apple", "google"] as const).map((provider) => {
-              const state = personal.wallet[provider],
-                url = safeLink(state.actionUrl);
-              return state.status === "ADDED" ? (
-                <span className="cp-wallet-added" key={provider}>
-                  ✓ {provider === "apple" ? "Apple Wallet" : "Google Wallet"} ·{" "}
-                  {c.walletAdded}
-                </span>
-              ) : state.status === "AVAILABLE" && url ? (
-                <a className="cp-wallet-button" key={provider} href={url}>
-                  {c[provider]}
-                  <ArrowUpRight size={15} />
-                </a>
-              ) : (
-                <span className="cp-wallet-unavailable" key={provider}>
-                  {c[provider]} ·{" "}
-                  {registrationContent[locale].walletUnavailable}
-                </span>
-              );
-            })}
-          </section>
-        )}
-        {(page.business.address ||
+        {personalHistory}
+        {((personal && (page.business.description || page.business.category || page.business.city)) || page.business.address ||
           page.business.openingHours ||
           page.business.phone ||
           page.business.email) && (
           <section className="cp-section cp-about">
-            <p className="cp-label">{c.about}</p>
+            <h2 className="cp-label">{c.about}</h2>
+            {personal && (page.business.category || page.business.city) && <p className="cp-location">{[customerCategories[locale][page.business.category] || page.business.category,page.business.city].filter(Boolean).join(" · ")}</p>}
+            {personal && page.business.description && <p className="cp-account-description">{page.business.description}</p>}
             {page.business.address && (
               <div>
                 <MapPin size={17} />
@@ -365,7 +350,8 @@ export function CustomerPageView({
         )}
         <footer className="cp-footer">
           <span className="cp-dot" />
-          {c.powered}
+          <span>{c.powered}</span>
+          <nav className="cp-footer-legal" aria-label={legalContent[locale].privacy}><Link href={`/${locale}/privacy`}>{legalContent[locale].privacy}</Link><Link href={`/${locale}/terms`}>{legalContent[locale].terms}</Link></nav>
         </footer>
       </div>
     </div>

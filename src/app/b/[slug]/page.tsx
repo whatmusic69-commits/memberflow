@@ -39,7 +39,7 @@ export async function generateMetadata({
 }: Props): Promise<Metadata> {
   const { slug } = await params,
     query = await searchParams;
-  if (demo && typeof query.preview === "string")
+  if (["preview", "prototypeCustomer", "demo", "guest"].some(key => query[key] !== undefined))
     return {
       title: "Customer page preview — MemberFlow",
       robots: { index: false, follow: false },

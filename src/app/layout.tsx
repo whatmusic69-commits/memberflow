@@ -1,8 +1,11 @@
 import "@fontsource-variable/manrope";
 import "./globals.css";
+import type { Metadata } from "next";
+import { publicSiteOrigin } from "@/config/public-site";
 import { LocalePreference } from "@/components/navigation/locale-preference";
 import { OnboardingTransition } from "@/components/navigation/onboarding-transition";
 import { content, isLocale, defaultLocale } from "@/content";
+export const metadata: Metadata = { metadataBase: new URL(publicSiteOrigin) };
 export default async function RootLayout({
   children,
   params,

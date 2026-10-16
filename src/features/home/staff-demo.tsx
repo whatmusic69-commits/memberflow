@@ -4,7 +4,7 @@ import { motionDemoContent } from "@/content/motion";
 import { ScanLine, Check, Wallet, UserRound } from "lucide-react";
 import type { HomeContent } from "@/content/types";
 import type { Locale } from "@/content";
-import { DemoQr } from "./story-visuals";
+import { BusinessDemoQr } from "@/features/product/business-demo-qr";
 import { ProgrammeCard } from "@/components/customer/programme-card";
 import { LoyaltyProgress } from "@/components/customer/loyalty-progress";
 import { marketingLoyalty } from "@/data/demo/home";
@@ -23,7 +23,7 @@ export function StaffStory({ c, locale }: { c: HomeContent; locale: Locale }) {
   const copy = motionDemoContent[locale];
   const stamps = phase === "done" ? 4 : 3;
   return (
-    <figure className="staff-story" data-demo-phase={phase}>
+    <figure id="staff-scanner-demo" className="staff-story" data-demo-phase={phase}>
       <div className="staff-composition">
         <div className="staff-device product-phone">
           <div className="phone-chrome">
@@ -37,7 +37,7 @@ export function StaffStory({ c, locale }: { c: HomeContent; locale: Locale }) {
           </div>
           <div className="staff-example-scan">
             <div className="scan-corner">
-              <DemoQr label={c.connect[8]} />
+              <BusinessDemoQr locale={locale} label={c.connect[8]} variant="scanner" />
             </div>
             <small>{s.qr}</small>
           </div>

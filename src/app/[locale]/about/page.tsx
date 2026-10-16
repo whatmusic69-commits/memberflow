@@ -25,9 +25,10 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical: `/${locale}/about`,
-      languages: { en: "/en/about", lv: "/lv/about", ru: "/ru/about" },
+      languages: { en: "/en/about", lv: "/lv/about", ru: "/ru/about", "x-default": "/en/about" },
     },
     openGraph: {
+      url: `/${locale}/about`,
       title,
       description,
       type: "website",

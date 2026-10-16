@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { publicSiteOrigin } from "@/config/public-site";
 import { content, type Locale, locales } from "@/content";
 import { Header } from "@/components/marketing/header";
 import { Footer } from "@/components/marketing/footer";
@@ -13,7 +14,7 @@ export function publicMetadata(
   title: string,
   description: string,
 ): Metadata {
-  const origin = "https://memberflow-seven.vercel.app";
+  const origin = publicSiteOrigin;
   const url = `${origin}/${locale}/${path}`;
   return {
     title: `${title} — MemberFlow`,
@@ -21,7 +22,7 @@ export function publicMetadata(
     alternates: {
       canonical: url,
       languages: Object.fromEntries(
-        locales.map((l) => [l, `${origin}/${l}/${path}`]),
+        [...locales.map((l) => [l, `${origin}/${l}/${path}`]), ["x-default", `${origin}/en/${path}`]],
       ),
     },
     openGraph: {

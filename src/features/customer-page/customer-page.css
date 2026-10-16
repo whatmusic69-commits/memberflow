@@ -969,5 +969,96 @@
 .cr-personal-card p {font-size:12px;line-height:1.8;color:var(--muted);}
 .cr-personal-card input {width:100%;min-width:0;border:1px solid var(--line);border-radius:6px;background:#fbfaf5;padding:10px;font-size:10px;}
 .cp-wallet-unavailable {display:block;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.7;color:var(--muted);}
+.cp-footer {flex-wrap:wrap;}
+.cp-footer-legal {display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;flex-basis:100%;font-size:10px;line-height:1.7;}
+.cp-footer-legal a {text-decoration:underline;text-underline-offset:3px;}
+
+/* Personal customer account: scoped independently from the guest business page. */
+.cp-personal-page {max-width:640px;}
+.cp-account-header {display:flex;align-items:center;gap:16px;padding:16px 22px;border-bottom:1px solid #d9ded2;background:#faf9f5;position:relative;z-index:2;}
+.cp-account-brand {display:flex;align-items:center;gap:9px;min-width:0;flex:1;}
+.cp-account-brand h1 {margin:0;font-size:16px;line-height:1.4;letter-spacing:-.03em;font-weight:600;overflow-wrap:anywhere;}
+.cp-account-brand-copy {display:grid;gap:4px;min-width:0;}
+.cp-account-platform .wordmark {gap:5px;font-size:12px;letter-spacing:-.4px;line-height:1.2;color:#526047;}
+.cp-account-platform .wordmark > svg {width:19px;height:19px;flex-shrink:0;}
+.cp-account-platform .wordmark > span {margin-left:-5px;}
+.cp-account-logo {width:34px;height:34px;flex-shrink:0;object-fit:cover;border-radius:9px;}
+.cp-account-initials {display:grid;place-items:center;background:#e5ebdc;color:#405438;font-size:12px;}
+.cp-account-nav {display:flex;gap:14px;flex-shrink:0;}
+.cp-account-nav a {font-size:11px;line-height:1.6;color:#526047;padding-block:8px;}
+.cp-account-nav a:hover {color:#263b21;text-decoration:underline;text-underline-offset:4px;}
+.cp-profile-menu {position:relative;flex-shrink:0;}
+.cp-profile-menu summary {display:flex;align-items:center;gap:5px;min-height:38px;padding:8px;border:1px solid #d4dccb;border-radius:20px;background:#edf0e6;cursor:pointer;list-style:none;}
+.cp-profile-menu summary::-webkit-details-marker {display:none;}
+.cp-profile-panel {position:absolute;right:0;top:calc(100% + 10px);width:230px;max-width:calc(100vw - 56px);padding:16px;border:1px solid #d4dccb;border-radius:12px;background:#faf9f5;z-index:3;}
+.cp-profile-panel > strong {display:block;font-size:13px;overflow-wrap:anywhere;}
+.cp-future-cards {display:flex;align-items:flex-start;gap:8px;margin-top:15px;padding-block:14px;border-block:1px solid #d9ded2;font-size:12px;color:#65705f;}
+.cp-future-cards svg {flex-shrink:0;}
+.cp-future-cards small {display:block;font-size:10px;line-height:1.6;margin-top:5px;}
+.cp-profile-panel button {display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:#526047;cursor:pointer;}
+.cp-personal-page :is(a,button,summary):focus-visible {outline:2px solid #718269;outline-offset:3px;}
+.cp-account-greeting.cp-greeting {display:block;padding:26px 0 22px;}
+.cp-account-greeting .cp-label {margin-bottom:9px;}
+.cp-account-greeting h2 {font-size:26px;line-height:1.3;overflow-wrap:anywhere;}
+.cp-account-greeting > p:last-child {margin:10px 0 0;font-size:12px;line-height:1.8;color:#65705f;}
+.cp-personal-page :is(#cp-home,#cp-rewards,#cp-offers,#cp-personal-qr) {scroll-margin-top:20px;}
+.cp-personal-page .cp-section {padding-block:22px;}
+.cp-account-loyalty > .cp-label {margin-bottom:14px;}
+.cp-loyalty-programme {padding:18px;border:1px solid #ccd6c1;border-radius:12px;background:#edf0e6;}
+.cp-loyalty-programme + .cp-loyalty-programme {margin-top:12px;}
+.cp-loyalty-programme h3 {font-size:17px;font-weight:550;line-height:1.5;margin:0 0 18px;overflow-wrap:anywhere;}
+.cp-personal-page .cp-stamps {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;}
+.cp-personal-page .cp-stamps > span {width:100%;height:auto;aspect-ratio:1;max-width:48px;}
+.cp-personal-page .cp-stamps svg {max-width:70%;max-height:70%;}
+.cp-points {font-size:24px;line-height:1.5;letter-spacing:-.03em;margin:0 0 12px;}
+.cp-loyalty-programme progress {width:100%;height:6px;accent-color:#718269;}
+.cp-available-rewards {margin-top:18px;}
+.cp-available-rewards h3 {font-size:13px;font-weight:600;margin-bottom:10px;}
+.cp-available-rewards ul {display:grid;gap:8px;list-style:none;margin:0;padding:0;}
+.cp-available-rewards li {display:flex;align-items:center;gap:9px;padding:12px 14px;border:1px solid #d1dbc5;border-radius:8px;background:#e9efdf;font-size:13px;line-height:1.6;}
+.cp-personal-page .cr-personal-card {margin:2px 0 0;padding:22px 18px;background:#fffef9;border-color:#d9ded2;}
+.cr-qr-frame {display:grid;place-items:center;min-height:180px;}
+.cr-qr-frame img {display:block;width:180px;height:180px;max-width:100%;background:#fff;}
+.cr-qr-frame > span {font-size:12px;color:#65705f;}
+.cr-manual-code {margin-top:16px;padding-top:14px;border-top:1px solid #e1e5da;text-align:left;}
+.cr-manual-code summary {font-size:11px;line-height:1.8;color:#526047;cursor:pointer;}
+.cr-manual-code input {margin-top:12px;}
+.cr-manual-code button {margin-top:10px;}
+.cp-wallet-compact {display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px;}
+.cp-wallet-compact > p {display:flex;gap:8px;align-items:flex-start;margin:0;font-size:11px;line-height:1.7;color:#65705f;}
+.cp-wallet-compact svg {flex-shrink:0;margin-top:1px;}
+.cp-wallet-compact .cp-wallet-button {min-height:40px;margin:0;font-size:11px;}
+.cp-wallet-compact .cp-wallet-added {display:flex;gap:6px;align-items:center;margin:0;font-size:11px;}
+.cp-history-list {list-style:none;margin:0;padding:0;}
+.cp-history-list li {display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #e1e5da;font-size:12px;line-height:1.7;}
+.cp-history-list li > span {min-width:0;overflow-wrap:anywhere;}
+.cp-history-list small {display:block;color:#65705f;font-size:11px;}
+.cp-history-list time {flex-shrink:0;font-size:10px;color:#65705f;text-align:right;}
+.cp-account-history details {margin-top:12px;}
+.cp-account-history summary {font-size:11px;cursor:pointer;color:#526047;}
+.cp-personal-page .mf-membership-list {display:grid;gap:12px;}
+.cp-personal-page .mf-membership-card {min-width:0;padding:16px;border:1px solid #d4dccb;border-radius:10px;background:#f0f2e9;}
+.cp-personal-page .mf-membership-card .mf-panel-heading {display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:14px;}
+.cp-personal-page .mf-status {font-size:10px;color:#526047;}
+.cp-personal-page .mf-membership-card p {font-size:13px;line-height:1.8;margin:10px 0;}
+.cp-personal-page .mf-membership-card small,.cp-personal-page .mf-membership-card dl {font-size:11px;line-height:1.7;color:#65705f;}
+.cp-personal-page .mf-membership-card dl {display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px;}
+.cp-personal-page .mf-membership-card dd {margin:0;text-align:right;}
+.cp-personal-page .mf-membership-card progress {width:100%;height:6px;accent-color:#718269;}
+.cp-account-description {font-size:13px;line-height:1.8;color:#566152;}
+.cp-preview-details {max-width:640px;margin:0 auto 14px;padding:10px 14px;border:1px dashed #d4dccb;border-radius:8px;font-size:11px;line-height:1.8;color:#65705f;}
+.cp-preview-details summary {cursor:pointer;}
+.cp-preview-details p {margin:10px 0;}
+.cp-preview-details a {text-decoration:underline;text-underline-offset:3px;}
+@media(max-width:430px) {
+  .cp-account-header {padding:14px 16px;gap:10px;flex-wrap:wrap;}
+  .cp-account-brand {order:0;}
+  .cp-profile-menu {order:1;}
+  .cp-account-nav {order:2;flex-basis:100%;gap:20px;border-top:1px solid #e1e5da;padding-top:5px;}
+  .cp-account-nav:empty {display:none;}
+  .cp-account-greeting h2 {font-size:23px;}
+  .cp-history-list li {gap:10px;}
+  .cp-history-list time {max-width:85px;}
+}
 @media(max-width:600px) {.cr-shell {padding:20px 14px 40px;}.cr-step,.cr-business {padding:22px 18px;}.cr-step input:not([type=checkbox]),.cr-step select {font-size:16px;}.cr-notice {padding:14px 18px;}}
 .cp-hours {white-space:pre-line;}

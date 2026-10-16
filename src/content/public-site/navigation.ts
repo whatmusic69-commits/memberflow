@@ -1,4 +1,8 @@
 export type MarketingPage =
+  | "solutions/coffee-shops"
+  | "solutions/beauty-salons"
+  | "features/digital-loyalty-cards"
+  | "features/qr-code-loyalty"
   | "terms"
   | "privacy"
   | "product"

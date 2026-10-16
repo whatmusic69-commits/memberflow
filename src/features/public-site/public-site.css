@@ -516,6 +516,8 @@
 .article-heading h1 {
   font-size: clamp(34px, 4vw, 54px);
 }
+.solutions-topic-links {display:flex;flex-wrap:wrap;gap:12px 24px;padding:24px 0;border-top:1px solid var(--line);}
+.solutions-topic-links a {font-size:13px;color:#405438;line-height:1.8;}
 .help-article-layout {
   display: grid;
   grid-template-columns: 230px minmax(0, 700px);

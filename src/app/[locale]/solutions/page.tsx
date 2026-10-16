@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { landingContent } from "@/content/landing-pages";
 import { notFound } from "next/navigation";
 import { isLocale, locales } from "@/content";
 import { publicSiteContent } from "@/content/public-site";
@@ -42,6 +44,9 @@ export default async function Page({
         intro={c.solutionsIntro}
       />
       <SolutionsExplorer c={c} locale={locale} />
+      <nav className="solutions-topic-links" aria-label={c.nav[0]}>
+        {(["solutions/coffee-shops","solutions/beauty-salons"] as const).map(path=><Link key={path} href={`/${locale}/${path}`}>{landingContent[locale][path].label} ↗</Link>)}
+      </nav>
       <PublicCTA locale={locale} />
     </PublicShell>
   );

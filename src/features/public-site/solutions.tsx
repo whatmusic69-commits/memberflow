@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react";
 import {
   Coffee,
   Sparkles,
@@ -25,6 +25,19 @@ export function SolutionsExplorer({ c, locale }: { c: PublicSiteContent; locale:
   const indicator = useRef<HTMLSpanElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const previousSelection = useRef(selected);
+  useEffect(() => {
+    let frame=0;
+    const selectHash=()=>{
+      cancelAnimationFrame(frame);
+      const match=/^#industry-(\d+)$/.exec(window.location.hash);
+      if(!match)return;
+      const index=Number(match[1]);
+      if(index>=0 && index<c.industries.length)frame=requestAnimationFrame(()=>setSelected(index));
+    };
+    selectHash();
+    window.addEventListener("hashchange",selectHash);
+    return ()=>{cancelAnimationFrame(frame);window.removeEventListener("hashchange",selectHash);};
+  },[c.industries.length]);
   const industry = c.industries[selected];
   const Icon = icons[selected];
   useLayoutEffect(() => {

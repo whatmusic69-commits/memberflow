@@ -30,12 +30,12 @@ export function Header({
     Boolean(process.env.NEXT_PUBLIC_API_URL);
   const navigation = (
     <>
-      <Link href={`/${locale}/product`} aria-current={page === "product" ? "page" : undefined} onClick={() => setOpen(false)}>
+      <Link href={`/${locale}/product`} aria-current={page === "product" || page?.startsWith("features/") ? "page" : undefined} onClick={() => setOpen(false)}>
         {c.nav[0]}
       </Link>
       <Link
         href={`/${locale}/solutions`}
-        aria-current={page === "solutions" ? "page" : undefined}
+        aria-current={page === "solutions" || page?.startsWith("solutions/") ? "page" : undefined}
         onClick={() => setOpen(false)}
       >
         {c.nav[1]}
